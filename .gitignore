@@ -1,0 +1,4 @@
+/node_modules/
+/.idea/
+/src/main/ngapp/node_modules/
+/target/classes/

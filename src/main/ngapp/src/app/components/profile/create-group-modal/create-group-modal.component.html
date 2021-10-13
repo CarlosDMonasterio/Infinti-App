@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <h5 class="modal-title"> &nbsp;
+        <span *ngIf="!isEdit">Create Group</span>
+        <span *ngIf="isEdit">Edit Group</span></h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <ngb-alert class="alert-error" *ngIf="edit.error" (close)="closeAlert()">Server error creating group</ngb-alert>
+
+    <div>
+        <form>
+            <div class="form-group row">
+                <label class="col-3 col-form-label font-weight-bold font-90" for="name">Name</label>
+                <div class="col">
+                    <span *ngIf="isEdit && !edit.name && newGroup.display">{{newGroup.display}}</span>
+
+                    <input *ngIf="!newGroup.id || edit.name" type="text" style="width: 180px" id="name"
+                           placeholder="Group Name" name="groupName" class="form-control form-control-sm"
+                           size="35" maxlength="35" [(ngModel)]="newGroup.display"/>
+                    <i class="fa fa-pencil font-12 opacity-hover cursor-pointer" (click)="edit.name=true"
+                       ngbTooltip="Edit" *ngIf="newGroup.id && !edit.name"></i>
+                    <button *ngIf="edit.name" class="btn btn-xs btn-primary" (click)="saveNewUserGroup()">Save</button>
+                    <button *ngIf="edit.name" class="btn btn-xs btn-link" (click)="edit.name=false">Cancel</button>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="description" class="col-3 col-form-label font-weight-bold font-90">Description</label>
+                <div class="col">
+                    <span *ngIf="newGroup.id && !edit.description && newGroup.description">{{newGroup.description}}</span>
+                    <i *ngIf="newGroup.id && !edit.description && !newGroup.description">None entered</i>
+                    <input *ngIf="!newGroup.id || edit.description" type="text" style="width: 300px"
+                           name="description" id="description" class="form-control form-control-sm"
+                           placeholder="Group Description" size="35" maxlength="125"
+                           [(ngModel)]="newGroup.description"/>
+                    <i class="fa fa-pencil font-12 opacity-hover cursor-pointer" ngbTooltip="Edit"
+                       (click)="edit.description=true" *ngIf="newGroup.id && !edit.description"></i>
+                    <button *ngIf="edit.description" class="btn btn-xs btn-primary" (click)="saveNewUserGroup()">
+                        Save
+                    </button>
+                    <button *ngIf="edit.description" class="btn btn-xs btn-link" (click)="edit.description=false">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-3 border-top">
+                <div class="form-group row">
+                    <label class="col-3 col-form-label font-weight-bold font-80">ADD USERS</label>
+                    <div class="col">
+                        <ng-template #userResultTemplate let-r="result" let-t="term">
+                            <ngb-highlight [result]="r.firstName + ' ' + r.lastName" [term]="t"></ngb-highlight>
+                            <br>
+                            <ngb-highlight [result]="r.email" [term]="t" class="small"
+                                           style="position: relative; top: -8px"></ngb-highlight>
+                        </ng-template>
+
+                        <input type="text" [(ngModel)]="newUserName" placeHolder="Enter user id"
+                               [resultTemplate]="userResultTemplate"
+                               [inputFormatter]="formatter" [resultFormatter]="formatter"
+                               class="form-control-sm form-control" style="width: 210px" name="newUserName"
+                               [editable]="false" (selectItem)="selectUser($event)" [ngbTypeahead]="searchUsers"/>
+                    </div>
+
+                    <div style="background-color: #fcfcfc; height: 250px; overflow: auto; width: 500px; padding: 12px">
+
+                        <div *ngIf="!newGroup || !newGroup.members || !newGroup.members.length"
+                             class="small p-4 opacity_6">
+                            <i>No users added</i>
+                        </div>
+
+                        <table class="table table-sm table-hover table-bordered p-4">
+                            <tbody>
+                            <tr *ngFor="let user of newGroup.members">
+                                <td class="font-80em cursor-pointer">
+                                    {{user.firstName}} {{user.lastName}}
+                                    <small class="opacity_4 pl-4">{{user.email}}</small>
+                                    <i class="float-right fa fa-fw fa-times delete_icon"
+                                       (click)="removeUserFromGroup(user)"></i>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer" *ngIf="!newGroup.id">
+    <button type="submit" [disabled]="!newGroup.display" class="btn btn-primary" (click)="saveNewUserGroup()">
+        Save
+    </button>
+    <button type="reset" (click)="activeModal.close()" class="btn btn-link">Cancel</button>
+</div>

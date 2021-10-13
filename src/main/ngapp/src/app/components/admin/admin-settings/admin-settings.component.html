@@ -1,0 +1,42 @@
+<table class="table table-hover table-bordered">
+    <tbody>
+    <tr *ngFor="let setting of generalSettings">
+        <td class="text-right align-middle font-weight-bold font-80 text-uppercase">
+            {{ setting.key | titlecase }}
+        </td>
+
+        <td *ngIf="setting.options && setting.options.length">
+            <select [(ngModel)]="setting.value" [disabled]="!setting.edit" (ngModelChange)="change($event, setting)"
+                    name="data">
+                <option *ngFor="let currentData of setting.options" [ngValue]="currentData">
+                    {{currentData}}
+                </option>
+            </select>
+        </td>
+
+        <td *ngIf="!setting.isBoolean && !setting.options" class="align-middle">
+            <input type="text" [(ngModel)]="setting.value" placeholder="Enter value" *ngIf="setting.edit"/>
+            <span *ngIf="setting.value && !setting.edit">{{setting.value}}</span>
+            <i *ngIf="!setting.value && !setting.edit" class="text-muted">No value entered</i>
+        </td>
+
+        <td *ngIf="setting.isBoolean" class="align-middle">
+            <i class="fa fa-fw font-14" [ngClass]="[setting.className + (setting.edit ? ' cursor-pointer' : '')]"
+               (click)="updateBooleanSetting(setting)"></i>
+        </td>
+
+        <td style="width: 15%">
+            <i class="edit_icon fa fa-fw fa-pencil ml-3" ngbTooltip="Click to edit" *ngIf="!setting.edit"
+               (click)="setting.edit=true"></i>
+
+            <div *ngIf="setting.edit && !setting.isBoolean && !setting.options">
+                <button class="btn btn-primary btn-sm" (click)="updateSetting(setting)">Update</button>
+                <button class="btn btn-link btn-sm" (click)="setting.edit=false">Cancel</button>
+            </div>
+
+            <i class="fa fa-fw fa-unlock font-14 orange" *ngIf="setting.edit && (setting.isBoolean || setting.options)"
+               (click)="setting.edit=false"></i>
+        </td>
+    </tr>
+    </tbody>
+</table>

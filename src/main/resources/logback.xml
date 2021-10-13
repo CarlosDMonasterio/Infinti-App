@@ -1,0 +1,36 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <contextListener class="org.ih.common.logging.LoggerStartupListener"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_PATH}/ih.log</file>
+        <append>true</append>
+
+        <!-- Support multiple-JVM writing to the same log file -->
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Daily rollover -->
+            <fileNamePattern>${LOG_PATH}/ih.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- Keep 28 days' worth of history -->
+            <maxHistory>28</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%-5level] %d{dd MMM yyyy; HH:mm:ss.SSS} [%.6thread] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{dd MMM yyyy; HH:mm:ss.SSS} %-5level [%.6thread] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="org.ih" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>

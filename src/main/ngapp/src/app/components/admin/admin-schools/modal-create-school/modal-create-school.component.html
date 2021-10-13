@@ -1,0 +1,79 @@
+<div class="modal-header">
+    <h5 class="modal-title">Add New School to {{district.label}} district</h5>
+    <button type="button" class="close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form class="needs-validation" novalidate>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">School Name</label>
+                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="newSchool.name"
+                           placeholder="Enter name of school">
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="grades">Grades</label>
+                    <input type="text" class="form-control " id="grades" name="grades"
+                           [(ngModel)]="newSchool.grades" placeholder="Grades">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" [(ngModel)]="newSchool.description"
+                          name="description" placeholder="Optional details"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="inputAddress" [(ngModel)]="newSchool.address"
+                       name="inputAddress" placeholder="1234 Main St">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" name="inputCity" id="inputCity"
+                           [(ngModel)]="newSchool.city">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">State</label>
+                    <select id="inputState" class="form-control" name="inputState" [(ngModel)]="newSchool.state">
+                        <option [ngValue]="undefined" disabled selected>Choose...</option>
+                        <option [ngValue]="'CA'">CA</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="text" class="form-control" name="inputZip" id="inputZip"
+                           [(ngModel)]="newSchool.zip">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="phone" [(ngModel)]="newSchool.phone"
+                           placeholder="(123)-456-7689)">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="url">Website</label>
+                    <input type="text" class="form-control" name="url" id="url" [(ngModel)]="newSchool.url"
+                           placeholder="http://">
+                </div>
+            </div>
+        </form>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <div class="btn-toolbar text-right">
+        <button class="btn btn-light" (click)="activeModal.close()">Cancel</button>
+        <button class="btn btn-primary ml-2" type="submit" (click)="saveNewSchool()">Save
+        </button>
+    </div>
+</div>

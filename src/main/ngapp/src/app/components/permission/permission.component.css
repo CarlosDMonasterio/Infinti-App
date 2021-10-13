@@ -1,0 +1,11 @@
+.opacity_hover {
+    opacity: 0.2;
+}
+
+.opacity_hover:hover {
+    opacity: 0.8;
+}
+
+.template-highlight {
+    font-size: 0.85rem;
+}

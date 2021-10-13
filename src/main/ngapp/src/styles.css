@@ -1,0 +1,88 @@
+@import '~bootstrap/dist/css/bootstrap.css';
+@import '~font-awesome/css/font-awesome.min.css';
+
+html body {
+    font-family: sans-serif, Helvetica Neue, Arial;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.delete_icon, .edit_icon {
+    display: inline;
+    opacity: 0.3;
+    cursor: pointer;
+    color: #000;
+}
+
+.edit_icon:hover {
+    color: #0082C0;
+    opacity: 1;
+}
+
+.delete_icon:hover {
+    color: #CC3333;
+    opacity: 1;
+}
+
+.red {
+    color: red;
+}
+
+.orange {
+    color: #f26a1a;
+}
+
+.blue {
+    color: #4076B5;
+}
+
+.purple {
+    color: purple;
+}
+
+.green {
+    color: green;
+}
+
+.opacity_hover {
+    opacity: 0.2;
+}
+
+.opacity_hover:hover {
+    opacity: 0.8;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.opacity-hover {
+    opacity: .4;
+}
+
+.opacity-hover:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.table-row-index {
+    text-shadow: 0 1px 0 #fff;
+    font-weight: bold;
+    color: #d9d6d1;
+}
+
+a.href {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a.href:hover {
+    text-decoration: underline;
+}
+

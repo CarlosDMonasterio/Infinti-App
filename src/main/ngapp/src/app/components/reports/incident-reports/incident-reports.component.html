@@ -1,0 +1,38 @@
+<div class="container-fluid pt-3">
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-link float-right"><i class="fa fa-fw fa-cloud-download"></i> Export</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table bg-white border-bottom">
+                <thead class="small text-uppercase">
+                <tr>
+                    <th>Reporter</th>
+                    <th>School</th>
+                    <th>Details</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let report of reports">
+                    <td class="w-25">
+                        {{report.user.firstName}} {{report.user.lastName}}
+                        <div class="small text-muted">{{report.dateTime | date : 'EEE, MMM d, yyyy h:mm:ss a'}}</div>
+                    </td>
+                    <td class="w-25">
+                        {{report.district.label}} District
+                        <div>{{report.school.name}}</div>
+                    </td>
+                    <td class="w-50">
+                        {{report.details}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

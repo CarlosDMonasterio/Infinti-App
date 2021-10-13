@@ -1,0 +1,98 @@
+<div class="container-fluid mt-4">
+    <div class="col">
+        <button type="button" class="btn btn-sm btn-secondary p-2" (click)="openCreateUserModal()">
+            Create Group
+        </button>
+    </div>
+
+    <br>
+
+    <div class="pt-3" *ngIf="!groups || !groups.length">
+        <i class="text-muted">No groups available</i>
+    </div>
+
+    <div class="pt-3" *ngIf="groups && groups.length" style="width: 96%">
+        <table class="table table-hover" style="border-bottom: 1px solid #dddddd"
+               [ngClass]="{'opacity_4':loadingGroupsData}">
+            <thead>
+            <tr>
+                <th style="width: 20px">&nbsp;</th>
+                <th class="font-80 text-uppercase" style="width: 360px">Label</th>
+                <th class="font-80 text-uppercase" style="width: 130px">Members</th>
+                <th class="font-80 text-uppercase">Created</th>
+                <th style="width:120px"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let group of groups; let  i = index">
+                <td style="vertical-align: middle; line-height:1; opacity:0.2; text-shadow:0 1px 0 #fff"
+                    class="font-14em">
+                    <b>{{i + 1}}</b>
+                </td>
+                <td>
+                    {{group.display}}
+                    <br>
+                    <small class="text-muted">{{group.description || 'No description provided'}}</small>
+                </td>
+                <td style="width:180px; white-space:nowrap; vertical-align: middle">
+                    <span class="badge"
+                          [ngClass]="{
+                          'badge-primary': group.memberCount,
+                          'badge-secondary': group.memberCount == 0}">{{group.memberCount | number}}
+                    </span>
+                </td>
+                <td style="width:190px">
+                    {{group.owner.email}} <br>
+                    <small class="text-muted">{{group.created | date:'MMM d, yyyy'}}</small>
+                </td>
+                <td style="border-left: 1px solid #EEEEEE; width:150px; white-space:nowrap; vertical-align: middle">
+                    <div *ngIf="group.owner.email === user.email">
+                        <div *ngIf="!confirmDeleteGroup">
+                            <i class="fa fa-fw fa-pencil font-14 edit_icon" ngbTooltip="Edit"
+                               (click)="openCreateUserModal(group)"></i>
+                            &nbsp;
+                            <i class="fa fa-fw fa-trash font-14 delete_icon" (click)="confirmDeleteGroup = true"
+                               ngbTooltip="Delete"></i>
+                        </div>
+
+                        <div *ngIf="confirmDeleteGroup">
+                            <b class="red">Delete?</b>
+                            <button class="btn btn-primary btn-xs" (click)="deleteUsersGroup(group)">Yes</button>
+                            <button class="btn btn-default btn-xs" (click)="confirmDeleteGroup=false">No</button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="group.owner.email !== user.email">
+                        <div *ngIf="!confirmLeaveGroup">
+                            <i class="fa fa-fw fa-user-times font-14 edit_icon" ngbTooltip="Leave Group"
+                               (click)="confirmLeaveGroup = true"></i>
+                        </div>
+
+                        <div *ngIf="confirmLeaveGroup">
+                            <b class="red">Leave?</b>
+                            <button class="btn btn-primary btn-xs" (click)="leaveGroup(group)">Yes</button>
+                            <button class="btn btn-default btn-xs" (click)="confirmLeaveGroup=false">No</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col">
+                <ngb-pagination [collectionSize]="params.available" (pageChange)="getUserGroups()"
+                                [page]="params.currentPage"
+                                [maxSize]="params.maxSize" class="pagination-sm"
+                                [boundaryLinks]="true"></ngb-pagination>
+            </div>
+
+            <div class="col">
+                <strong class="small float-right">
+                    <i *ngIf="loadingGroupsData" class="fa fa-spin fa-gear opacity_4"></i>
+                    {{pageCounts(params.currentPage, params.available)}}
+                </strong>
+            </div>
+        </div>
+    </div>
+</div>

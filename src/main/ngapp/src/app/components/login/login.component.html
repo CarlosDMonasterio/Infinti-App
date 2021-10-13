@@ -1,0 +1,44 @@
+<section id="cover" class="min-vh-100 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-12 mx-auto text-center form p-4 border shadow-sm bg-white">
+                <img src="assets/img.png" alt="Infiniti Health" style="width: 250px" class="pb-2">
+
+                <hr>
+
+                <div class="px-2 pt-3">
+
+                    <div class="alert alert-danger p-2" *ngIf="this.validation.invalidPassword">Invalid login or
+                        password. Please try again.
+                    </div>
+
+                    <form id="loginForm2" class="justify-content-center">
+                        <div class="form-group">
+                            <label class="sr-only">Name</label>
+                            <input type="text" placeholder="Email" class="form-control is-invalid"
+                                   [(ngModel)]="loggedInUser.email"
+                                   name="userId" [ngClass]="{'is-invalid': !validation.validId}" [disabled]="processing"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only">Password</label>
+                            <input type="password" placeholder="Password" class="form-control"
+                                   [(ngModel)]="loggedInUser.password" [disabled]="processing"
+                                   name="password" [ngClass]="{'is-invalid': !validation.validPassword}" required>
+                        </div>
+
+                        <div class="text-right">
+                            <a href="#" class="small">Help with password?</a>
+                        </div>
+
+                        <button type="submit" [disabled]="processing"
+                                class="w-100 btn btn-primary pull-right mt-5" id="submit" (click)="loginUser()">
+                            <i *ngIf="processing" class="fa fa-spinner fa-pulse fa-fw"></i>
+                            Sign In
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

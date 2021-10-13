@@ -1,0 +1,74 @@
+<div class="">
+    <div class="row">
+        <div class="col">
+            <h5 class="font-weight-bold">Districts & Schools</h5>
+        </div>
+
+        <div class="col text-right">
+            <div class="btn-block">
+                <button class="btn btn-outline-primary btn-sm">Import Sites</button>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div *ngIf="!districts || !districts.length" class="text-muted">
+        No school districts available
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="d-flex justify-content-between">
+                <b class="small text-uppercase font-weight-bold">Local Districts</b>
+                <i class="fa fa-fw fa-plus" (click)="addNewDistrict()"></i>
+            </div>
+
+            <div class="list-group small list-group-flush border-top border-left border-bottom">
+                <button type="button" class="list-group-item list-group-item-action"
+                        *ngFor="let district of districts" (click)="selectDistrict(district)">
+                    {{district.label}}
+                </button>
+            </div>
+        </div>
+
+        <div class="col-sm-9 mt-3">
+            <div class="text-muted" *ngIf="!selectedDistrict">Please select a district</div>
+
+            <div *ngIf="selectedDistrict">
+
+                <button class="btn btn-outline-secondary btn-sm" (click)="addNewSchool()">Add School</button>
+                <button class="btn btn-outline-secondary btn-sm" (click)="importSchools()">Import Schools</button>
+
+                <table class="table small border-bottom">
+                    <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Grades</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let school of schools">
+                        <td>{{school.name}}
+                            <div class="text-muted font-italic">{{school.description}}</div>
+                        </td>
+                        <td>
+                            {{school.address}}
+                            <div>Phone: {{school.phone}}</div>
+                        </td>
+                        <td>{{school.grades}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <br>
+
+                <ngb-pagination [collectionSize]="paging.available" (pageChange)="getSelectedDistrictSchools()"
+                                [boundaryLinks]="true" [rotate]="true" [(page)]="paging.currentPage"
+                                [maxSize]="5" class="pagination-sm"
+                                [pageSize]="paging.limit"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <h4>Site Survey Reports</h4>
+            <button class="btn float-right btn-outline-primary btn-sm"><i class="fa fa-fw fa-cloud-download"></i> Export
+            </button>
+        </div>
+    </div>
+
+    <div class="row bg-white">
+        <div class="col-sm-12">
+            <table class="table table-hover border-bottom">
+                <thead class="small text-uppercase">
+                <tr>
+                    <th>Date</th>
+                    <th>Reporter</th>
+                    <th>School</th>
+                    <th>Results</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let report of reports">
+                    <td class="small">
+                        {{report.creationTime | date : 'EEE, MMM d, yyyy'}}
+                        <div>{{report.creationTime | date : 'h:mm:ss a'}}</div>
+                    </td>
+                    <td>{{report.account.firstName}} {{report.account.lastName}}
+                        <div class="small">{{report.account.email}}</div>
+                    </td>
+                    <td>
+                        {{report.district.label}} District
+                        <div>{{report.school.name}}</div>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

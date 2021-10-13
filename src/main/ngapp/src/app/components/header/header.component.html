@@ -1,0 +1,30 @@
+<header class="sticky-top shadow-sm bg-white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="assets/ih-logo.png" class="ml-3 cursor-pointer" (click)="goHome()">
+                <div class="text-uppercase text-muted font-weight-bold"
+                     style="position: absolute; left: 55px; font-size: small">Nurse Quality Data Management System
+                </div>
+            </div>
+
+            <div class="col-sm-1 col-md-6 text-right">
+                <nav class="navbar navbar-expand-sm">
+                    <ul class="navbar-nav mr-auto">
+                        <li *ngIf="loggedInUser" ngbDropdown><a class="cursor-pointer" ngbDropdownToggle>
+                            <i class="fa fa-user-circle"></i> <span
+                                class="hide-on-mobile"> {{loggedInUser.firstName}} {{loggedInUser.lastName}}</span></a>
+                            <div ngbDropdownMenu>
+                                <a *ngIf="isAdmin()" ngbDropdownItem routerLink="/admin" class="pl-3 p-1">Admin
+                                    Settings</a>
+                                <a ngbDropdownItem (click)="logUserOut()" class="pl-3 p-1 cursor-pointer">Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+

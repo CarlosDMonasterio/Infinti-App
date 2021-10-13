@@ -1,0 +1,32 @@
+<app-header></app-header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h4>Profile {{user.firstName}} {{user.lastName}}</h4>
+        </div>
+    </div>
+
+    <div class="row border-top">
+        <div class="col-md-11" style="padding-right: 0; padding-left: 0">
+            <router-outlet></router-outlet>
+        </div>
+
+        <div class="col-sm-1">
+            <table class="profile_menu float-right font-85" *ngIf="user.email == loggedInUser.email"
+                   style="text-align: center; width: 90px;  color: #a7a7a7; cursor: pointer">
+
+                <tr *ngFor="let menuOption of userMenuOptions">
+                    <td [ngClass]="{'selected':menuOption.id === active}" (click)="showSelection(menuOption)">
+                        <i class="fa fa-fw {{menuOption.icon}}" style="font-size: 24px;"></i>
+                        <p style="word-wrap: break-word; line-height: 120%; margin-top: 6px" class="font-80">
+                            <b>{{menuOption.display | uppercase}}</b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

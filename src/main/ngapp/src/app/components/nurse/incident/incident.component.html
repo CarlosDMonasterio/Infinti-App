@@ -1,0 +1,93 @@
+<app-header></app-header>
+
+<div class="bg-light">
+
+    <br><br><br><br>
+
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-12 small text-uppercase text-monospace font-weight-bold">
+                <a style="color: black" href="/">Home</a> / <span class="text-muted">Incident Report</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg-white shadow-sm p-5">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Incident Report</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <ngb-progressbar type="primary" [showValue]="false" [value]="progress"
+                                 style="height: 10px"></ngb-progressbar>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 text-right font-weight-bold small" *ngIf="report.district">
+                {{report.district.label}} <span class="text-muted">District</span>
+                <span *ngIf="report.school">, {{report.school.name}} <span class="text-muted">School</span></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3 pt-4">
+                <label for="district" class="text-muted font-weight-bold">District</label>:<br>
+                <select class="custom-select" id="district" required [(ngModel)]="report.district" name="district"
+                        style="width: 180px" (ngModelChange)="districtSelected()">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option *ngFor="let district of districts" [ngValue]="district">{{district.label}}</option>
+                </select>
+            </div>
+
+            <div class="col-md-6 mb-3 pt-4" *ngIf="report.district">
+
+                <ng-container *ngIf="!availableSchools">
+                    <label for="school" class="text-muted font-weight-bold">School</label>:
+                    <input type="text" class="form-control" placeholder="Start entering school name..."
+                           name="school" id="school"
+                           (selectItem)="schoolSelected($event)"
+                           [(ngModel)]="report.school"
+                           [editable]="false"
+                           [ngbTypeahead]="searchDistrictSchools"
+                           [inputFormatter]="formatter"
+                           [resultFormatter]="formatter"
+                           #instance="ngbTypeahead">
+                </ng-container>
+            </div>
+        </div>
+
+        <hr>
+
+        <ng-container *ngIf="progress >= 50">
+            <div class="row">
+                <div class="col mb-3 pt-4">
+                    <label for="comment" class="text-muted font-weight-bold">Incident Details</label>:<br>
+                    <textarea name="comment" id="comment" class="form-control" rows="6" [(ngModel)]="report.details"
+                              placeholder="Please enter the details of the incident"></textarea>
+                </div>
+            </div>
+        </ng-container>
+
+        <div class="row mt-5">
+            <div class="col" *ngIf="errorSubmitting">
+                <div class="alert alert-danger p-2 small"><i class="fa fa-exclamation-triangle"></i> Server error.</div>
+            </div>
+
+            <div class="col mb-3 text-right">
+                <button class="btn btn-primary ml-2" *ngIf="progress >= 50"
+                        [disabled]="!report.details || submittingReport" (click)="submitReport()">
+                    <span *ngIf="!submittingReport">Submit</span>
+                    <span *ngIf="submittingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br><br>
+
+</div>

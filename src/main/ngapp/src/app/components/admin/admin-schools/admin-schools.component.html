@@ -1,0 +1,61 @@
+<div>
+    <div class="row">
+        <div class="col">
+            <h5 class="font-weight-bold">Schools</h5>
+        </div>
+
+        <div class="col text-right">
+            <div class="btn-block">
+                <button class="btn btn-outline-primary btn-sm">Import</button>
+                <button class="btn btn-outline-primary btn-sm ml-2" (click)="addNewSchool()">Add New School</button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!schools || !schools.length" class="text-muted">
+        <hr>
+        No schools available
+    </div>
+
+    <ng-container *ngIf="schools && schools.length">
+        <div class="row">
+            <div class="col">
+                <table class="table mt-4 border-bottom">
+                    <thead style="font-size: small" class="text-uppercase text-black-50">
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Grades</th>
+                        <th>District</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr *ngFor="let school of schools">
+                        <td>
+                            {{school.name}}
+                            <div style="font-size: small" class="text-muted">{{school.description}}</div>
+                        </td>
+                        <td>{{school.address}}</td>
+                        <td>{{school.phone}}</td>
+                        <td>{{school.grades}}</td>
+                        <td>{{school.district.label}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <ngb-pagination [collectionSize]="schoolPaging.available" (pageChange)="getSchools()"
+                                [boundaryLinks]="true" [rotate]="true" [(page)]="schoolPaging.currentPage"
+                                [maxSize]="5" class="pagination-sm"
+                                [pageSize]="schoolPaging.limit"></ngb-pagination>
+            </div>
+        </div>
+
+    </ng-container>
+</div>

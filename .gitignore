@@ -2,3 +2,5 @@
 /.idea/
 /src/main/ngapp/node_modules/
 /target/classes/
+/src/main/webapp/ih/
+/target/

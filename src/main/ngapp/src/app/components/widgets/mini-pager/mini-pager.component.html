@@ -1,0 +1,8 @@
+<div class="pull-right text-center" *ngIf="totalSize">
+    <i class="fa fa-fw fa-chevron-left" [ngClass]="{'text-muted': params.currentPage === 1,
+        'cursor-pointer': params.currentPage !== 1}" (click)="page(false)"></i>
+    <small>{{ params.currentPage }} / {{ params.numberOfPages }}</small>
+    <i class="fa fa-fw fa-chevron-right"
+       [ngClass]="{'text-muted': params.currentPage === params.numberOfPages,
+           'cursor-pointer': params.currentPage !== params.numberOfPages}" (click)="page()"></i>
+</div>

@@ -1,0 +1,26 @@
+<div class="modal-header border-bottom-0 pt-1 pr-2">
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <span aria-hidden="true" class="font-80 opacity-hover">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body pt-0">
+    <div class="row">
+        <div class="col-sm-2">
+            <i class="fa fa-fw fa-exclamation-triangle text-danger" style="font-size: 3em"></i>
+        </div>
+        <div class="col">
+            <span class="font-14" *ngIf="resourceName"> Delete {{resourceName}}<span
+                    *ngIf="resourceIdentifier"> "{{resourceIdentifier}}"?</span></span>
+            <span class="font-14" *ngIf="!resourceName">Confirm delete</span>
+            <div class="font-11">
+                This action cannot be undone
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-light" (click)="activeModal.close(false)">Cancel</button>
+    <button class="btn btn-danger" (click)="deleteConfirmed()">Delete</button>
+</div>

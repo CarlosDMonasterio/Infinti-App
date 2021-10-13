@@ -1,0 +1,120 @@
+<div>
+
+    <div class="row mt-2">
+        <div class="col-md-6">
+            <h4 class="font-weight-bold">User Accounts</h4>
+        </div>
+
+        <div class="col-md-6 text-right">
+            <div class="btn-block">
+                <button class="btn btn-outline-primary btn-sm" (click)="showUploadModal()">Import Users</button>
+                <button class="btn btn-outline-primary btn-sm ml-2" (click)="addNewUser()">Add New User</button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!users || !users.available" class="text-muted">
+        No user accounts available
+    </div>
+
+    <div *ngIf="users && users.available" class="row mt-3">
+        <div class="col">
+            <table class="table table-hover table-bordered border-bottom table-responsive-md"
+                   [ngClass]="{'opacity_4':loadingAdminAccountsPage}">
+                <thead class="small text-uppercase">
+                <tr>
+                    <th style="width: 30%" class="cursor-pointer">Name
+                        <i *ngIf="paging.sort === 'lastName'" class="fa float-right mr-3"
+                           [ngClass]="{'fa-sort-asc': paging.asc, 'fa-sort-desc': !paging.asc}"></i>
+                        <i *ngIf="paging.sort !== 'lastName'" class="fa fa-sort float-right mr-3"></i>
+                    </th>
+
+                    <th style="width: 10%">Role</th>
+
+                    <th style="width: 15%">
+                        Registered
+                        <i *ngIf="paging.sort === 'lastName'" class="fa float-right mr-3"
+                           [ngClass]="{'fa-sort-asc': paging.asc, 'fa-sort-desc': !paging.asc}"></i>
+                        <i *ngIf="paging.sort !== 'lastName'" class="fa fa-sort float-right mr-3"></i>
+                    </th>
+                    <th style="width: 15%">Last Login</th>
+                    <th style="width: 8%">Enabled</th>
+                    <th style="width: 8%">Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let userItem of users.requested; let i = index">
+                    <td class="text-truncate">
+                        <a routerLink="/user/{{userItem.id}}">
+                            <span *ngIf="userItem.firstName && userItem.lastName">{{userItem.firstName}}
+                                {{userItem.lastName}}
+                            </span>
+                            <span *ngIf="!userItem.firstName && !userItem.lastName">{{userItem.email}}</span></a>
+                        <br>
+                        <small class="text-muted">{{userItem.email}}</small>
+                    </td>
+
+                    <td class="align-middle">
+                        <div class="btn-group" ngbDropdown>
+                            <button type="button" class="btn btn-sm btn-warning" ngbDropdownToggle
+                                    *ngIf="userItem.isAdministrator">Administrator
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-dark" ngbDropdownToggle
+                                    *ngIf="!userItem.isAdministrator">Regular
+                            </button>
+
+                            <div ngbDropdownMenu>
+                                <a class="cursor-pointer" ngbDropdownItem *ngIf="userItem.isAdministrator"
+                                   (click)="setUserAccountType(userItem)">Regular</a>
+                                <a class="cursor-pointer" ngbDropdownItem *ngIf="!userItem.isAdministrator"
+                                   (click)="setUserAccountType(userItem)">Administrator</a>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="align-middle">
+                        <span *ngIf="userItem.creationTime">{{userItem.creationTime | date:'MMM d, yyyy hh:mm a'}}</span>
+                    </td>
+
+                    <td class="align-middle">
+                        <span *ngIf="userItem.lastLoginTime">{{userItem.lastLoginTime | date:'MMM d, yyyy hh:mm a'}}</span>
+                        <div class="font-italic text-muted" *ngIf="!userItem.lastLoginTime">Not logged in</div>
+                    </td>
+
+                    <td class="align-middle">
+                        <i class="fa fa-fw fa-2x cursor-pointer"
+                           [ngClass]="{'text-success fa-toggle-on':!userItem.disabled && !userItem.updatingActiveStatus,
+                       '.text-secondary fa-toggle-off': userItem.disabled && !userItem.updatingActiveStatus,
+                       'fa-spinner fa-pulse fa-3x':userItem.updatingActiveStatus}"
+                           (click)="updateActiveStatus(userItem)"></i>
+                    </td>
+
+                    <td>
+                        <i class="fa fa-fw fa-key fa-2x opacity-hover" (click)="confirmPassReset(userItem)"
+                           [ngbTooltip]="'Reset Password'"></i>
+                        <i class="fa fa-fw fa-pencil fa-2x opacity-hover" [ngbTooltip]="'Edit'"></i>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="users && users.requested.length" class="row mb-5">
+        <div class="col-md-5">
+            <ngb-pagination [collectionSize]="users.available" (pageChange)="loadAccounts()"
+                            [boundaryLinks]="true" [rotate]="true" [(page)]="paging.currentPage"
+                            [maxSize]="5" class="pagination-sm"
+                            [pageSize]="paging.limit"></ngb-pagination>
+        </div>
+
+        <div class="col-md-7">
+            <strong class="small font-weight-bolder">
+                <i *ngIf="loadingAdminAccountsPage" class="fa fa-spin fa-gear opacity_4"></i>
+                {{pageCounts(paging.currentPage, users.available)}}
+            </strong>
+        </div>
+
+    </div>
+</div>

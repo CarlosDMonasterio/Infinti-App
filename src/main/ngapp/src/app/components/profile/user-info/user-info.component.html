@@ -1,0 +1,134 @@
+<div class="container-fluid">
+    <div class="row" *ngIf="user.allowedToChangePassword">
+        <div class="col">
+            <button class="btn btn-sm btn-link" (click)="mode = undefined">Edit Profile</button>
+            |
+            <button class="btn btn-sm btn-link" (click)="mode = 'password'">Update Password</button>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="mode" style="margin-top: 30px">
+        <div class="col-md-12">
+            <form class="form-group col-md-offset-1 col-md-6" name="passwordForm">
+                <div class="alert alert-info">
+                    <i class="fa fa-fw fa-info-circle font-14"></i> Please update your password below. All fields are
+                    required.
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4" for="oldPassword">Current password</label>
+
+                    <div class="col-md-8">
+                        <input type="password" id="oldPassword" placeholder="Enter password" name="old-password"
+                               class="form-control"
+                               [ngClass]="{'is-invalid': passwordCheck.invalidExistingPassword, 'is-valid': passwordCheck.validExistingPassword}"
+                               [(ngModel)]="user.password" (blur)="validateCurrentPassword()">
+                    </div>
+                </div>
+
+                <hr>
+
+                <div>
+                    <label class="col-md-4" for="password">New password</label>
+                    <div class="col-md-8">
+                        <input type="password" id="password" placeholder="Enter password"
+                               [(ngModel)]="passwordCheck.newPassword" class="form-control"
+                               [ngClass]="{'is-invalid': passwords.valid == false, 'is-valid': passwords.valid == true}"
+                               (ngModelChange)="checkPassword()" name="password">
+                        <small id="passwordHelpBlock" class="form-text text-muted">
+                            At least <span
+                                [ngClass]="{'red': passwords.validLength == false, 'green': passwords.validLength == true}">8 characters long</span>,
+                            must <span
+                                [ngClass]="{'red': passwords.containsLetter == false || passwords.containsNumber == false, 'green': passwords.containsLetter && passwords.containsNumber}">contain letters and numbers</span>,
+                            and <span
+                                [ngClass]="{'red': passwords.containsSpace, 'green': passwords.containsSpace==false}">must not contain spaces</span>.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <label class="col-md-4" for="newPassword">Confirm new password</label>
+
+                    <div class="col-md-8">
+                        <input type="password" id="newPassword" placeholder="Enter password" name="newPassword"
+                               class="form-control"
+                               [ngClass]="{'is-valid': passwordCheck.newPassword === passwordCheck.newPasswordRepeat && passwords.valid==true}"
+                               [disabled]="!passwords.valid" [(ngModel)]="passwordCheck.newPasswordRepeat">
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <div class="col-md-offset-6 col-md-6">
+                        <button type="submit" class="btn btn-default btn-primary" (click)="resetPassword()"
+                                [disabled]="passwordCheck.newPassword !== passwordCheck.newPasswordRepeat || !passwords.valid || !passwordCheck.validExistingPassword || passwordCheck.invalidExistingPassword">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="!mode" style="margin-top: 40px">
+
+        <form class="w-50 ml-4">
+            <div class="row mb-3">
+                <div class="col-sm-5 text-right mt-1">
+                    <label for="firstName">First name</label>
+                </div>
+
+                <div class="col-sm-6 text-left">
+                    <input type="text" class="form-control form-control-sm" id="firstName" [(ngModel)]="user.firstName"
+                           [disabled]="!user.allowedToChangePassword" name="firstName">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-5 text-right mt-1">
+                    <label for="lastName">Last name</label>
+                </div>
+
+                <div class="col-sm-6 text-left">
+                    <input type="text" class="form-control form-control-sm" id="lastName" [(ngModel)]="user.lastName"
+                           [disabled]="!user.allowedToChangePassword" name="lastName">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-5 text-right mt-1">
+                    <label for="userid">User ID</label>
+                </div>
+
+                <div class="col-sm-6 text-left">
+                    <input type="text" class="form-control form-control-sm" id="userid" [(ngModel)]="user.email"
+                           [disabled]="true" name="userid">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-5 text-right mt-1">
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="col-sm-6 text-left">
+                    <input type="text" class="form-control form-control-sm" id="email" [(ngModel)]="user.email"
+                           [disabled]="true" name="email">
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="btn btn-group pull-right">
+                <button class="btn btn-primary" (click)="updateUser()" [disabled]="updatingUser">
+                    <span *ngIf="!updatingUser">Update</span>
+                    <span *ngIf="updatingUser">
+                        <i class="fa fa-spinner fa-pulse fa-fw"></i> Updating
+                    </span>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<h6 class="d-inline-flex card-title font-weight-bold">{{title}}</h6>
+<button class="btn btn-sm btn-link float-right" (click)="add=true">+add</button>
+
+<ng-template #rt let-r="result" let-t="term">
+    <ngb-highlight [result]="r.firstName + ' ' + r.lastName" [term]="t"></ngb-highlight>
+    <br>
+    <ngb-highlight [result]="r.email" [term]="t" class="small" style="position: relative; top: -8px"></ngb-highlight>
+</ng-template>
+
+<div class="d-flex align-items-center" *ngIf="add">
+
+    <div class="btn-toolbar mb-3" style="width: 100%">
+        <div class="input-group" style="width: 100%" ngbDropdown>
+
+            <div class="input-group-prepend">
+                <div class="input-group-text cursor-pointer" id="btnGroupAddon" ngbDropdownToggle>
+                    <i class="fa fa-fw mr-n1"
+                       [ngClass]="{'fa-user': type=='user', 'fa-group': type=='group', 'fa-globe': type=='remote'}"></i>
+                    <div class="dropdown-menu font-95" ngbDropdownMenu>
+                        <a ngbDropdownItem class="ml-n2" *ngIf="type!=='group'" (click)="type='group'">
+                            <i class="fa fa-fw fa-group"></i> Add groups
+                        </a>
+                        <a ngbDropdownItem class="ml-n2" *ngIf="type!=='user'" (click)="type='user'">
+                            <i class="fa fa-fw fa-user"></i> Add users
+                        </a>
+                        <a ngbDropdownItem class="ml-n2" *ngIf="type!='remote'" (click)="type='remote'">
+                            <i class="fa fa-fw fa-globe"></i> Remote users
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <input type="text" class="form-control form-control-sm" *ngIf="type=='user'"
+                   [resultTemplate]="rt" [inputFormatter]="formatter" [resultFormatter]="formatter" [editable]='false'
+                   (selectItem)="select($event)" [ngbTypeahead]="searchUsers"
+                   placeholder="Start typing user id..."/>
+
+            <input type="text" class="form-control form-control-sm" *ngIf="type=='group'"
+                   [inputFormatter]="formatter" [resultFormatter]="groupFormatter" [editable]='false'
+                   (selectItem)="select($event, false)" [ngbTypeahead]="searchGroups"
+                   placeholder="Start typing group name..."/>
+
+            <span *ngIf="type=='remote'" style="width: 223px">
+                <input type="text" class="form-control form-control-sm" placeholder="Enter remote user id"/>
+                <input type="text" class="form-control form-control-sm" placeholder="Enter DIVA instance URL"/>
+            </span>
+
+            <div *ngIf="searching" class="spinner-border spinner-border-sm text-secondary"></div>
+            <button type="button" class="close font-weight-normal ml-2 font-14" aria-label="Close"
+                    (click)="add=false">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<div class="list-group-item text-black-50 border-right-0 border-left-0 border-bottom-0"
+     *ngIf="!permissions || !permissions.length">
+    <i>No {{title | lowercase}} added</i>
+</div>
+
+<div *ngIf="permissions && permissions.length" class="border-top font-90 fixed-height">
+    <ul class="card-text list-group list-group-flush w-100" style="line-height: normal">
+        <li class="list-group-item border-bottom"
+            *ngFor="let permission of permissions">
+            <i class="fa fa-fw fa-user text-secondary"
+               [ngClass]="{'fa-user': !permission.group, 'fa-group': permission.group}"></i>
+            <span *ngIf="permission.account">{{permission.account.firstName}} {{permission.account.lastName}}</span>
+            <span *ngIf="permission.group">{{permission.group.display}}</span>
+
+            <button type="button" class="close float-right text-muted opacity_hover" (click)="remove(permission)"
+                    *ngIf="permission.canEdit && ((isProject && permission.article === 'PROJECT') || (!isProject && permission.article !== 'PROJECT'))">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <i class="fa fa-fw fa-sitemap float-right text-muted" ngbTooltip="Inherited permission"
+               *ngIf="(!isProject && permission.article === 'PROJECT')"></i>
+            <br>
+            <small *ngIf="permission.account" class="text-muted ml-1">{{permission.account.email}}</small>
+            <small *ngIf="permission.group" class="text-muted ml-1">{{permission.group.description}}</small>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,117 @@
+<app-header></app-header>
+
+<div class="bg-light">
+
+    <br><br> <br><br>
+
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-12 small text-uppercase text-monospace font-weight-bold">
+                <a style="color: black" href="/">Home</a> / <span class="text-muted">Survey</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg-white shadow-sm p-5">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Quality Audit</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <ngb-progressbar type="primary" [showValue]="false" [value]="progress"
+                                 style="height: 8px"></ngb-progressbar>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 text-right font-weight-bold small" *ngIf="survey.district">
+                {{survey.district.label}} <span class="text-muted">District</span>
+                <span *ngIf="survey.school">, {{survey.school.name}} <span class="text-muted">School</span></span>
+            </div>
+        </div>
+
+        <div class="row mb-5 mt-3">
+            <ng-container *ngIf="page === -1">
+                <div class="col-md-6 mb-3 pt-4">
+                    <label for="district" class="font-weight-bold text-muted">District</label>:<br>
+                    <select class="custom-select" id="district" required [(ngModel)]="survey.district" name="district"
+                            style="width: 180px" (ngModelChange)="districtSelected()" [disabled]="submittingReport">
+                        <option selected [ngValue]=undefined>Choose One...</option>
+                        <option *ngFor="let district of districts" [ngValue]="district">{{district.label}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3 pt-4" *ngIf="survey.district">
+
+                    <ng-container *ngIf="!availableSchools">
+                        <label for="school" class="text-muted font-weight-bold">School</label>:
+                        <input type="text" class="form-control" placeholder="Start entering school name..."
+                               name="school" id="school"
+                               (selectItem)="schoolSelected($event)"
+                               [(ngModel)]="survey.school"
+                               [editable]="false"
+                               [ngbTypeahead]="searchDistrictSchools"
+                               [inputFormatter]="formatter"
+                               [resultFormatter]="formatter"
+                               #instance="ngbTypeahead">
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="page >= 0">
+                <div class="col">
+                    <div class="font-weight-bold mt-5">{{questions[page].label}}</div>
+                    <br>
+                    <p *ngIf="questions[page].options">{{questions[page].details}}</p>
+
+                    <textarea *ngIf="!questions[page].options" name="comments" id="comments" class="form-control"
+                              rows="6" [placeholder]="questions[page].details"
+                              [(ngModel)]="questions[page].comments"></textarea>
+
+                    <div *ngIf="questions[page].options" style="font-size: large">
+                        <span class="btn btn-light" (click)="setAnswer(true)">
+                            <i class="fa fa-fw"
+                               [ngClass]="{'fa-check-circle': questions[page].answer, 'fa-circle-o': !questions[page].answer}"></i> {{questions[page].options[0]}}
+                        </span>
+                        <span class="ml-3 btn btn-light" (click)="setAnswer(false)">
+                            <i class="fa fa-fw"
+                               [ngClass]="{'fa-check-circle': questions[page].answer === false, 'fa-circle-o': questions[page].answer !== false || questions[page].answer === true}"></i> {{questions[page].options[1]}}
+                        </span>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+
+        <hr>
+
+        <div class="row mt-5">
+            <div class="col text-left">
+                <button class="btn btn-secondary" [disabled]="page <= 0" (click)="previousQuestion()">
+                    <i class="fa fa-fw fa-angle-double-left"></i> Previous
+                </button>
+            </div>
+
+            <div class="col text-right" *ngIf="!isLastQuestion()">
+                <button class="btn btn-secondary" [disabled]="nextDisabled()" (click)="nextQuestion()">Next <i
+                        class="fa fa-fw fa-angle-double-right"></i></button>
+            </div>
+
+            <div class="col text-right" *ngIf="isLastQuestion()">
+                <button class="btn btn-primary" [disabled]="submittingReport" (click)="submitReport()">
+                    <span *ngIf="!submittingReport">Submit Survey</span>
+                    <span *ngIf="submittingReport"><i
+                            class="fa fa-spinner fa-pulse fa-fw"></i> Submitting Survey...</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <br><br><br><br>
+
+</div>

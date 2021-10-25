@@ -25,6 +25,7 @@ import {HygieneReportsComponent} from "./components/reports/hygiene-reports/hygi
 import {IncidentReportsComponent} from "./components/reports/incident-reports/incident-reports.component";
 import {GloveReportsComponent} from "./components/reports/glove-reports/glove-reports.component";
 import {SurveyReportsComponent} from "./components/reports/survey-reports/survey-reports.component";
+import {RegisterComponent} from "./components/register/register.component";
 
 const routes: Routes = [
     {path: '', component: DashboardComponent},
@@ -35,6 +36,7 @@ const routes: Routes = [
     {path: 'hygiene', component: HygieneComponent},
     {path: 'gloves', component: GlovesComponent},
     {path: 'forgotPassword', component: ForgotPasswordComponent},
+    {path: 'register', component: RegisterComponent},
     {path: 'resetPassword', component: ResetPasswordComponent},
     {
         path: 'admin', component: AdminComponent, canActivate: [AdminGuardGuard],

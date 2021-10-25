@@ -25,7 +25,6 @@ import {CreateGroupModalComponent} from './components/profile/create-group-modal
 import {ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
 import {MiniPagerComponent} from './components/widgets/mini-pager/mini-pager.component';
 import {UserResolver} from './user.resolver';
-import {ContextMenuModule} from 'ngx-contextmenu';
 import {ConfigComponent} from './components/config/config.component';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ConfirmActionComponent} from './components/widgets/confirm-action/confirm-action.component';
@@ -49,6 +48,7 @@ import {IncidentReportsComponent} from './components/reports/incident-reports/in
 import {GloveReportsComponent} from './components/reports/glove-reports/glove-reports.component';
 import {SurveyReportsComponent} from './components/reports/survey-reports/survey-reports.component';
 import {ConfirmComponent} from './components/common/confirm/confirm.component';
+import {RegisterComponent} from './components/register/register.component';
 
 @NgModule({
     declarations: [
@@ -90,7 +90,8 @@ import {ConfirmComponent} from './components/common/confirm/confirm.component';
         IncidentReportsComponent,
         GloveReportsComponent,
         SurveyReportsComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        RegisterComponent
     ],
     imports: [
         BrowserModule,
@@ -100,8 +101,7 @@ import {ConfirmComponent} from './components/common/confirm/confirm.component';
         NgbNavModule,
         HttpClientModule,
         NgxChartsModule,
-        BrowserAnimationsModule,
-        ContextMenuModule.forRoot({useBootstrap4: true})
+        BrowserAnimationsModule
     ],
     providers: [UserResolver, ProfileDetailsResolver],
     bootstrap: [AppComponent]

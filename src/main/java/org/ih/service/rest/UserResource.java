@@ -1,5 +1,6 @@
 package org.ih.service.rest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.ih.account.AccountAuthorization;
@@ -9,7 +10,9 @@ import org.ih.account.Users;
 import org.ih.common.logging.Logger;
 import org.ih.dto.Account;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.InputStream;
@@ -26,9 +29,16 @@ public class UserResource extends RestResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(@DefaultValue("false") @QueryParam("notify") boolean notifyUser, Account account) {
+    public Response create(@Context HttpServletRequest req,
+                           @DefaultValue("false") @QueryParam("notify") boolean notifyUser, Account account) {
         String userId = getUserId();
-        Logger.info("Creating new account for " + account.getEmail());
+        if (StringUtils.isBlank(userId)) {
+            Logger.info("Self-registering account for " + account.getEmail());
+            notifyUser = false;     // force false, if self-registering in order to have an approval
+        } else {
+            Logger.info("Creating new account for " + account.getEmail());
+        }
+
         try {
             Accounts accounts = new Accounts();
             account = accounts.createAccount(userId, account, notifyUser);
@@ -52,7 +62,7 @@ public class UserResource extends RestResource {
     public Response getAutoCompleteForAvailableAccounts(
             @QueryParam("val") String val,
             @DefaultValue("8") @QueryParam("limit") int limit) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Users users = new Users(userId);
         return super.respond(users.filter(val, limit));
     }
@@ -64,7 +74,7 @@ public class UserResource extends RestResource {
                             @DefaultValue("false") @QueryParam("asc") boolean asc,
                             @DefaultValue("id") @QueryParam("sort") String sort,
                             @QueryParam("filterText") String filter) {
-        String userId = getUserId();
+        String userId = requireUserId();
         new AccountAuthorization().expectAdmin(userId);
         Logger.info(userId + ": retrieving all accounts");
         Accounts accounts = new Accounts();
@@ -142,7 +152,7 @@ public class UserResource extends RestResource {
     @Path("{id}/active")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addToActiveUsers(@PathParam("id") long id) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Accounts accounts = new Accounts(userId);
         return super.respond(accounts.setDisabled(id, false));
     }
@@ -151,7 +161,7 @@ public class UserResource extends RestResource {
     @Path("{id}/active")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response removeFromActiveUsers(@PathParam("id") long id) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Accounts accounts = new Accounts(userId);
         return super.respond(accounts.setDisabled(id, true));
     }
@@ -163,7 +173,7 @@ public class UserResource extends RestResource {
     public Response importUsers(@DefaultValue("false") @QueryParam("notify") boolean notify,
                                 @FormDataParam("file") InputStream fileInputStream,
                                 @FormDataParam("file") FormDataContentDisposition contentDisposition) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Users users = new Users(userId);
         users.importFile(fileInputStream, notify);
         return super.respond(true);

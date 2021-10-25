@@ -20,7 +20,7 @@ public class SurveyResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSurvey(Survey survey) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Surveys surveys = new Surveys(userId);
         Logger.info("Creating new survey");
         return super.respond(surveys.create(survey));
@@ -33,7 +33,7 @@ public class SurveyResource extends RestResource {
                          @DefaultValue("0") @QueryParam("start") int start,
                          @DefaultValue("false") @QueryParam("asc") boolean asc,
                          @DefaultValue("id") @QueryParam("sort") String sort) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info("Paging surveys");
         Surveys surveys = new Surveys(userId);
         return super.respond(surveys.list(start, limit, asc, sort));

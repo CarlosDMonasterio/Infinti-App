@@ -6,7 +6,7 @@ import org.ih.account.Accounts;
 import org.ih.common.logging.Logger;
 import org.ih.dao.DataAccessException;
 import org.ih.dao.model.AccountModel;
-import org.ih.dao.model.Group;
+import org.ih.dao.model.GroupModel;
 import org.ih.util.StringUtil;
 
 import javax.persistence.criteria.*;
@@ -100,11 +100,11 @@ public class AccountDAO extends HibernateRepository<AccountModel> {
         }
     }
 
-    public List<AccountModel> getGroupMembers(Group group) {
+    public List<AccountModel> getGroupMembers(GroupModel group) {
         try {
             CriteriaQuery<AccountModel> query = getBuilder().createQuery(AccountModel.class);
             Root<AccountModel> from = query.from(AccountModel.class);
-            Join<AccountModel, Group> groups = from.join("groups");
+            Join<AccountModel, GroupModel> groups = from.join("groups");
             query.where(getBuilder().equal(groups, group));
             return currentSession().createQuery(query).list();
         } catch (HibernateException e) {
@@ -113,11 +113,11 @@ public class AccountDAO extends HibernateRepository<AccountModel> {
         }
     }
 
-    public List<AccountModel> getMatchingGroupMembers(Set<Group> matchingGroups, String token, int limit) {
+    public List<AccountModel> getMatchingGroupMembers(Set<GroupModel> matchingGroups, String token, int limit) {
         try {
             CriteriaQuery<AccountModel> query = getBuilder().createQuery(AccountModel.class);
             Root<AccountModel> from = query.from(AccountModel.class);
-            Join<AccountModel, Group> groups = from.join("groups");
+            Join<AccountModel, GroupModel> groups = from.join("groups");
 
             String[] tokens = token.split("\\s+");
             List<Predicate> predicates = new ArrayList<>();
@@ -147,7 +147,7 @@ public class AccountDAO extends HibernateRepository<AccountModel> {
     }
 
     // remove
-    public void removeGroup(Group group, AccountModel accountModel) {
+    public void removeGroup(GroupModel group, AccountModel accountModel) {
         accountModel.getGroups().remove(group);
         update(accountModel);
     }

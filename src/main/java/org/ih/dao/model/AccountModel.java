@@ -65,7 +65,7 @@ public class AccountModel implements DatabaseModel {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_group", joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
-    private final Set<Group> groups = new LinkedHashSet<>();
+    private final Set<GroupModel> groups = new LinkedHashSet<>();
 
     @Column(name = "disabled")
     private Boolean disabled;
@@ -152,7 +152,7 @@ public class AccountModel implements DatabaseModel {
         this.salt = salt;
     }
 
-    public Set<Group> getGroups() {
+    public Set<GroupModel> getGroups() {
         return groups;
     }
 

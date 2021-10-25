@@ -16,7 +16,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "\"group\"")
-public class Group implements DatabaseModel {
+public class GroupModel implements DatabaseModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "group_id")
@@ -47,7 +47,7 @@ public class Group implements DatabaseModel {
     @ManyToMany(mappedBy = "groups", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<AccountModel> members = new HashSet<>();
 
-    public Group() {
+    public GroupModel() {
     }
 
     public long getId() {

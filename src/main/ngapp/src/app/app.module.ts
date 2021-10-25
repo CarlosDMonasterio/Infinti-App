@@ -25,7 +25,6 @@ import {CreateGroupModalComponent} from './components/profile/create-group-modal
 import {ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
 import {MiniPagerComponent} from './components/widgets/mini-pager/mini-pager.component';
 import {UserResolver} from './user.resolver';
-import {ContextMenuModule} from 'ngx-contextmenu';
 import {ConfigComponent} from './components/config/config.component';
 import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ConfirmActionComponent} from './components/widgets/confirm-action/confirm-action.component';
@@ -49,6 +48,15 @@ import {IncidentReportsComponent} from './components/reports/incident-reports/in
 import {GloveReportsComponent} from './components/reports/glove-reports/glove-reports.component';
 import {SurveyReportsComponent} from './components/reports/survey-reports/survey-reports.component';
 import {ConfirmComponent} from './components/common/confirm/confirm.component';
+import {RegisterPatientComponent} from './components/dashboard/register-patient/register-patient.component';
+import {LookupPatientComponent} from './components/dashboard/lookup-patient/lookup-patient.component';
+import {TracingComponent} from './components/nurse/tracing/tracing.component';
+import {TestsComponent} from './components/reports/tests/tests.component';
+import {PatientsComponent} from './components/reports/patients/patients.component';
+import {CalendarModule, DateAdapter} from 'angular-calendar';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {ScheduleComponent} from './components/reports/schedule/schedule.component';
+import {FlatpickrModule} from "angularx-flatpickr";
 
 @NgModule({
     declarations: [
@@ -90,7 +98,13 @@ import {ConfirmComponent} from './components/common/confirm/confirm.component';
         IncidentReportsComponent,
         GloveReportsComponent,
         SurveyReportsComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        RegisterPatientComponent,
+        LookupPatientComponent,
+        TracingComponent,
+        TestsComponent,
+        PatientsComponent,
+        ScheduleComponent
     ],
     imports: [
         BrowserModule,
@@ -101,7 +115,8 @@ import {ConfirmComponent} from './components/common/confirm/confirm.component';
         HttpClientModule,
         NgxChartsModule,
         BrowserAnimationsModule,
-        ContextMenuModule.forRoot({useBootstrap4: true})
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory})
     ],
     providers: [UserResolver, ProfileDetailsResolver],
     bootstrap: [AppComponent]

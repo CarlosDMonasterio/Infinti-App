@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-12 small text-uppercase text-monospace font-weight-bold">
-                <a style="color: black" href="/">Home</a> / <span class="text-muted">Glove Changes</span>
+                <a style="color: black" href="/">Home</a> / <span class="text-muted">Contact Tracing</span>
             </div>
         </div>
     </div>
@@ -16,7 +16,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <h3>Glove Changes</h3>
+                <h3>Contact Tracing</h3>
             </div>
         </div>
 
@@ -28,51 +28,41 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-12 text-right font-weight-bold small" *ngIf="report.district">
-                {{report.district.label}} <span class="text-muted">District</span>
-                <span *ngIf="report.school">, {{report.school.name}} <span class="text-muted">School</span></span>
+            <div class="col-sm-12 text-right font-weight-bold small" *ngIf="caseType">
+                {{caseType}} <span class="text-muted">Case Type</span>
+                <span *ngIf="caseNumber">, <span class="text-muted">Number</span> 00-{{caseNumber}}</span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 mb-3 pt-4">
-                <label for="district" class="font-weight-bold text-muted">District</label>:<br>
-                <select class="custom-select" id="district" required [(ngModel)]="report.district" name="district"
-                        style="width: 180px" (ngModelChange)="districtSelected()" [disabled]="submittingReport">
+                <label for="district" class="font-weight-bold text-muted">Case Type</label>:<br>
+                <select class="custom-select" id="district" required [(ngModel)]="caseType" name="caseType"
+                        style="width: 180px" (ngModelChange)="caseTypeSelected()" [disabled]="submittingReport">
                     <option selected [ngValue]=undefined>Choose One...</option>
-                    <option *ngFor="let district of districts" [ngValue]="district">{{district.label}}</option>
+                    <option *ngFor="let type of caseTypes" [ngValue]="type">{{type}}</option>
                 </select>
             </div>
 
-            <div class="col-md-6 mb-3 pt-4" *ngIf="report.district">
-
-                <ng-container *ngIf="!availableSchools">
-                    <label for="school" class="text-muted font-weight-bold">School</label>:
-                    <input type="text" class="form-control" placeholder="Start entering school name..."
-                           name="school" id="school"
-                           (selectItem)="schoolSelected($event)"
-                           [(ngModel)]="report.school"
-                           [editable]="false"
-                           [ngbTypeahead]="searchDistrictSchools"
-                           [inputFormatter]="formatter"
-                           [resultFormatter]="formatter"
-                           #instance="ngbTypeahead">
-                </ng-container>
+            <div class="col-md-6 mb-3 pt-4" *ngIf="caseType">
+                <label for="caseNumber" class="text-muted font-weight-bold">Case Number 00-</label>:
+                <input type="text" class="form-control" placeholder="e.g.: 23" [(ngModel)]="caseNumber"
+                       name="caseNumber" id="caseNumber">
             </div>
         </div>
 
         <hr>
 
-        <div class="form-group row" *ngIf="progress >= 40">
-            <div class="col-md-6 mb-3 pt-4">
-                <label for="role" class="font-weight-bold text-muted">Select role</label>:<br>
-                <select class="custom-select" id="role" required [(ngModel)]="report.role" name="role"
-                        (ngModelChange)="roleSelected()" [disabled]="submittingReport">
-                    <option selected disabled [ngValue]=undefined>Choose One...</option>
-                    <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
-                </select>
-            </div>
-        </div>
+        <!--        <div class="form-group row" *ngIf="progress >= 40">-->
+        <!--            <div class="col-md-6 mb-3 pt-4">-->
+        <!--                <label for="role" class="font-weight-bold text-muted">Select role</label>:<br>-->
+        <!--                <select class="custom-select" id="role" required [(ngModel)]="report.role" name="role"-->
+        <!--                        (ngModelChange)="roleSelected()" [disabled]="submittingReport">-->
+        <!--                    <option selected disabled [ngValue]=undefined>Choose One...</option>-->
+        <!--                    <option *ngFor="let role of roles" [ngValue]="role">{{role}}</option>-->
+        <!--                </select>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
         <div class="form-group row" *ngIf="progress >= 60">
             <div class="col-md-6 mb-3 pt-4">
@@ -105,4 +95,3 @@
     <br><br><br>
 
 </div>
-

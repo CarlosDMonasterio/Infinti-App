@@ -7,21 +7,33 @@
             <div class="text-uppercase small font-weight-bold pt-4 opacity_4 text-center">Reports and Graphs</div>
 
             <div class="list-group list-group-flush mt-5">
-                <button type="button" class="list-group-item list-group-item-action border-0 py-2"
+                <button type="button" class="list-group-item list-group-item-action border-0 py-3"
                         [ngClass]="{'active': active === 'surveys'}" (click)="showReport('surveys')">
                     <i class="fa fa-fw fa-clipboard"></i> Quality Audits
                 </button>
-                <button type="button" class="list-group-item list-group-item-action border-0 py-2"
+                <button type="button" class="list-group-item list-group-item-action border-0 py-3"
                         [ngClass]="{'active': active === 'hygiene'}" (click)="showReport('hygiene')">
                     <i class="fa fa-fw fa-life-bouy"></i> Hand Hygiene
                 </button>
-                <button type="button" class="list-group-item list-group-item-action border-0 py-2"
+                <button type="button" class="list-group-item list-group-item-action border-0 py-3"
                         [ngClass]="{'active': active === 'incidents'}" (click)="showReport('incidents')">
                     <i class="fa fa-fw fa-bullhorn"></i> Incidents
                 </button>
-                <button type="button" class="list-group-item list-group-item-action border-0 py-2"
+                <button type="button" class="list-group-item list-group-item-action border-0 py-3"
                         [ngClass]="{'active': active === 'gloves'}" (click)="showReport('gloves')">
                     <i class="fa fa-fw fa-hand-stop-o"></i> Glove Changes
+                </button>
+                <button type="button" class="list-group-item list-group-item-action border-0 py-3"
+                        [ngClass]="{'active': active === 'tests'}" (click)="showReport('tests')">
+                    <img src="assets/icon/test_tube.png" alt="Test Icon" style="width: 20px"> Tests
+                </button>
+                <button type="button" class="list-group-item list-group-item-action border-0 py-3"
+                        [ngClass]="{'active': active === 'schedules'}" (click)="showReport('schedules')">
+                    <i class="fa fa-fw fa-calendar"></i> Scheduling
+                </button>
+                <button type="button" class="list-group-item list-group-item-action border-0 py-3"
+                        [ngClass]="{'active': active === 'patients'}" (click)="showReport('patients')">
+                    <i class="fa fa-fw fa-user-md"></i> Patients
                 </button>
             </div>
         </div>

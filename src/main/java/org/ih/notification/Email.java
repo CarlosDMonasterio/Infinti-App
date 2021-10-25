@@ -16,7 +16,7 @@ import java.util.Properties;
 class Email {
 
     private static final String NO_REPLY_EMAIL = "no-reply@infinitihealth.org";
-    private final String password = "";
+    private final String password = "xyp984ertpaSDODS7823de12343435wer";
     private static final String SMTP_HOST = "smtp.office365.com";
 
     public void send(String email, String subject, String body) {

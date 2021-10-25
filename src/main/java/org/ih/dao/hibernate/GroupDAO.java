@@ -4,7 +4,7 @@ import org.hibernate.HibernateException;
 import org.ih.common.logging.Logger;
 import org.ih.dao.DataAccessException;
 import org.ih.dao.model.AccountModel;
-import org.ih.dao.model.Group;
+import org.ih.dao.model.GroupModel;
 import org.ih.group.GroupType;
 import org.ih.util.StringUtil;
 
@@ -16,17 +16,17 @@ import java.util.List;
  *
  * @author Hector Plahar
  */
-public class GroupDAO extends HibernateRepository<Group> {
+public class GroupDAO extends HibernateRepository<GroupModel> {
 
-    public Group get(long id) {
-        return super.retrieve(Group.class, id);
+    public GroupModel get(long id) {
+        return super.retrieve(GroupModel.class, id);
     }
 
-    public boolean isGroupMember(Group group, AccountModel accountModel) {
+    public boolean isGroupMember(GroupModel group, AccountModel accountModel) {
         try {
             CriteriaQuery<Long> query = getBuilder().createQuery(Long.class);
-            Root<Group> from = query.from(Group.class);
-            Join<Group, AccountModel> member = from.join("members");
+            Root<GroupModel> from = query.from(GroupModel.class);
+            Join<GroupModel, AccountModel> member = from.join("members");
             query.select(getBuilder().countDistinct(from.get("id")));
             query.where(getBuilder().and(
                     getBuilder().equal(from.get("id"), group.getId()),
@@ -41,8 +41,8 @@ public class GroupDAO extends HibernateRepository<Group> {
     public long getMemberCount(long groupId) {
         try {
             CriteriaQuery<Long> query = getBuilder().createQuery(Long.class);
-            Root<Group> from = query.from(Group.class);
-            Join<Group, AccountModel> member = from.join("members");
+            Root<GroupModel> from = query.from(GroupModel.class);
+            Join<GroupModel, AccountModel> member = from.join("members");
             query.select(getBuilder().countDistinct(member.get("id")));
             query.where(getBuilder().equal(from.get("id"), groupId));
             return currentSession().createQuery(query).uniqueResult();
@@ -52,10 +52,10 @@ public class GroupDAO extends HibernateRepository<Group> {
         }
     }
 
-    public List<Group> availableGroups(GroupType type, AccountModel owner, int offset, int limit, String filter) {
+    public List<GroupModel> availableGroups(GroupType type, AccountModel owner, int offset, int limit, String filter) {
         try {
-            CriteriaQuery<Group> query = getBuilder().createQuery(Group.class).distinct(true);
-            Root<Group> groupRoot = query.from(Group.class);
+            CriteriaQuery<GroupModel> query = getBuilder().createQuery(GroupModel.class).distinct(true);
+            Root<GroupModel> groupRoot = query.from(GroupModel.class);
             Predicate predicate = createPredicate(groupRoot, type, owner, filter);
             query.select(groupRoot).where(predicate);
             query.orderBy(getBuilder().desc(groupRoot.get("id")));
@@ -70,7 +70,7 @@ public class GroupDAO extends HibernateRepository<Group> {
         try {
             CriteriaBuilder cb = getBuilder();
             CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
-            Root<Group> groupRoot = criteria.from(Group.class);
+            Root<GroupModel> groupRoot = criteria.from(GroupModel.class);
             Predicate predicate = createPredicate(groupRoot, type, owner, filter);
             criteria.select(cb.countDistinct(groupRoot)).where(predicate);
             return currentSession().createQuery(criteria).uniqueResult();
@@ -80,9 +80,9 @@ public class GroupDAO extends HibernateRepository<Group> {
         }
     }
 
-    private Predicate createPredicate(Root<Group> groupRoot, GroupType type, AccountModel owner, String filter) {
+    private Predicate createPredicate(Root<GroupModel> groupRoot, GroupType type, AccountModel owner, String filter) {
         CriteriaBuilder cb = getBuilder();
-        Join<Group, AccountModel> accountJoin = groupRoot.join("members", JoinType.LEFT);
+        Join<GroupModel, AccountModel> accountJoin = groupRoot.join("members", JoinType.LEFT);
 
         if (StringUtil.isEmpty(filter)) {
             return cb.and(

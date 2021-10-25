@@ -8,7 +8,7 @@ import org.ih.dao.DAOFactory;
 import org.ih.dao.hibernate.AccountDAO;
 import org.ih.dao.hibernate.GroupDAO;
 import org.ih.dao.model.AccountModel;
-import org.ih.dao.model.Group;
+import org.ih.dao.model.GroupModel;
 import org.ih.dto.Account;
 import org.ih.dto.GroupTransfer;
 
@@ -40,7 +40,7 @@ public class Groups {
         if (accountModel == null)
             throw new IllegalArgumentException("User with id '" + userId + "' does not exist");
 
-        Group group = dao.get(groupId);
+        GroupModel group = dao.get(groupId);
         if (group == null)
             throw new IllegalArgumentException("Group with id '" + groupId + "' does not exist");
 
@@ -54,9 +54,9 @@ public class Groups {
 
     public Results<GroupTransfer> get(GroupType type, int start, int limit, String filter) {
         AccountModel accountModel = accountDAO.getByEmail(userId);
-        List<Group> groups = dao.availableGroups(type, accountModel, start, limit, filter);
+        List<GroupModel> groups = dao.availableGroups(type, accountModel, start, limit, filter);
         Results<GroupTransfer> result = new Results<>();
-        for (Group group : groups) {
+        for (GroupModel group : groups) {
             GroupTransfer transfer = group.toDataObject();
             if (group.getOwner() != null) {
                 AccountModel owner = group.getOwner();
@@ -77,7 +77,7 @@ public class Groups {
         if (transfer.getType() == null)
             transfer.setType(GroupType.PRIVATE);
 
-        Group group = new Group();
+        GroupModel group = new GroupModel();
         group.setType(transfer.getType());
         group.setDescription(transfer.getDescription());
         group.setLabel(transfer.getDisplay());
@@ -90,7 +90,7 @@ public class Groups {
     }
 
     public GroupTransfer update(long id, GroupTransfer transfer) {
-        Group group = this.dao.get(id);
+        GroupModel group = this.dao.get(id);
         if (group == null)
             throw new IllegalArgumentException("No group available with id " + id);
 
@@ -100,7 +100,7 @@ public class Groups {
     }
 
     public List<Account> getMembers(long groupId) {
-        Group group = expectWrite(groupId, false);
+        GroupModel group = expectWrite(groupId, false);
         List<AccountModel> accountModels = accountDAO.getGroupMembers(group);
         List<Account> results = new ArrayList<>(accountModels.size());
         for (AccountModel accountModel : accountModels)
@@ -110,9 +110,9 @@ public class Groups {
 
     public List<GroupTransfer> getMatchingGroups(String token, int limit) {
         AccountModel accountModel = this.accountDAO.getByEmail(this.userId);
-        List<Group> groups = dao.availableGroups(GroupType.PRIVATE, accountModel, 0, limit, token);
+        List<GroupModel> groups = dao.availableGroups(GroupType.PRIVATE, accountModel, 0, limit, token);
         List<GroupTransfer> result = new ArrayList<>();
-        for (Group group : groups) {
+        for (GroupModel group : groups) {
             GroupTransfer groupTransfer = group.toDataObject();
             groupTransfer.setMemberCount(dao.getMemberCount(group.getId()));
             result.add(groupTransfer);
@@ -121,7 +121,7 @@ public class Groups {
     }
 
     public boolean removeMemberFromGroup(long groupId, long memberId) {
-        Group group = expectWrite(groupId, true);
+        GroupModel group = expectWrite(groupId, true);
         AccountModel accountModel = accountDAO.get(memberId);
         if (accountModel == null)
             throw new IllegalArgumentException("Cannot find member with id " + memberId);
@@ -130,7 +130,7 @@ public class Groups {
     }
 
     public boolean remove(long groupId) {
-        Group group = expectWrite(groupId, false);
+        GroupModel group = expectWrite(groupId, false);
         for (AccountModel accountModel : accountDAO.getGroupMembers(group))
             accountDAO.removeGroup(group, accountModel);
         dao.delete(group);
@@ -145,8 +145,8 @@ public class Groups {
      * @return group object if verification is successful
      * @throws AuthorizationException if the appropriate privileges do not exist
      */
-    protected Group expectWrite(long groupId, boolean canBeMember) {
-        Group group = this.dao.get(groupId);
+    protected GroupModel expectWrite(long groupId, boolean canBeMember) {
+        GroupModel group = this.dao.get(groupId);
         if (group == null)
             throw new IllegalArgumentException("No group available with id " + groupId);
 
@@ -162,7 +162,7 @@ public class Groups {
         return group;
     }
 
-    private void setGroupMembers(Group group, List<Account> members) {
+    private void setGroupMembers(GroupModel group, List<Account> members) {
         if (members == null || members.isEmpty())
             return;
 

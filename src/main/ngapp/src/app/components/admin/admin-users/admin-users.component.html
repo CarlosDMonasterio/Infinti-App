@@ -101,9 +101,9 @@
         </div>
     </div>
 
-    <div *ngIf="users && users.requested.length" class="row mb-5">
+    <div *ngIf="users && users.requested.length" class="row mb-5 mt-3">
         <div class="col-md-5">
-            <ngb-pagination [collectionSize]="users.available" (pageChange)="loadAccounts()"
+            <ngb-pagination [collectionSize]="users.available" (pageChange)="loadAccounts($event)"
                             [boundaryLinks]="true" [rotate]="true" [(page)]="paging.currentPage"
                             [maxSize]="5" class="pagination-sm"
                             [pageSize]="paging.limit"></ngb-pagination>

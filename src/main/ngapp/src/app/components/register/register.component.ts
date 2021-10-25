@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../../models/User";
 import {Router} from "@angular/router";
+import {HttpService} from "../../http.service";
 
 @Component({
     selector: 'app-register',
@@ -11,8 +12,9 @@ export class RegisterComponent implements OnInit {
 
     newUser: User;
     validationError: any;
+    loginCompleted: boolean;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private http: HttpService) {
         this.newUser = new User();
         this.validationError = {};
     }
@@ -21,6 +23,42 @@ export class RegisterComponent implements OnInit {
     }
 
     registerUser(): void {
+        // validate
+        this.validationError = {};
+
+        if (!this.newUser.firstName) {
+            this.validationError.firstName = true;
+        }
+
+        if (!this.newUser.lastName) {
+            this.validationError.lastName = true;
+        }
+
+        if (!this.newUser.email) {
+            this.validationError.email = true;
+        }
+
+        if (!this.newUser.description) {
+            this.validationError.description = true;
+        }
+
+        if (Object.keys(this.validationError).length > 0) {
+            return;
+        }
+
+        // create user then show popup with password
+        this.http.post('users', this.newUser).subscribe(result => {
+            if (!result) {
+                return;
+            }
+
+            this.loginCompleted = true;
+        }, error => {
+            if (error.status === 409) {
+                this.validationError.userIdNotAvailable = true;
+                this.loginCompleted = false;
+            }
+        });
     }
 
     cancelRegister(): void {

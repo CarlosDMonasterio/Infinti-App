@@ -6,7 +6,21 @@
 
                 <hr>
 
-                <div class="px-2 pt-3">
+                <div class="px-2 pt-3" *ngIf="loginCompleted">
+                    <div class="alert alert-success">
+                        Your account has been created successfully and is pending approval. Once approved, you will
+                        receive an email with your personal credentials that will allow you to login.<br><br>
+
+                        Thank you.
+                    </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-primary w-100 py-2" (click)="cancelRegister()">Done
+                        </button>
+                    </div>
+                </div>
+
+                <div class="px-2 pt-3" *ngIf="!loginCompleted">
                     <form id="registerForm" (ngSubmit)="registerUser()" novalidate>
                         <div class="text-muted">Enter your registration details</div>
 
@@ -40,7 +54,8 @@
                         </div>
 
                         <div class="mt-5">
-                            <button type="submit" class="btn btn-primary w-100 py-2">Register</button>
+                            <button type="submit" class="btn btn-primary w-100 py-2" (click)="registerUser()">Register
+                            </button>
                             <br>
                             <button type="button" class="btn btn-link" (click)="cancelRegister()">
                                 Cancel

@@ -30,8 +30,8 @@ export class HygieneComponent implements OnInit {
     constructor(private http: HttpService, private search: SchoolService, private router: Router) {
         this.report = new HygieneReport();
         this.roles = ['HCP - Health Care Professional', 'Data Entry', 'Nurse', 'Grounds Coordinator'];
-        this.compliance = [{display: 'No Hand Hygiene Performed', value: false}, {
-            display: 'Wash/Rub Performed',
+        this.compliance = [{display: 'No hand hygiene performed', value: false}, {
+            display: 'Wash/Rub performed',
             value: true
         }];
         this.progress = 0;

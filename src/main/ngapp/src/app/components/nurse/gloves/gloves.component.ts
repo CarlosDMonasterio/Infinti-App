@@ -30,7 +30,7 @@ export class GlovesComponent implements OnInit {
     constructor(private http: HttpService, private search: SchoolService, private router: Router) {
         this.report = new HygieneReport('GLOVE');
         this.roles = ['HCP - Health Care Professional', 'Data Entry', 'Nurse', 'Grounds Coordinator'];
-        this.compliance = ['No Glove Change Performed', 'Wash/Rub Performed'];
+        this.compliance = ['No glove change performed', 'Glove change performed'];
         this.progress = 0;
     }
 

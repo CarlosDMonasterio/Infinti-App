@@ -18,7 +18,7 @@ public class DistrictResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(District district) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": creating user id");
         Districts districts = new Districts();
         return super.respond(districts.create(district));
@@ -30,7 +30,7 @@ public class DistrictResource extends RestResource {
     public Response filterSchoolsForDistrict(@PathParam("id") long id,
                                              @QueryParam("filter") String filter,
                                              @DefaultValue("7") @QueryParam("limit") int limit) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": filtering schools for district");
         Districts districts = new Districts();
         return super.respond(districts.filterSchools(id, filter, limit));
@@ -45,7 +45,7 @@ public class DistrictResource extends RestResource {
                                           @DefaultValue("id") @QueryParam("sort") String sort,
                                           @QueryParam("filter") String filter,
                                           @DefaultValue("7") @QueryParam("limit") int limit) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": retrieving schools for district with id: " + id);
         Districts districts = new Districts();
         return super.respond(districts.schools(id, start, limit, asc, sort));
@@ -58,7 +58,7 @@ public class DistrictResource extends RestResource {
                             @DefaultValue("false") @QueryParam("asc") boolean asc,
                             @DefaultValue("id") @QueryParam("sort") String sort,
                             @QueryParam("filterText") String filter) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": retrieving all districts");
         Districts districts = new Districts();
         return super.respond(districts.list(start, limit, asc, sort, filter));
@@ -71,7 +71,7 @@ public class DistrictResource extends RestResource {
     public Response importUsers(@PathParam("id") long id,
                                 @FormDataParam("file") InputStream fileInputStream,
                                 @FormDataParam("file") FormDataContentDisposition contentDisposition) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Districts districts = new Districts();
         districts.importSchools(id, fileInputStream);
         return super.respond(true);

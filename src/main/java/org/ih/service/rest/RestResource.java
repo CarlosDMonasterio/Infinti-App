@@ -24,6 +24,10 @@ public class RestResource {
     protected String sessionId;
 
     protected String getUserId() {
+        return SessionHandler.getUserIdBySession(sessionId);
+    }
+
+    protected String requireUserId() {
         return getUserIdFromSessionHeader(sessionId);
     }
 

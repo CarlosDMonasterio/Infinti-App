@@ -26,7 +26,7 @@ export class AdminUsersComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadAccounts();
+        this.loadAccounts(1);
     }
 
     addNewUser(): void {
@@ -39,8 +39,8 @@ export class AdminUsersComponent implements OnInit {
         const modalRef = this.modalService.open(ModalUploadUsersComponent, options);
     }
 
-    loadAccounts(): void {
-        this.paging.start = ((this.paging.currentPage - 1) * this.paging.limit);
+    loadAccounts(page: number): void {
+        this.paging.start = ((page - 1) * this.paging.limit);
         this.loadingAdminAccountsPage = true;
         this.http.get('users', this.paging).subscribe((result: Result<User>) => {
             this.users = result;

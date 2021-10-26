@@ -16,7 +16,7 @@ public class IncidentResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(IncidentReport report) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": adding incident report");
         Incidents incidents = new Incidents(userId);
         return super.respond(incidents.createReport(report));
@@ -31,7 +31,7 @@ public class IncidentResource extends RestResource {
                                 @DefaultValue("false") @QueryParam("asc") boolean asc,
                                 @DefaultValue("id") @QueryParam("sort") String sort,
                                 @QueryParam("filterText") String filter) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Incidents incidents = new Incidents(userId);
         return super.respond(incidents.list(start, limit, asc, sort));
     }

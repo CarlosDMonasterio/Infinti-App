@@ -1,0 +1,69 @@
+<section id="cover" class="min-vh-100 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-12 mx-auto form p-4 border shadow-sm bg-white">
+                <img src="assets/img.png" alt="Infiniti Health" style="width: 250px" class="pb-2">
+
+                <hr>
+
+                <div class="px-2 pt-3" *ngIf="loginCompleted">
+                    <div class="alert alert-success">
+                        Your account has been created successfully and is pending approval. Once approved, you will
+                        receive an email with your personal credentials that will allow you to login.<br><br>
+
+                        Thank you.
+                    </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-primary w-100 py-2" (click)="cancelRegister()">Done
+                        </button>
+                    </div>
+                </div>
+
+                <div class="px-2 pt-3" *ngIf="!loginCompleted">
+                    <form id="registerForm" (ngSubmit)="registerUser()" novalidate>
+                        <div class="text-muted">Enter your registration details</div>
+
+                        <div class="row mt-4">
+                            <div class="form-group col-sm-6 pr-0">
+                                <label for="firstName" class="control-label float-left">First name</label>
+                                <input type="text" id="firstName" class="form-control" [(ngModel)]="newUser.firstName"
+                                       name="firstName" required
+                                       [ngClass]="{'is-invalid': validationError.firstName}">
+                            </div>
+
+                            <div class="form-group col-sm-6 pr-0">
+                                <label for="lastName" class="control-label float-left">Last name</label>
+                                <input type="text" id="lastName" class="form-control" [(ngModel)]="newUser.lastName"
+                                       name="lastName"
+                                       [ngClass]="{'is-invalid': validationError.lastName}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="control-label float-left">Email address</label>
+                            <input type="email" id="email" class="form-control" [(ngModel)]="newUser.email"
+                                   name="email" [ngClass]="{'is-invalid': validationError.email}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="affiliation" class="control-label float-left">Role </label>
+                            <input type="text" id="affiliation" class="form-control" [(ngModel)]="newUser.description"
+                                   name="affiliation"
+                                   [ngClass]="{'is-invalid': validationError.description}">
+                        </div>
+
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-primary w-100 py-2" (click)="registerUser()">Register
+                            </button>
+                            <br>
+                            <button type="button" class="btn btn-link" (click)="cancelRegister()">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

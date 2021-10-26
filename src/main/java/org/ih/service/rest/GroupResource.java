@@ -27,7 +27,7 @@ public class GroupResource extends RestResource {
             @DefaultValue("id") @QueryParam("sort") String sort,
             @QueryParam("filter") String filter,
             @QueryParam("limit") int limit) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Groups groups = new Groups(userId);
         GroupType groupType = GroupType.valueOf(type.toUpperCase());
         return super.respond(groups.get(groupType, offset, limit, filter));
@@ -38,7 +38,7 @@ public class GroupResource extends RestResource {
     @Path("/autocomplete")
     public Response matchGroupNames(@QueryParam("token") String token,
                                     @DefaultValue("8") @QueryParam("limit") int limit) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Groups groups = new Groups(userId);
         return super.respond(groups.getMatchingGroups(token, limit));
     }
@@ -46,7 +46,7 @@ public class GroupResource extends RestResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response createGroup(GroupTransfer userGroup) {
-        String userId = getUserId();
+        String userId = requireUserId();
         log(userId, "creating a new group");
         Groups groups = new Groups(userId);
         return super.respond(groups.add(userGroup));
@@ -56,7 +56,7 @@ public class GroupResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}/members")
     public Response addGroupMember(@PathParam("id") long groupId, Account account) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Groups groups = new Groups(userId);
         return super.respond(groups.addUserToGroup(groupId, account.getEmail()));
     }
@@ -65,7 +65,7 @@ public class GroupResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
     public Response deleteUserGroup(@PathParam("id") long groupId) {
-        String userIdStr = getUserId();
+        String userIdStr = requireUserId();
         log(userIdStr, "deleting group " + groupId);
         Groups groups = new Groups(userIdStr);
         return super.respond(groups.remove(groupId));
@@ -76,7 +76,7 @@ public class GroupResource extends RestResource {
     @Path("/{id}/members/{mid}")
     public Response deleteGroupMember(@PathParam("id") long groupId,
                                       @PathParam("mid") long memberId) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Groups groups = new Groups(userId);
         return super.respond(groups.removeMemberFromGroup(groupId, memberId));
     }
@@ -85,7 +85,7 @@ public class GroupResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}/members")
     public Response getGroupMembers(@PathParam("id") long id) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Groups groups = new Groups(userId);
         return super.respond(groups.getMembers(id));
     }
@@ -94,7 +94,7 @@ public class GroupResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
     public Response updateGroup(@PathParam("id") long id, GroupTransfer group) {
-        String userId = getUserId();
+        String userId = requireUserId();
         log(userId, "updating group " + group.getId());
         Groups groups = new Groups(userId);
         return respond(groups.update(id, group));

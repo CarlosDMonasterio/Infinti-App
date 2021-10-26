@@ -16,7 +16,7 @@ public class ReportResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createReport(Hygiene hygiene) {
-        String userId = getUserId();
+        String userId = requireUserId();
         HygieneReports reports = new HygieneReports(userId);
         return super.respond(reports.create(hygiene));
     }
@@ -31,7 +31,7 @@ public class ReportResource extends RestResource {
                                 @DefaultValue("false") @QueryParam("asc") boolean asc,
                                 @DefaultValue("id") @QueryParam("sort") String sort,
                                 @QueryParam("filterText") String filter) {
-        String userId = getUserId();
+        String userId = requireUserId();
         HygieneReports reports = new HygieneReports(userId);
         return super.respond(reports.list(type, limit, start, asc, sort, filter));
     }

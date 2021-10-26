@@ -7,6 +7,7 @@
                 <hr>
 
                 <div class="px-2 pt-3">
+                    <div class="text-muted mb-4">Please enter your login credentials</div>
 
                     <div class="alert alert-danger p-2" *ngIf="this.validation.invalidPassword">Invalid login or
                         password. Please try again.
@@ -20,7 +21,8 @@
                                    name="userId" [ngClass]="{'is-invalid': !validation.validId}" [disabled]="processing"
                                    required>
                         </div>
-                        <div class="form-group">
+
+                        <div class="form-group mb-0">
                             <label class="sr-only">Password</label>
                             <input type="password" placeholder="Password" class="form-control"
                                    [(ngModel)]="loggedInUser.password" [disabled]="processing"
@@ -31,14 +33,22 @@
                             <a href="#" class="small">Help with password?</a>
                         </div>
 
-                        <button type="submit" [disabled]="processing"
-                                class="w-100 btn btn-primary pull-right mt-5" id="submit" (click)="loginUser()">
-                            <i *ngIf="processing" class="fa fa-spinner fa-pulse fa-fw"></i>
-                            Sign In
-                        </button>
+                        <div class="mt-5">
+                            <button type="submit" [disabled]="processing"
+                                    class="w-100 btn btn-primary pull-right  py-2" id="submit" (click)="loginUser()">
+                                <i *ngIf="processing" class="fa fa-spinner fa-pulse fa-fw"></i>
+                                Sign In
+                            </button>
+                        </div>
                     </form>
+
                 </div>
+
+                <br><br><br>
+
+                <div class="small">Don't have an account? <a routerLink="/register">Create one now</a></div>
             </div>
         </div>
+
     </div>
 </section>

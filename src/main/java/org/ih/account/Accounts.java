@@ -1,5 +1,6 @@
 package org.ih.account;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ih.account.authentication.AuthenticationException;
 import org.ih.common.Results;
 import org.ih.common.exception.ServiceException;
@@ -101,8 +102,6 @@ public class Accounts {
     }
 
     public Account createAccount(String userId, Account account, boolean sendEmailNotification) {
-        authorization.expectAdmin(userId);
-
         if (account == null || account.getEmail() == null || account.getEmail().trim().isEmpty())
             throw new ServiceException("User id is required to create an account");
 
@@ -116,49 +115,53 @@ public class Accounts {
         if (accountModel != null)
             throw new IllegalArgumentException("User with id " + account.getEmail() + " already exists");
 
+        // if an email notification is to be sent, this implies an administrator is creating the password
+        if (sendEmailNotification)
+            authorization.expectAdmin(userId);
+
+        // create new account
         accountModel = new AccountModel();
         accountModel.setCreationTime(new Date());
         accountModel.setLastUpdateTime(accountModel.getCreationTime());
         accountModel.setFirstName(account.getFirstName());
         accountModel.setLastName(account.getLastName());
         accountModel.setEmail(account.getEmail());
-        accountModel.setDisabled(false);
-        accountModel.setSalt(PasswordUtil.generateSalt());
         accountModel.setDescription(account.getDescription());
+        accountModel.setDisabled(!sendEmailNotification);
+        String password = "";
 
-        String password = account.getPassword();
-
-        if (StringUtil.isEmpty(password)) {
-            // generate a temporary password if user doesn't specify password
-            password = PasswordUtil.generateTemporaryPassword();
-            accountModel.setUsingTempPassword(true);
-        }
-
-        try {
-            accountModel.setPassword(PasswordUtil.encryptPassword(password, accountModel.getSalt()));
-        } catch (UtilityException ue) {
-            throw new ServiceException("Exception encrypting password", ue);
+        // check whether to generate password information if sending email notification
+        if (!sendEmailNotification) {
+            accountModel.setSalt(PasswordUtil.generateSalt());
+            password = account.getPassword();
+            if (StringUtil.isEmpty(password)) {
+                // generate a temporary password if user doesn't specify password
+                password = PasswordUtil.generateTemporaryPassword();
+                accountModel.setUsingTempPassword(true);
+            }
+            try {
+                accountModel.setPassword(PasswordUtil.encryptPassword(password, accountModel.getSalt()));
+            } catch (UtilityException ue) {
+                throw new ServiceException("Exception encrypting password", ue);
+            }
         }
 
         Account newAccount = dao.create(accountModel).toDataObject();
 
-        if (accountModel.getUsingTempPassword() != null && accountModel.getUsingTempPassword())
-            newAccount.setPassword(password);
-
         // send email to new user
-        if (sendEmailNotification)
+        if (sendEmailNotification && !StringUtils.isBlank(password))
             sendAccountEmail(newAccount, password);
 
         return newAccount;
     }
 
     private void sendAccountEmail(Account newAccount, String password) {
-        String subject = "Nurse Quality Data Management System Account Created";
+        String subject = "Infiniti Health System Account Created";
 
         String stringBuilder = "Dear " +
                 newAccount.getFirstName() + " " + newAccount.getLastName() +
                 ", " +
-                "\n\nA new account has been created for you on the InfinitiHealth Nurse Quality Data Management System." +
+                "\n\nA new account has been created for you on the Infiniti Health Technology Applications site." +
                 "\nPlease use the following username and password to access the site." +
                 "\n\nUser name: " +
                 newAccount.getEmail() +

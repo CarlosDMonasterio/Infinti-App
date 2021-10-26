@@ -1,9 +1,10 @@
 package org.ih.common.access;
 
-import org.ih.account.Accounts;
+import org.ih.account.AccountRole;
 import org.ih.dao.DAOFactory;
 import org.ih.dao.DatabaseModel;
 import org.ih.dao.Repository;
+import org.ih.dao.hibernate.AccountDAO;
 import org.ih.dao.model.AccountModel;
 import org.ih.dto.Account;
 
@@ -36,8 +37,7 @@ public abstract class Authorization<T extends DatabaseModel> {
     }
 
     public boolean isAdmin(String userId) {
-        AccountModel accountModel = getAccount(userId);
-        return accountModel.getEmail().equalsIgnoreCase(Accounts.DEFAULT_ADMIN_USERID);
+        return this.isUserHasSpecifiedRole(userId, AccountRole.ADMINISTRATOR);
     }
 
     public boolean canRead(String userId, T object) {
@@ -47,6 +47,18 @@ public abstract class Authorization<T extends DatabaseModel> {
     protected boolean isOwner(String userId, T object) {
         Account owner = getOwner(object);
         return owner == null || userId.equalsIgnoreCase(owner.getEmail());
+    }
+
+    protected boolean isUserHasSpecifiedRole(String userId, AccountRole role) {
+        AccountDAO dao = (AccountDAO) this.repository;
+        AccountModel accountModel = dao.getByEmail(userId);
+        if (accountModel == null)
+            throw new NullPointerException("No account for specified id " + userId);
+
+        if (role == null)
+            throw new NullPointerException("Cannot check against null role");
+
+        return accountModel.getRoles().contains(role);
     }
 
     public void expectRead(String userId, T object) throws AuthorizationException {

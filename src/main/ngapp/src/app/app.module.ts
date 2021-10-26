@@ -57,6 +57,7 @@ import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {ScheduleComponent} from './components/reports/schedule/schedule.component';
 import {FlatpickrModule} from "angularx-flatpickr";
+import {RegisterComponent} from './components/register/register.component';
 
 @NgModule({
     declarations: [
@@ -98,6 +99,8 @@ import {FlatpickrModule} from "angularx-flatpickr";
         IncidentReportsComponent,
         GloveReportsComponent,
         SurveyReportsComponent,
+        ConfirmComponent,
+        RegisterComponent,
         ConfirmComponent,
         RegisterPatientComponent,
         LookupPatientComponent,

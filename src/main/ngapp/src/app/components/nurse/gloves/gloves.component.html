@@ -65,7 +65,8 @@
 
         <div class="form-group row" *ngIf="progress >= 40">
             <div class="col-md-6 mb-3 pt-4">
-                <label for="role" class="font-weight-bold text-muted">Select role</label>:<br>
+                <label for="role" class="font-weight-bold text-muted">Select the role of individual being
+                    observed</label>:<br>
                 <select class="custom-select" id="role" required [(ngModel)]="report.role" name="role"
                         (ngModelChange)="roleSelected()" [disabled]="submittingReport">
                     <option selected disabled [ngValue]=undefined>Choose One...</option>

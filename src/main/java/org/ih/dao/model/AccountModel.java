@@ -25,7 +25,7 @@ public class AccountModel implements DatabaseModel {
     @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
-    @Column(name = "email", length = 320, nullable = false)
+    @Column(name = "email", length = 320, nullable = false, unique = true)
     private String email;
 
     @Column(name = "phone")

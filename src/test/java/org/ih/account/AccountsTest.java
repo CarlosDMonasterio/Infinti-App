@@ -26,8 +26,16 @@ class AccountsTest {
 
         account = accounts.createAccount(null, account, false);
         Assert.assertNotNull(account);
-
         Assert.assertTrue(accounts.accountExists(account.getEmail()));
+
+        // try to create the same account
+        boolean caught = false;
+        try {
+            account = accounts.createAccount(null, account, false);
+        } catch (IllegalArgumentException e) {
+            caught = true;
+        }
+        Assert.assertTrue(caught);
     }
 
     @AfterEach

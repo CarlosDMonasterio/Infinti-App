@@ -309,12 +309,6 @@ public class Accounts {
         return accountModel.toDataObject();
     }
 
-    public AccountModel retrieveAccountByUserId(String userId) {
-        if (StringUtil.isEmpty(userId))
-            return null;
-        return dao.getByEmail(userId.toLowerCase());
-    }
-
     public boolean isAdministrator(String userId) {
         AccountModel accountModel = dao.getByEmail(userId);
         return accountModel != null && accountModel.getRoles() != null && accountModel.getRoles().contains(AccountRole.ADMINISTRATOR);
@@ -340,8 +334,10 @@ public class Accounts {
     }
 
     public boolean accountExists(String userId) {
-        AccountModel accountModel = retrieveAccountByUserId(userId);
-        return accountModel != null;
+        if (StringUtil.isEmpty(userId))
+            return false;
+
+        return dao.getByEmail(userId.toLowerCase()) != null;
     }
 
     public Results<Account> retrieve(String userId, int start, int limit, boolean asc, String prop, String filter) {

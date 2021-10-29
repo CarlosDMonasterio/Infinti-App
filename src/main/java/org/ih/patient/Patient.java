@@ -11,6 +11,7 @@ public class Patient implements DataObject {
     private String email;
     private String phone;
     private String birthDate;
+    private String gender;
     private String uuid;
 
     public long getId() {
@@ -75,5 +76,13 @@ public class Patient implements DataObject {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

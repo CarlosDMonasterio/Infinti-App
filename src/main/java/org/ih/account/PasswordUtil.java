@@ -33,7 +33,7 @@ public class PasswordUtil {
         try {
             SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             byte[] hash = keyFactory.generateSecret(spec).getEncoded();
-            return Hex.encodeHexString(hash);
+            return String.valueOf(Hex.encodeHex(hash));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new UtilityException(e);
         }
@@ -43,7 +43,7 @@ public class PasswordUtil {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTE_SIZE];
         random.nextBytes(salt);
-        return Hex.encodeHexString(salt);
+        return String.valueOf(Hex.encodeHex(salt));
     }
 
     public static String generateTemporaryPassword() {

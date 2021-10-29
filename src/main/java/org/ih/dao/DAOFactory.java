@@ -19,6 +19,8 @@ public class DAOFactory {
     private static HygieneDAO hygieneDAO;
     private static SurveyDAO surveyDAO;
     private static QuestionDAO questionDAO;
+    private static PatientDAO patientDAO;
+    private static TestDAO testDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -78,5 +80,17 @@ public class DAOFactory {
         if (questionDAO == null)
             questionDAO = new QuestionDAO();
         return questionDAO;
+    }
+
+    public static PatientDAO getPatientDAO() {
+        if (patientDAO == null)
+            patientDAO = new PatientDAO();
+        return patientDAO;
+    }
+
+    public static TestDAO getTestDAO() {
+        if (testDAO == null)
+            testDAO = new TestDAO();
+        return testDAO;
     }
 }

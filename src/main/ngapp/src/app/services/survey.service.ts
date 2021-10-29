@@ -24,7 +24,7 @@ export class SurveyService {
         },
         {
             label: "Couriers",
-            details: "Was there sufficient Couriers to safely operate the test site?",
+            details: "Couriers available and easily contacted for timely specimen pick-up/supply drop offs?",
             options: ["Adequate", "Not Adequate"]
         },
         {
@@ -70,11 +70,6 @@ export class SurveyService {
         {
             label: "Air Circulation",
             details: "Was there proper ventilation (i.e. outside air, open windows and doors, operating window or attic fans, or running air conditioner)?",
-            options: ["Yes", "No"]
-        },
-        {
-            label: "Test Process",
-            details: "Was the test process conducted properly?",
             options: ["Yes", "No"]
         },
         {

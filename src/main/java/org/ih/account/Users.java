@@ -7,7 +7,7 @@ import org.ih.common.logging.Logger;
 import org.ih.dao.DAOFactory;
 import org.ih.dao.hibernate.AccountDAO;
 import org.ih.dao.model.AccountModel;
-import org.ih.dao.model.Group;
+import org.ih.dao.model.GroupModel;
 import org.ih.dto.Account;
 import org.ih.notification.NotificationTask;
 import org.ih.task.TaskRunner;
@@ -60,7 +60,7 @@ public class Users {
         // else non admin; filter by users that account is allowed to see
         // this is typically based on group membership
         AccountModel accountModel = dao.getByEmail(userId);
-        Set<Group> groups = accountModel.getGroups();
+        Set<GroupModel> groups = accountModel.getGroups();
         if (groups.isEmpty())
             return result;
 

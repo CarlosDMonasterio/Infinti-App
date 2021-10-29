@@ -48,6 +48,15 @@ import {IncidentReportsComponent} from './components/reports/incident-reports/in
 import {GloveReportsComponent} from './components/reports/glove-reports/glove-reports.component';
 import {SurveyReportsComponent} from './components/reports/survey-reports/survey-reports.component';
 import {ConfirmComponent} from './components/common/confirm/confirm.component';
+import {RegisterPatientComponent} from './components/dashboard/register-patient/register-patient.component';
+import {LookupPatientComponent} from './components/dashboard/lookup-patient/lookup-patient.component';
+import {TracingComponent} from './components/nurse/tracing/tracing.component';
+import {TestsComponent} from './components/reports/tests/tests.component';
+import {PatientsComponent} from './components/reports/patients/patients.component';
+import {CalendarModule, DateAdapter} from 'angular-calendar';
+import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {ScheduleComponent} from './components/reports/schedule/schedule.component';
+import {FlatpickrModule} from "angularx-flatpickr";
 import {RegisterComponent} from './components/register/register.component';
 
 @NgModule({
@@ -91,7 +100,14 @@ import {RegisterComponent} from './components/register/register.component';
         GloveReportsComponent,
         SurveyReportsComponent,
         ConfirmComponent,
-        RegisterComponent
+        RegisterComponent,
+        ConfirmComponent,
+        RegisterPatientComponent,
+        LookupPatientComponent,
+        TracingComponent,
+        TestsComponent,
+        PatientsComponent,
+        ScheduleComponent
     ],
     imports: [
         BrowserModule,
@@ -101,7 +117,9 @@ import {RegisterComponent} from './components/register/register.component';
         NgbNavModule,
         HttpClientModule,
         NgxChartsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory})
     ],
     providers: [UserResolver, ProfileDetailsResolver],
     bootstrap: [AppComponent]

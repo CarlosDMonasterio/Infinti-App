@@ -1,0 +1,24 @@
+<div class="container-fluid">
+    <div class="col mt-4">
+        <table class="table table-hover bg-white table-bordered shadow-sm">
+            <thead class="text-uppercase">
+            <tr>
+                <th style="width: 25px"><i class="fa fa-fw fa-square-o"></i></th>
+                <th class="small font-weight-bold">Name</th>
+                <th class="small font-weight-bold">Last Tested</th>
+                <th class="small font-weight-bold">Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let patient of patients">
+                <td><i class="fa fa-fw fa-square-o"></i></td>
+                <td><a routerLink="/reports/patients/{{patient.uuid}}"
+                       (click)="patientId = patient.uuid">{{patient.firstName}} {{patient.lastName}}</a></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

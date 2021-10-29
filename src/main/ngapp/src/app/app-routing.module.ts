@@ -25,6 +25,10 @@ import {HygieneReportsComponent} from "./components/reports/hygiene-reports/hygi
 import {IncidentReportsComponent} from "./components/reports/incident-reports/incident-reports.component";
 import {GloveReportsComponent} from "./components/reports/glove-reports/glove-reports.component";
 import {SurveyReportsComponent} from "./components/reports/survey-reports/survey-reports.component";
+import {TracingComponent} from "./components/nurse/tracing/tracing.component";
+import {TestsComponent} from "./components/reports/tests/tests.component";
+import {PatientsComponent} from "./components/reports/patients/patients.component";
+import {ScheduleComponent} from "./components/reports/schedule/schedule.component";
 import {RegisterComponent} from "./components/register/register.component";
 
 const routes: Routes = [
@@ -35,6 +39,7 @@ const routes: Routes = [
     {path: 'incidents', component: IncidentComponent},
     {path: 'hygiene', component: HygieneComponent},
     {path: 'gloves', component: GlovesComponent},
+    {path: 'tracing', component: TracingComponent},
     {path: 'forgotPassword', component: ForgotPasswordComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'resetPassword', component: ResetPasswordComponent},
@@ -87,9 +92,21 @@ const routes: Routes = [
             },
             {
                 path: 'gloves', component: GloveReportsComponent
+            },
+            {
+                path: 'tests', component: TestsComponent
+            },
+            {
+                path: 'patients', component: PatientsComponent, children: [
+                    {path: ':patientId', component: PatientsComponent}
+                ]
+            },
+            {
+                path: 'schedules', component: ScheduleComponent
             }
         ]
-    }
+    },
+
 ];
 
 @NgModule({

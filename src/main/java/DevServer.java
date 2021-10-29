@@ -43,6 +43,7 @@ public class DevServer {
         PredicatesHandler handler = Handlers.predicates(PredicatedHandlersParser.parse(
                 "path-prefix('districts') or " +
                         "path-prefix('forgotPassword') or " +
+                        "path-prefix('patients') or " +
                         "path-prefix('schools') or " +
                         "path-prefix('incidents') or " +
                         "path-prefix('login') or " +

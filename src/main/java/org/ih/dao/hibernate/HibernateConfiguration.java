@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.ih.common.logging.Logger;
 import org.ih.dao.model.*;
+import org.ih.patient.PatientModel;
 
 import java.nio.file.Path;
 import java.util.Properties;
@@ -105,9 +106,8 @@ public class HibernateConfiguration {
 
     private static void addAnnotatedClasses(Configuration configuration) {
         configuration.addAnnotatedClass(AccountModel.class);
-        configuration.addAnnotatedClass(Group.class);
+        configuration.addAnnotatedClass(GroupModel.class);
         configuration.addAnnotatedClass(AuditModel.class);
-        configuration.addAnnotatedClass(Task.class);
         configuration.addAnnotatedClass(org.ih.dao.model.Configuration.class);
         configuration.addAnnotatedClass(DistrictModel.class);
         configuration.addAnnotatedClass(IncidentReportModel.class);
@@ -115,6 +115,7 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(HygieneModel.class);
         configuration.addAnnotatedClass(SurveyModel.class);
         configuration.addAnnotatedClass(QuestionModel.class);
+        configuration.addAnnotatedClass(PatientModel.class);
     }
 
     /**

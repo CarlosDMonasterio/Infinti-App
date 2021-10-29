@@ -23,6 +23,7 @@ export class AdminUsersComponent implements OnInit {
     constructor(private modalService: NgbModal, private http: HttpService) {
         this.paging = new Paging();
         this.paging.sort = "lastName";
+        this.paging.asc = true;
     }
 
     ngOnInit(): void {
@@ -47,6 +48,18 @@ export class AdminUsersComponent implements OnInit {
             this.loadingAdminAccountsPage = false;
         },);
     };
+
+    setSort(sort: string): void {
+        if (this.paging.sort !== sort) {
+            this.paging.sort = sort;
+            this.paging.asc = false;
+        } else {
+            this.paging.asc = !this.paging.asc;
+        }
+
+        this.paging.currentPage = 1;
+        this.loadAccounts(1);
+    }
 
     // determine whether to add admin role or remove it
     setUserAccountType(user: User): void {

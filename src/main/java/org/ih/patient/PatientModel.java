@@ -13,7 +13,7 @@ public class PatientModel implements DatabaseModel {
     @SequenceGenerator(name = "patient_id", sequenceName = "patient_id_seq", allocationSize = 1)
     private long id;
 
-    @Column(name = "identifier", unique = true)
+    @Column(name = "identifier", unique = true)     // some sort of human-readable or local specific identifier
     private String identifier;
 
     @Column(name = "first_name", length = 50, nullable = false)
@@ -30,6 +30,9 @@ public class PatientModel implements DatabaseModel {
 
     @Column(name = "birthDate", length = 12)
     private String birthDate;
+
+    @Column(name = "gender")
+    private String gender;
 
     @Column(name = "uuid", unique = true)
     private String uuid;
@@ -94,6 +97,14 @@ public class PatientModel implements DatabaseModel {
         this.uuid = uuid;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @Override
     public Patient toDataObject() {
         Patient patient = new Patient();
@@ -104,6 +115,7 @@ public class PatientModel implements DatabaseModel {
         patient.setPhone(this.phone);
         patient.setBirthDate(this.birthDate);
         patient.setUuid(this.uuid);
+        patient.setGender(this.gender);
         return patient;
     }
 }

@@ -22,8 +22,7 @@ export class AdminUsersComponent implements OnInit {
 
     constructor(private modalService: NgbModal, private http: HttpService) {
         this.paging = new Paging();
-        this.paging.sort = "lastName";
-        this.paging.asc = true;
+        this.paging.sort = "creationTime";
     }
 
     ngOnInit(): void {

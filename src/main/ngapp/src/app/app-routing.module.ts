@@ -30,12 +30,16 @@ import {TestsComponent} from "./components/reports/tests/tests.component";
 import {PatientsComponent} from "./components/reports/patients/patients.component";
 import {ScheduleComponent} from "./components/reports/schedule/schedule.component";
 import {RegisterComponent} from "./components/register/register.component";
+import {PatientDetailsComponent} from "./components/reports/patients/patient-details/patient-details.component";
+import {PatientDetailsResolver} from "./components/reports/patients/patient-details/patient.details.resolver";
+import {ScreeningComponent} from "./components/dashboard/screening/screening.component";
 
 const routes: Routes = [
     {path: '', component: DashboardComponent},
     {path: 'login', component: LoginComponent},
     {path: 'config', component: ConfigComponent},
     {path: 'survey', component: SurveyComponent},
+    {path: 'screening', component: ScreeningComponent},
     {path: 'incidents', component: IncidentComponent},
     {path: 'hygiene', component: HygieneComponent},
     {path: 'gloves', component: GlovesComponent},
@@ -77,10 +81,9 @@ const routes: Routes = [
     {
         path: 'reports', component: ReportsComponent, canActivate: [AdminGuardGuard],
         children: [
-            //     {
-            //     path: '', redirectTo: 'profile', pathMatch: 'full'
-            // },
-
+            {
+                path: '', redirectTo: 'surveys', pathMatch: 'full'
+            },
             {
                 path: 'surveys', component: SurveyReportsComponent
             },
@@ -97,16 +100,18 @@ const routes: Routes = [
                 path: 'tests', component: TestsComponent
             },
             {
-                path: 'patients', component: PatientsComponent, children: [
-                    {path: ':patientId', component: PatientsComponent}
-                ]
+                path: 'patients', component: PatientsComponent
+            },
+            {
+                path: 'patients/:patientId',
+                component: PatientDetailsComponent,
+                resolve: {patient: PatientDetailsResolver}
             },
             {
                 path: 'schedules', component: ScheduleComponent
             }
         ]
     },
-
 ];
 
 @NgModule({

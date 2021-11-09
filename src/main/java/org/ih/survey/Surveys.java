@@ -24,17 +24,25 @@ public class Surveys {
     public Survey create(Survey survey) {
 
         // get school district
-        DistrictModel districtModel = DAOFactory.getDistrictDAO().get(survey.getDistrict().getId());
-        if (districtModel == null)
-            throw new IllegalArgumentException("Cannot create survey for null district");
+        DistrictModel districtModel = null;
+        if (survey.getDistrict() != null) {    // district is required for quality audit but not for dhs
+            districtModel = DAOFactory.getDistrictDAO().get(survey.getDistrict().getId());
+            if (districtModel == null)
+                throw new IllegalArgumentException("Cannot create survey for null district");
+        }
 
         // get school
-        SchoolModel schoolModel = DAOFactory.getSchoolDAO().get(survey.getSchool().getId());
-        if (schoolModel == null)
-            throw new IllegalArgumentException("Cannot create survey for null school");
+        SchoolModel schoolModel = null;
+        if (survey.getSchool() != null) {
+            schoolModel = DAOFactory.getSchoolDAO().get(survey.getSchool().getId());
+            if (schoolModel == null)
+                throw new IllegalArgumentException("Cannot create survey for null school");
+        }
 
-        if (schoolModel.getDistrict() == null || schoolModel.getDistrict().getId() != survey.getDistrict().getId())
-            throw new IllegalArgumentException("Incompatible school and district");
+        if (schoolModel != null && districtModel != null) {
+            if (schoolModel.getDistrict() == null || schoolModel.getDistrict().getId() != survey.getDistrict().getId())
+                throw new IllegalArgumentException("Incompatible school and district");
+        }
 
         AccountModel accountModel = DAOFactory.getAccountDAO().getByEmail(this.userId);
         if (accountModel == null)
@@ -54,6 +62,8 @@ public class Surveys {
                 QuestionModel questionModel = new QuestionModel();
                 questionModel.setAnswer(question.isAnswer());
                 questionModel.setLabel(question.getLabel());
+                questionModel.setSurvey(model);
+                DAOFactory.getQuestionDAO().create(questionModel);
             }
         }
 

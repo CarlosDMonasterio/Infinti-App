@@ -49,6 +49,10 @@ public class Schools {
         return resultData;
     }
 
+    public void createDemoSchool() {
+
+    }
+
     public void parse(InputStream inputStream) {
         CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
 //        reader.readNext()

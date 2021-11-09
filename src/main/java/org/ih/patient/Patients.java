@@ -23,7 +23,7 @@ public class Patients {
     }
 
     public Patient get(String identifier) {
-        Optional<PatientModel> optional = this.dao.getByIdentifier(identifier);
+        Optional<PatientModel> optional = this.dao.getByUUID(identifier);
         return optional.map(PatientModel::toDataObject).orElse(null);
     }
 

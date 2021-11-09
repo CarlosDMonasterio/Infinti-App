@@ -58,6 +58,9 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {ScheduleComponent} from './components/reports/schedule/schedule.component';
 import {FlatpickrModule} from "angularx-flatpickr";
 import {RegisterComponent} from './components/register/register.component';
+import {PatientDetailsComponent} from './components/reports/patients/patient-details/patient-details.component';
+import {PatientDetailsResolver} from "./components/reports/patients/patient-details/patient.details.resolver";
+import {ScreeningComponent} from './components/dashboard/screening/screening.component';
 
 @NgModule({
     declarations: [
@@ -107,7 +110,9 @@ import {RegisterComponent} from './components/register/register.component';
         TracingComponent,
         TestsComponent,
         PatientsComponent,
-        ScheduleComponent
+        ScheduleComponent,
+        PatientDetailsComponent,
+        ScreeningComponent
     ],
     imports: [
         BrowserModule,
@@ -121,7 +126,7 @@ import {RegisterComponent} from './components/register/register.component';
         FlatpickrModule.forRoot(),
         CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory})
     ],
-    providers: [UserResolver, ProfileDetailsResolver],
+    providers: [UserResolver, ProfileDetailsResolver, PatientDetailsResolver],
     bootstrap: [AppComponent]
 })
 export class AppModule {

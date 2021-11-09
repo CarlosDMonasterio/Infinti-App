@@ -22,7 +22,7 @@ public class SurveyResource extends RestResource {
     public Response createSurvey(Survey survey) {
         String userId = requireUserId();
         Surveys surveys = new Surveys(userId);
-        Logger.info("Creating new survey");
+        Logger.info("Creating new survey of type " + survey.getType());
         return super.respond(surveys.create(survey));
     }
 

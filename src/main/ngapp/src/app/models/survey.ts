@@ -5,13 +5,15 @@ import {District} from "./district";
 
 export class Survey {
     id: number;
+    type: string;
     account: User;
     district: District;
     school: School;
     questions: SurveyQuestion[];
     creationTime: number;
 
-    constructor() {
+    constructor(type = 'AUDIT') {
         this.questions = [];
+        this.type = type;
     }
 }

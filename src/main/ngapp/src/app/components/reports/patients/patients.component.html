@@ -1,24 +1,45 @@
 <div class="container-fluid">
-    <div class="col mt-4">
-        <table class="table table-hover bg-white table-bordered shadow-sm">
-            <thead class="text-uppercase">
-            <tr>
-                <th style="width: 25px"><i class="fa fa-fw fa-square-o"></i></th>
-                <th class="small font-weight-bold">Name</th>
-                <th class="small font-weight-bold">Last Tested</th>
-                <th class="small font-weight-bold">Actions</th>
-            </tr>
-            </thead>
 
-            <tbody>
-            <tr *ngFor="let patient of patients">
-                <td><i class="fa fa-fw fa-square-o"></i></td>
-                <td><a routerLink="/reports/patients/{{patient.uuid}}"
-                       (click)="patientId = patient.uuid">{{patient.firstName}} {{patient.lastName}}</a></td>
-                <td></td>
-                <td></td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="row mt-4">
+        <div class="col">
+            <input class="form-control" placeholder="Search Patients">
+        </div>
+        <div class="col">
+            <button class="btn btn-primary float-right">Add Patient</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mt-4">
+            <table class="table table-hover bg-white table-bordered">
+                <thead class="text-uppercase">
+                <tr>
+                    <th style="width: 25px"><i class="fa fa-fw fa-square-o"></i></th>
+                    <th class="small font-weight-bold">Name</th>
+                    <th class="small font-weight-bold">Result</th>
+                    <th class="small font-weight-bold">Last Tested</th>
+                    <th class="small font-weight-bold">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let patient of patients">
+                    <td><i class="fa fa-fw fa-square-o"></i></td>
+                    <td><a routerLink="/reports/patients/{{patient.uuid}}"
+                           (click)="patientId = patient.uuid">{{patient.firstName}} {{patient.lastName}}</a></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <ngb-pagination [(page)]="paging.currentPage" [pageSize]="5"
+                            [collectionSize]="paging.available"></ngb-pagination>
+        </div>
     </div>
 </div>

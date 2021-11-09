@@ -7,10 +7,9 @@
 
 <div class="modal-body">
     <form class="p-4">
-        <div class="form-group row">
-            <label for="identifier" class="col-sm-2 col-form-label">Unique ID</label>
-
-            <div class="col-sm-10 mb-3">
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="identifier" class="control-label float-left">Unique ID</label>
                 <input type="text" class="form-control" name="identifier" id="identifier" required
                        [(ngModel)]="newPatient.identifier">
                 <small id="emailHelp" class="form-text text-muted">Please enter a unique identifier (e.g. Badge or
@@ -18,40 +17,42 @@
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="firstName" class="col-sm-2 col-form-label">First name</label>
-            <div class="col-sm-4 mb-1">
-                <input type="text" class="form-control" id="firstName" name="firstName" required
-                       [(ngModel)]="newPatient.firstName">
+        <div class="row">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="firstName" class="control-label float-left">First name</label>
+                <input type="text" id="firstName" class="form-control" [(ngModel)]="newPatient.firstName"
+                       name="firstName" required
+                       [ngClass]="{'is-invalid': false}">
             </div>
 
-            <label for="lastName" class="col-sm-2 col-form-label">Last name</label>
-            <div class="col-sm-4 mb-1">
-                <input type="text" class="form-control" id="lastName" name="lastName" required
-                       [(ngModel)]="newPatient.lastName">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="lastName" class="control-label float-left">Last name</label>
+                <input type="text" id="lastName" class="form-control" [(ngModel)]="newPatient.lastName"
+                       name="lastName"
+                       [ngClass]="{'is-invalid': false}">
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="email" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10 mb-1">
+
+        <div class="row">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="email" class="control-label">Email</label>
                 <input type="text" class="form-control" id="email" name="email" required [(ngModel)]="newPatient.email">
             </div>
-        </div>
 
-        <div class="form-group row">
-            <label for="phone" class="col-sm-2 col-form-label">Phone</label>
-            <div class="col-sm-10 mb-1">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="phone" class="control-label">Phone</label>
                 <input type="text" class="form-control" id="phone" name="phone" placeholder="(123) 456-7890" required
                        [(ngModel)]="newPatient.phone">
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="phone" class="col-sm-2 col-form-label">D.O.B.</label>
-            <div class="col-sm-4 mb-1">
+
+        <div class="row">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="dp" class="control-label">Date of birth</label>
                 <div class="input-group">
-                    <input class="form-control" placeholder="yyyy-mm-dd" [maxDate]="maxDate"
+                    <input class="form-control" placeholder="yyyy-mm-dd" [maxDate]="maxDate" id="dp"
                            name="dp" [(ngModel)]="dateStruct" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
@@ -61,7 +62,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mt-3">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
                 <label class="form-check-label" for="invalidCheck2">

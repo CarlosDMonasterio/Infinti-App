@@ -3,6 +3,7 @@ package org.ih.dao.model;
 import org.ih.dao.DatabaseModel;
 import org.ih.dto.Survey;
 import org.ih.survey.SurveyStatus;
+import org.ih.survey.SurveyType;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,15 +23,19 @@ public class SurveyModel implements DatabaseModel {
     @Enumerated(value = EnumType.STRING)
     private SurveyStatus status;
 
+    @Column(name = "type")
+    @Enumerated(value = EnumType.STRING)
+    private SurveyType type;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "account_id")
     private AccountModel account;
 
-    @ManyToOne(optional = false)
+    @ManyToOne()
     @JoinColumn(name = "district_id")
     private DistrictModel district;
 
-    @OneToOne(optional = false)
+    @OneToOne()
     @JoinColumn(name = "school_id")
     private SchoolModel school;
 
@@ -89,13 +94,26 @@ public class SurveyModel implements DatabaseModel {
         this.created = created;
     }
 
+    public SurveyType getType() {
+        return type;
+    }
+
+    public void setType(SurveyType type) {
+        this.type = type;
+    }
+
     @Override
     public Survey toDataObject() {
         Survey survey = new Survey();
         survey.setId(this.id);
+        survey.setType(this.type);
         survey.setAccount(this.account.toDataObject());
-        survey.setDistrict(this.district.toDataObject());
-        survey.setSchool(this.school.toDataObject());
+        if (this.district != null)
+            survey.setDistrict(this.district.toDataObject());
+
+        if (this.school != null)
+            survey.setSchool(this.school.toDataObject());
+
         if (this.created != null)
             survey.setCreationTime(this.created.getTime());
         return survey;

@@ -54,6 +54,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4 mt-5">
+            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('screening')">
+                <div class="p-3 mx-auto">
+                    <i class="fa fa-fw fa-4x fa-thermometer-3 text-muted"></i>
+                </div>
+
+                <div class="card-body text-center border-top">
+                    <h5 class="card-title font-weight-bold">Daily Health Screening</h5>
+                    <p class="card-text">Submit information about your health status.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="row" *ngIf="currentUser && currentUser.isAdministrator">

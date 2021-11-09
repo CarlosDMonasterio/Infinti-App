@@ -1,6 +1,7 @@
 package org.ih.dto;
 
 import org.ih.survey.SurveyStatus;
+import org.ih.survey.SurveyType;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ public class Survey implements DataObject {
 
     private long id;
     private SurveyStatus status;
+    private SurveyType type;
     private Account account;
     private District district;
     private School school;
@@ -68,5 +70,13 @@ public class Survey implements DataObject {
 
     public void setCreationTime(long creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public SurveyType getType() {
+        return type;
+    }
+
+    public void setType(SurveyType type) {
+        this.type = type;
     }
 }

@@ -83,6 +83,13 @@ export class ScreeningComponent implements OnInit {
         this.progress = 100;
         this.submittingReport = true;
         Object.assign(this.survey.questions, this.questions);
+
+        // set the details to the label since screening questions don't have labels
+        for (let i = 0; i < this.survey.questions.length; i += 1) {
+            this.survey.questions[i].label = this.survey.questions[i].details;
+        }
+
+        // submit to the backend
         this.http.post('surveys', this.survey).subscribe((result: Survey) => {
             this.submittingReport = false;
 

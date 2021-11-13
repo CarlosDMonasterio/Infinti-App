@@ -27,10 +27,18 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-sm-12 text-right font-weight-bold small">
+                <i class="fa fa-fw fa-check text-success"
+                   *ngIf="this.answeredCount === (this.questions.length + 1)"></i>
+                <span [ngClass]="getSubmissionClass()">Answered {{answeredCount}} / {{questions.length + 1}}</span>
+            </div>
+        </div>
+
         <div class="row mb-5">
             <ng-container *ngIf="page >= 0">
                 <div class="col mt-2" *ngIf="page === questions.length">
-                    <div class="cursor-pointer mt-5" (click)="attested = !attested" style="font-size: large">
+                    <div class="cursor-pointer mt-5" (click)="setAttestation()" style="font-size: large">
                         <i class="fa fa-fw" [ngClass]="{'fa-square-o': !attested, 'fa-check-square-o': attested}"></i>
                         For the safety and protection of myself and my
                         colleagues, I attest that I have answered the prompts in this questionnaire truthfully.
@@ -69,16 +77,14 @@
                 </button>
             </div>
 
-            <div class="col text-right" *ngIf="!isLastQuestion()">
-                <button class="btn btn-secondary" [disabled]="nextDisabled()" (click)="nextQuestion()">Next <i
-                        class="fa fa-fw fa-angle-double-right"></i></button>
-            </div>
+            <div class="col text-right">
+                <button class="btn btn-secondary" [disabled]="nextDisabled()" (click)="nextQuestion()"
+                        *ngIf="!isLastQuestion()">Next <i class="fa fa-fw fa-angle-double-right"></i></button>
 
-            <div class="col text-right" *ngIf="isLastQuestion()">
-                <button class="btn btn-primary" [disabled]="submittingReport || !attested" (click)="submitReport()">
+                <button class="btn btn-primary ml-1" *ngIf="isLastQuestion() || answeredCount === questions.length + 1"
+                        [disabled]="submitDisabled()" (click)="submitReport()">
                     <span *ngIf="!submittingReport">Submit</span>
-                    <span *ngIf="submittingReport"><i
-                            class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>
+                    <span *ngIf="submittingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>
                 </button>
             </div>
         </div>

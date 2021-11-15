@@ -43,7 +43,6 @@ export class HttpService {
     private setHeaders(redirect?: boolean): void {
         if (this.userService.getUser(redirect)) {
             const sid = this.userService.getUser().sessionId;
-            console.log(sid);
             this.httpOptions.headers = new HttpHeaders({
                 'Content-Type': 'application/json',
                 'X-IH-Authentication-SessionId': sid

@@ -21,9 +21,6 @@ import {AdminSchoolsComponent} from "./components/admin/admin-schools/admin-scho
 import {ReportsComponent} from "./components/reports/reports.component";
 import {HygieneComponent} from "./components/nurse/hygiene/hygiene.component";
 import {GlovesComponent} from "./components/nurse/gloves/gloves.component";
-import {HygieneReportsComponent} from "./components/reports/hygiene-reports/hygiene-reports.component";
-import {IncidentReportsComponent} from "./components/reports/incident-reports/incident-reports.component";
-import {GloveReportsComponent} from "./components/reports/glove-reports/glove-reports.component";
 import {SurveyReportsComponent} from "./components/reports/survey-reports/survey-reports.component";
 import {TracingComponent} from "./components/nurse/tracing/tracing.component";
 import {TestsComponent} from "./components/reports/tests/tests.component";
@@ -86,15 +83,6 @@ const routes: Routes = [
             },
             {
                 path: 'surveys', component: SurveyReportsComponent
-            },
-            {
-                path: 'hygiene', component: HygieneReportsComponent
-            },
-            {
-                path: 'incidents', component: IncidentReportsComponent
-            },
-            {
-                path: 'gloves', component: GloveReportsComponent
             },
             {
                 path: 'tests', component: TestsComponent

@@ -42,7 +42,6 @@ import {HygieneComponent} from './components/nurse/hygiene/hygiene.component';
 import {GlovesComponent} from './components/nurse/gloves/gloves.component';
 import {ModalUploadSchoolsComponent} from './components/admin/sites/modal-upload-schools/modal-upload-schools.component';
 import {ProfileDetailsResolver} from "./components/profile/profile.details.resolver";
-import {ComponentsComponent} from './components/components.component';
 import {HygieneReportsComponent} from './components/reports/hygiene-reports/hygiene-reports.component';
 import {IncidentReportsComponent} from './components/reports/incident-reports/incident-reports.component';
 import {GloveReportsComponent} from './components/reports/glove-reports/glove-reports.component';
@@ -61,6 +60,8 @@ import {RegisterComponent} from './components/register/register.component';
 import {PatientDetailsComponent} from './components/reports/patients/patient-details/patient-details.component';
 import {PatientDetailsResolver} from "./components/reports/patients/patient-details/patient.details.resolver";
 import {ScreeningComponent} from './components/dashboard/screening/screening.component';
+import {AuditsComponent} from './components/reports/audits/audits.component';
+import {DailyScreenReportsComponent} from './components/reports/daily-screen-reports/daily-screen-reports.component';
 
 @NgModule({
     declarations: [
@@ -97,7 +98,6 @@ import {ScreeningComponent} from './components/dashboard/screening/screening.com
         HygieneComponent,
         GlovesComponent,
         ModalUploadSchoolsComponent,
-        ComponentsComponent,
         HygieneReportsComponent,
         IncidentReportsComponent,
         GloveReportsComponent,
@@ -112,7 +112,9 @@ import {ScreeningComponent} from './components/dashboard/screening/screening.com
         PatientsComponent,
         ScheduleComponent,
         PatientDetailsComponent,
-        ScreeningComponent
+        ScreeningComponent,
+        AuditsComponent,
+        DailyScreenReportsComponent
     ],
     imports: [
         BrowserModule,

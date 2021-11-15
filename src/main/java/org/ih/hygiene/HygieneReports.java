@@ -77,6 +77,11 @@ public class HygieneReports {
         for (HygieneModel model : modelList) {
             String dateString = getDateWithoutTime(model.getDate()).toString().substring(0, 10);
             List<Pair> graphData = map.get(dateString);
+            if (graphData == null) {
+                graphData = new ArrayList<>(2);
+                graphData.add(new Pair("Non-Compliance", 0));
+                graphData.add(new Pair("Compliance", 0));
+            }
 
             // add data to graph data
             int index = model.getCompliant() ? 1 : 0;

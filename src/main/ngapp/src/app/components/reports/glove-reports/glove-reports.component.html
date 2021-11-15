@@ -1,28 +1,41 @@
 <div class="container-fluid pt-3">
-
-    <div class="row mt-3 mb-3">
-        <div class="col">
-            <h4>Glove Change Reports</h4>
-            <button class="btn float-right btn-outline-primary btn-sm"><i class="fa fa-fw fa-cloud-download"></i> Export
-            </button>
+    <div class="row">
+        <div class="col-sm shadow-sm border bg-white p-2">
+            <ngx-charts-bar-vertical-stacked
+                    [scheme]="colorScheme"
+                    [results]="multi"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [animations]="animations"
+                    (select)="onSelect($event)">
+            </ngx-charts-bar-vertical-stacked>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table bg-white border-bottom">
-                <thead class="small text-uppercase">
+    <div class="row border shadow-sm mt-4">
+        <div class="col-sm-12 bg-white">
+
+            <div *ngIf="!reports || !reports.length" class="p-3">
+                <span class="text-muted font-italic">No glove change reports available</span>
+            </div>
+
+            <table class="table table-hover table-borderless mt-3" *ngIf="reports && reports.length">
+                <thead class="small text-uppercase border bg-light text-secondary">
                 <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Reporter</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">School</th>
-                    <th scope="col">Compliance</th>
+                    <th scope="col" class="border-right py-2">Date</th>
+                    <th scope="col" class="border-right py-2">Reporter</th>
+                    <th scope="col" class="border-right py-2">Role</th>
+                    <th scope="col" class="border-right py-2">School</th>
+                    <th scope="col" class="py-2">Compliance</th>
                 </tr>
                 </thead>
 
-                <tbody>
-                <tr *ngFor="let report of reports">
+                <tbody style="font-size: 0.95em">
+                <tr *ngFor="let report of reports" class="border-bottom">
                     <td class="small">
                         {{report.creationTime | date : 'EEE, MMM d, yyyy'}}
                         <div>{{report.creationTime | date : 'h:mm:ss a'}}</div>

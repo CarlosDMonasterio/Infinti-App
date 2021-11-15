@@ -8,9 +8,11 @@ import org.ih.dao.model.DistrictModel;
 import org.ih.dao.model.HygieneModel;
 import org.ih.dao.model.SchoolModel;
 import org.ih.dto.Hygiene;
+import org.ih.dto.HygieneGraphData;
+import org.ih.dto.Pair;
 
-import java.util.Date;
-import java.util.List;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 public class HygieneReports {
 
@@ -54,5 +56,53 @@ public class HygieneReports {
             results.getRequested().add(model.toDataObject());
         }
         return results;
+    }
+
+    public List<HygieneGraphData> getGraphData(HygieneType type) {
+        final int minusDays = 7;
+        final ZonedDateTime startOfLastWeek = ZonedDateTime.now().minusDays(minusDays);
+        List<HygieneModel> modelList = this.dao.recordsAfter(Date.from(startOfLastWeek.toInstant()).getTime(), type);
+        HashMap<String, List<Pair>> map = new LinkedHashMap<>();
+
+        // add the seven days
+        for (int i = 1; i <= minusDays; i += 1) {
+            Date date = Date.from(startOfLastWeek.plusDays(i).toInstant());
+            List<Pair> graphData = new ArrayList<>(2);
+            graphData.add(new Pair("Non-Compliance", 0));
+            graphData.add(new Pair("Compliance", 0));
+            map.put(getDateWithoutTime(date).toString().substring(0, 10), graphData);
+        }
+
+        // iterate model list
+        for (HygieneModel model : modelList) {
+            String dateString = getDateWithoutTime(model.getDate()).toString().substring(0, 10);
+            List<Pair> graphData = map.get(dateString);
+
+            // add data to graph data
+            int index = model.getCompliant() ? 1 : 0;
+            int value = graphData.get(index).getValue() + 1;
+            graphData.get(index).setValue(value);
+        }
+
+        List<HygieneGraphData> data = new ArrayList<>();
+        for (Map.Entry<String, List<Pair>> entry : map.entrySet()) {
+            HygieneGraphData graphData = new HygieneGraphData();
+            graphData.setName(entry.getKey());
+            graphData.getSeries().add(entry.getValue().get(0));
+            graphData.getSeries().add(entry.getValue().get(1));
+            data.add(graphData);
+        }
+
+        return data;
+    }
+
+    public static Date getDateWithoutTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 }

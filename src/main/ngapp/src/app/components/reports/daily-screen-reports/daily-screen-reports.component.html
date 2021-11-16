@@ -1,0 +1,65 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col">
+        </div>
+    </div>
+
+    <div class="row border shadow-sm">
+        <div class="col-sm-12 bg-white">
+            <div *ngIf="!reports || !reports.length" class="p-3">
+                <span class="text-muted font-italic">No daily health screens available</span>
+            </div>
+
+            <table class="table table-borderless mt-3" *ngIf="reports && reports.length">
+                <thead class="small text-uppercase border bg-light text-secondary">
+                <tr>
+                    <th class="border-right py-2" style="width: 150px">Date</th>
+                    <th class="border-right py-2">Reporter</th>
+                    <th class="border-right py-2">Results</th>
+                    <th class="py-2" style="width: 150px">Action</th>
+                </tr>
+                </thead>
+
+                <tbody class="border-bottom" style="font-size: 0.95em">
+                <tr *ngFor="let report of reports" class="border-top">
+                    <td class="small">
+                        {{report.creationTime | date : 'EEE, MMM d, yyyy'}}
+                        <div>{{report.creationTime | date : 'h:mm:ss a'}}</div>
+                    </td>
+                    <td>{{report.account.firstName}} {{report.account.lastName}}
+                        <div class="small">{{report.account.email}}</div>
+                    </td>
+                    <td class="p-0">
+
+                        <div class="d-flex mt-3">
+                            <div class="border text-center p-1 ml-2"
+                                 *ngFor="let question of report.questions; let i = index" style="width: 38px">
+                                <i class="fa fa-fw" [ngbTooltip]="questions[i].details"
+                                   [ngClass]="{'fa-times text-success': !question.answer, 'fa-check text-danger': question.answer}"></i>
+                            </div>
+                        </div>
+
+                        <div style="height: 150px; overflow-y: scroll" class="border" *ngIf="false">
+                            <ul class="list-group list-group-flush small">
+                                <li class="list-group-item"
+                                    *ngFor="let question of report.questions">
+                                    <i class="fa fa-fw fa-2x float-left"
+                                       [ngClass]="{'fa-times text-success': !question.answer, 'fa-check text-danger': question.answer}"></i>
+                                    &nbsp; {{question.label}}</li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <app-mini-pager [available]="paging.available" [numberPerPage]="paging.limit"
+                                (nextPage)="pageDailyHealthReports($event)"
+                                class="mb-2"></app-mini-pager>
+            </div>
+        </div>
+    </div>
+</div>

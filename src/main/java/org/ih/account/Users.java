@@ -93,6 +93,7 @@ public class Users {
 
             Logger.info("Creating account for user: " + email);
             Account account = new Account();
+            account.setEmail(email);
             account.setFirstName(firstName);
             account.setLastName(lastName);
             account.setDescription(role);

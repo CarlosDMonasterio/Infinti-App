@@ -60,9 +60,9 @@ export class HttpService {
             );
     }
 
-    post<T>(api: string, payload: T, options?): Observable<any> {
+    post<T>(api: string, payload: T, options?, redirect = true): Observable<any> {
         this.setOptions(options);
-        this.setHeaders(true);
+        this.setHeaders(redirect);
         const url = `${this.apiUrl}/${api}`;
         return this.http.post<T>(url, payload, this.httpOptions);
     }

@@ -16,7 +16,7 @@ import java.util.Properties;
 class Email {
 
     private static final String NO_REPLY_EMAIL = "no-reply@infinitihealth.org";
-    private final String password = "xyp984ertpaSDODS7823de12343435wer";
+    private final String password = "xyp984ertpaSDODS7823de12343435wer";        // todo : no bueno. change and put in property file
     private static final String SMTP_HOST = "smtp.office365.com";
 
     public void send(String email, String subject, String body) {
@@ -30,9 +30,9 @@ class Email {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", SMTP_HOST);
-        props.put("mail.smtp.port", "587"); //TLS Port
-        props.put("mail.smtp.auth", "true"); //enable authentication
-        props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+        props.put("mail.smtp.port", "587"); // TLS Port
+        props.put("mail.smtp.auth", "true"); // enable authentication
+        props.put("mail.smtp.starttls.enable", "true"); // enable STARTTLS
 
         //create Authenticator object to pass in Session.getInstance argument
         Authenticator auth = new Authenticator() {

@@ -6,10 +6,18 @@
 
                 <hr>
 
+                <!--                this.validationError.userIdNotAvailable-->
+                <div class="alert alert-danger" *ngIf="validationError.userIdNotAvailable">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i> There was a problem signing up with this user id.
+                    Please reset the password if you already have
+                    an account.
+                </div>
+
                 <div class="px-2 pt-3" *ngIf="loginCompleted">
                     <div class="alert alert-success">
                         Your account has been created successfully and is pending approval. Once approved, you will
-                        receive an email with your personal credentials that will allow you to login.<br><br>
+                        receive an email with your personal credentials that will allow you to login. This may take a
+                        few hours.<br><br>
 
                         Thank you.
                     </div>
@@ -25,41 +33,46 @@
                         <div class="text-muted">Enter your registration details</div>
 
                         <div class="row mt-4">
-                            <div class="form-group col-sm-6 pr-0">
+                            <div class="form-group col-sm-6 pr-0 pl-0">
                                 <label for="firstName" class="control-label float-left">First name</label>
                                 <input type="text" id="firstName" class="form-control" [(ngModel)]="newUser.firstName"
-                                       name="firstName" required
-                                       [ngClass]="{'is-invalid': validationError.firstName}">
+                                       name="firstName" required [ngClass]="{'is-invalid': validationError.firstName}">
                             </div>
 
                             <div class="form-group col-sm-6 pr-0">
                                 <label for="lastName" class="control-label float-left">Last name</label>
                                 <input type="text" id="lastName" class="form-control" [(ngModel)]="newUser.lastName"
-                                       name="lastName"
-                                       [ngClass]="{'is-invalid': validationError.lastName}">
+                                       name="lastName" [ngClass]="{'is-invalid': validationError.lastName}">
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="email" class="control-label float-left">Email address</label>
-                            <input type="email" id="email" class="form-control" [(ngModel)]="newUser.email"
-                                   name="email" [ngClass]="{'is-invalid': validationError.email}">
+                        <div class="row">
+                            <div class="form-group col-sm pr-0 pl-0">
+                                <label for="email" class="control-label float-left">Email address</label>
+                                <input type="email" id="email" class="form-control" [(ngModel)]="newUser.email"
+                                       name="email"
+                                       [ngClass]="{'is-invalid': validationError.email || validationError.userIdNotAvailable}">
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="affiliation" class="control-label float-left">Role </label>
-                            <input type="text" id="affiliation" class="form-control" [(ngModel)]="newUser.description"
-                                   name="affiliation"
-                                   [ngClass]="{'is-invalid': validationError.description}">
+                        <div class="row">
+                            <div class="form-group col-sm pr-0 pl-0">
+                                <label for="affiliation" class="control-label float-left">Role</label>
+                                <input type="text" id="affiliation" class="form-control"
+                                       [(ngModel)]="newUser.description" name="affiliation">
+                            </div>
                         </div>
 
-                        <div class="mt-5">
-                            <button type="submit" class="btn btn-primary w-100 py-2" (click)="registerUser()">Register
-                            </button>
-                            <br>
-                            <button type="button" class="btn btn-link" (click)="cancelRegister()">
-                                Cancel
-                            </button>
+                        <div class="row">
+                            <div class="col-sm mt-4 pl-0 pr-0">
+                                <button type="submit" class="btn btn-primary w-100 py-2">
+                                    Register
+                                </button>
+                                <br>
+                                <button class="btn btn-link">
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>

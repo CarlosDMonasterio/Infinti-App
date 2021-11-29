@@ -15,7 +15,8 @@ export class ModalUploadUsersComponent implements OnInit {
     fileName: string;
     emailNotification: boolean;
 
-    constructor(public activeModal: NgbActiveModal, private http: HttpService, private user: UserService, private httpClient: HttpClient) {
+    constructor(public activeModal: NgbActiveModal, private http: HttpService, private user: UserService,
+                private httpClient: HttpClient) {
     }
 
     ngOnInit(): void {
@@ -41,9 +42,6 @@ export class ModalUploadUsersComponent implements OnInit {
             this.httpClient.request(request).subscribe(event => {
                 console.log(event);
             })
-
-            // const upload$ = this.http.post("users/import", formData);
-            // upload$.subscribe();
         }
     }
 }

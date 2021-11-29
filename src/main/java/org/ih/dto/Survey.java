@@ -3,6 +3,7 @@ package org.ih.dto;
 import org.ih.survey.SurveyStatus;
 import org.ih.survey.SurveyType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Survey implements DataObject {
@@ -14,7 +15,7 @@ public class Survey implements DataObject {
     private District district;
     private School school;
     private long creationTime;
-    private List<Question> questions;
+    private List<Question> questions = new ArrayList<>();
 
     public long getId() {
         return id;

@@ -38,16 +38,12 @@ export class RegisterComponent implements OnInit {
             this.validationError.email = true;
         }
 
-        if (!this.newUser.description) {
-            this.validationError.description = true;
-        }
-
         if (Object.keys(this.validationError).length > 0) {
             return;
         }
 
         // create user then show popup with password
-        this.http.post('users', this.newUser).subscribe(result => {
+        this.http.post('users', this.newUser, undefined, false).subscribe((result: User) => {
             if (!result) {
                 return;
             }

@@ -1,21 +1,16 @@
 package org.ih.account;
 
 import com.opencsv.CSVReader;
-import org.ih.common.exception.ServiceException;
-import org.ih.common.exception.UtilityException;
 import org.ih.common.logging.Logger;
 import org.ih.dao.DAOFactory;
 import org.ih.dao.hibernate.AccountDAO;
 import org.ih.dao.model.AccountModel;
 import org.ih.dao.model.GroupModel;
 import org.ih.dto.Account;
-import org.ih.notification.NotificationTask;
-import org.ih.task.TaskRunner;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -71,80 +66,38 @@ public class Users {
 
     public void importFile(InputStream inputStream, boolean notifyUsers) {
         // expected file format is
-        // "Last Name", "First Name", "Email", "Phone Number", "Street", "City", "State", "Zip"
+        // "First Name", "Last Name", "Email", "Role/description" (optional)
         CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
 
         int i = 0;
-        AccountDAO accountDAO = DAOFactory.getAccountDAO();
-        NotificationTask notificationTask = new NotificationTask();
+        Accounts accounts = new Accounts();
 
         for (String[] next : reader) {
-            if (next.length != 8) {
+            if (next.length != 4) {
                 throw new IllegalArgumentException("Cannot import file. Improper format");
             }
 
             if (++i == 1)
                 continue;
 
-            String lastName = next[0];
-            String firstName = next[1];
+            String firstName = next[0];
+            String lastName = next[1];
             String email = next[2];
-            String phone = next[3];
-            String address = next[4] + ", " + next[5] + ", " + next[6] + ", " + next[7];
+            String role = next[3];
 
             AccountModel model = DAOFactory.getAccountDAO().getByEmail(next[1]);
             if (model != null) {
-                Logger.error("User with email: " + email + " already exists");
+                Logger.error("User with email: " + email + " already exists. Skipping account creation");
                 continue;
             }
 
             Logger.info("Creating account for user: " + email);
-            model = new AccountModel();
-            model.setEmail(email);
-            model.setFirstName(firstName);
-            model.setLastName(lastName);
-            model.setPhone(phone);
-            model.setAddress(address);
-            model.setDisabled(false);
-            model.setSalt(PasswordUtil.generateSalt());
-            model.setCreationTime(new Date());
-            model.setUsingTempPassword(true);
-            String password = PasswordUtil.generateTemporaryPassword();
-
-            try {
-                model.setPassword(PasswordUtil.encryptPassword(password, model.getSalt()));
-            } catch (UtilityException ue) {
-                throw new ServiceException("Exception encrypting password", ue);
-            }
-
-            accountDAO.create(model);
-
-            if (notifyUsers) {
-                notificationTask.addInformation(email, getSubject(), getBody(firstName, lastName, email, password));
-            }
+            Account account = new Account();
+            account.setEmail(email);
+            account.setFirstName(firstName);
+            account.setLastName(lastName);
+            account.setDescription(role);
+            accounts.createAccount(this.userId, account, notifyUsers);
         }
-
-        if (notifyUsers) {
-            TaskRunner.getInstance().runTask(notificationTask);
-        }
-    }
-
-    public static String getSubject() {
-        return "Nurse Quality Data Management System Account Created";
-    }
-
-    public static String getBody(String fName, String lName, String email, String password) {
-        return "Dear " +
-                fName + " " + lName +
-                ", " +
-                "\n\nA new account has been created for you on the InfinitiHealth Nurse Quality Data Management System." +
-                "\nPlease use the following username and password to access the site." +
-                "\n\nUser name: " +
-                email +
-                "\nPassword: " +
-                password +
-                "\n\nPlease use the link below to login and finish setting up your account." +
-                "\n\nLink: https://infinitihealth.tech\n\n\nThank you" +
-                "\n\n\n----------------------------------------------------";
     }
 }

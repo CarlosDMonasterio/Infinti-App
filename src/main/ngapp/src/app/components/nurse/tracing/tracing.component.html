@@ -44,7 +44,7 @@
                 </select>
             </div>
 
-            <div class="col-md-6 mb-3 pt-4" *ngIf="caseType">
+            <div class="col-md-6 mb-3 pt-4">
                 <label for="caseNumber" class="text-muted font-weight-bold">Case Number 00-</label>:
                 <input type="text" class="form-control" placeholder="e.g.: 23" [(ngModel)]="caseNumber"
                        name="caseNumber" id="caseNumber">
@@ -52,6 +52,13 @@
         </div>
 
         <hr>
+
+        <ng-container>
+            <div class="row">
+
+            </div>
+
+        </ng-container>
 
         <!--        <div class="form-group row" *ngIf="progress >= 40">-->
         <!--            <div class="col-md-6 mb-3 pt-4">-->

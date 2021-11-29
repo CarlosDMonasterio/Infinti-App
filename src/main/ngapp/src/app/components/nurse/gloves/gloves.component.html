@@ -81,7 +81,7 @@
                 <select class="custom-select" id="compliance" required [(ngModel)]="report.compliant" name="compliance"
                         style="width: 250px" (ngModelChange)="this.progress = 80" [disabled]="submittingReport">
                     <option selected [ngValue]=undefined>Choose One...</option>
-                    <option *ngFor="let comp of compliance" [ngValue]="comp">{{comp}}</option>
+                    <option *ngFor="let comp of compliance" [ngValue]="comp.value">{{comp.label}}</option>
                 </select>
             </div>
         </div>
@@ -89,8 +89,7 @@
         <div class="row mt-5">
             <div class="col-sm-4" *ngIf="errorSubmitting">
                 <div class="alert alert-danger p-2 small"><i class="fa fa-exclamation-triangle"></i> Error creating
-                    report.
-                    Please try again
+                    report. Please try again
                 </div>
             </div>
 

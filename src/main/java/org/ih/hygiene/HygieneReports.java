@@ -58,14 +58,13 @@ public class HygieneReports {
         return results;
     }
 
-    public List<HygieneGraphData> getGraphData(HygieneType type) {
-        final int minusDays = 7;
-        final ZonedDateTime startOfLastWeek = ZonedDateTime.now().minusDays(minusDays);
+    public List<HygieneGraphData> getGraphData(HygieneType type, int numberOfDays) {
+        final ZonedDateTime startOfLastWeek = ZonedDateTime.now().minusDays(numberOfDays);
         List<HygieneModel> modelList = this.dao.recordsAfter(Date.from(startOfLastWeek.toInstant()).getTime(), type);
         HashMap<String, List<Pair>> map = new LinkedHashMap<>();
 
         // add the seven days
-        for (int i = 1; i <= minusDays; i += 1) {
+        for (int i = 1; i <= numberOfDays; i += 1) {
             Date date = Date.from(startOfLastWeek.plusDays(i).toInstant());
             List<Pair> graphData = new ArrayList<>(2);
             graphData.add(new Pair("Non-Compliance", 0));

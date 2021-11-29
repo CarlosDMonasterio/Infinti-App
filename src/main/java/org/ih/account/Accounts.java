@@ -17,6 +17,7 @@ import org.ih.util.StringUtil;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -111,7 +112,7 @@ public class Accounts {
         if (StringUtil.isEmpty(account.getEmail()))
             throw new ServiceException("A valid email address is required to create an account");
 
-        AccountModel accountModel = dao.getByEmail(account.getEmail());
+        AccountModel accountModel = dao.getByEmail(account.getEmail().trim().toLowerCase(Locale.ROOT));
         if (accountModel != null)
             throw new IllegalArgumentException("User with id " + account.getEmail() + " already exists");
 
@@ -125,7 +126,7 @@ public class Accounts {
         accountModel.setLastUpdateTime(accountModel.getCreationTime());
         accountModel.setFirstName(account.getFirstName());
         accountModel.setLastName(account.getLastName());
-        accountModel.setEmail(account.getEmail());
+        accountModel.setEmail(account.getEmail().trim().toLowerCase(Locale.ROOT));
         accountModel.setDescription(account.getDescription());
         accountModel.setDisabled(!sendEmailNotification);
         String password = "";

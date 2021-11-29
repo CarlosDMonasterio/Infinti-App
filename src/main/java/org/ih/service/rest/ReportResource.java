@@ -35,4 +35,14 @@ public class ReportResource extends RestResource {
         HygieneReports reports = new HygieneReports(userId);
         return super.respond(reports.list(type, limit, start, asc, sort, filter));
     }
+
+    @GET
+    @Path("/hygiene/{type}/graph")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getGraphData(@PathParam("type") HygieneType type, @DefaultValue("21") @QueryParam("length") int length) {
+        String userId = requireUserId();
+        HygieneReports reports = new HygieneReports(userId);
+        return super.respond(reports.getGraphData(type, length));
+    }
 }

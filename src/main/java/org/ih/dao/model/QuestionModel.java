@@ -5,6 +5,7 @@ import org.ih.dto.Question;
 
 import javax.persistence.*;
 
+// todo : this class should be a question answer and reference question
 @Entity
 @Table(name = "Question")
 public class QuestionModel implements DatabaseModel {
@@ -74,6 +75,7 @@ public class QuestionModel implements DatabaseModel {
     public Question toDataObject() {
         Question question = new Question();
         question.setId(this.id);
+        question.setLabel(this.getLabel());
         question.setAnswer(this.answer ? this.answer : false);
         question.setComments(comments);
         return question;

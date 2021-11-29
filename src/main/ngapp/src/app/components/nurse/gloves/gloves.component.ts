@@ -22,7 +22,7 @@ export class GlovesComponent implements OnInit {
     report: HygieneReport;
     searching: boolean;
     roles: string[];
-    compliance: string[];
+    compliance: any[];
     progress: number;
     submittingReport: boolean;
     errorSubmitting: boolean;
@@ -30,7 +30,10 @@ export class GlovesComponent implements OnInit {
     constructor(private http: HttpService, private search: SchoolService, private router: Router) {
         this.report = new HygieneReport('GLOVE');
         this.roles = ['HCP - Health Care Professional', 'Data Entry', 'Nurse', 'Grounds Coordinator'];
-        this.compliance = ['No glove change performed', 'Glove change performed'];
+        this.compliance = [{label: 'No glove change performed', value: false}, {
+            label: 'Glove change performed',
+            value: true
+        }];
         this.progress = 0;
     }
 
@@ -72,7 +75,6 @@ export class GlovesComponent implements OnInit {
             this.progress = 90;
         });
     }
-
 
     formatter = (school: School) => school.name;
     searchDistrictSchools = (text$: Observable<string>) => {

@@ -20,7 +20,7 @@ export class TracingComponent implements OnInit {
     caseNumber: string;
 
     constructor() {
-        this.caseTypes = ['Positive', 'Exposure', 'Unconfirmed Symptomatic', 'Not an exposure'];
+        this.caseTypes = ['Positive Case', 'Exposure', 'Unconfirmed Symptomatic'];
     }
 
     ngOnInit(): void {

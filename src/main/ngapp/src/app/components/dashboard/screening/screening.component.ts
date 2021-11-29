@@ -4,6 +4,8 @@ import {SurveyQuestion} from "../../../models/survey-question";
 import {ScreeningService} from "../../../services/screening.service";
 import {HttpService} from "../../../http.service";
 import {Router} from "@angular/router";
+import {Result} from "../../../models/Result";
+import {District} from "../../../models/district";
 
 @Component({
     selector: 'app-screening',
@@ -21,8 +23,9 @@ export class ScreeningComponent implements OnInit {
     questions: SurveyQuestion[];
     answeredCount: number;
     attested: boolean;
-
+    districts: District[];
     page: number;
+    selectedDistrict = false;
 
     constructor(private http: HttpService, private screenService: ScreeningService, private router: Router) {
         this.survey = new Survey('DAILY_HEALTH');
@@ -34,13 +37,16 @@ export class ScreeningComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.http.get('districts').subscribe((result: Result<District>) => {
+            this.districts = result.requested;
+        });
     }
 
     setAnswer(answer: boolean): void {
         if (this.questions[this.page].answer != false && this.questions[this.page].answer != true) {
             // then answering a new question
             this.answeredCount += 1;
-            this.progress = (this.answeredCount / (this.questions.length + 1)) * 100;
+            this.progress = (this.answeredCount / (this.questions.length + 2)) * 100;
         }
 
         this.questions[this.page].answer = answer;
@@ -76,6 +82,15 @@ export class ScreeningComponent implements OnInit {
             return 'text-success';
 
         return 'text-secondary';
+    }
+
+    districtSelected(): void {
+        if (!this.selectedDistrict) {
+            this.answeredCount += 1;
+            this.progress = (this.answeredCount / (this.questions.length + 2)) * 100;
+            this.selectedDistrict = true;
+        }
+        this.errorSubmitting = false;
     }
 
     submitReport(): void {

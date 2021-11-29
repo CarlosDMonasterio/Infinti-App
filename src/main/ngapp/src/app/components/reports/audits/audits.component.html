@@ -1,0 +1,47 @@
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col">
+        </div>
+    </div>
+
+    <div class="row border shadow-sm">
+        <div class="col-sm-12 bg-white">
+            <div *ngIf="!reports || !reports.length" class="p-3">
+                <span class="text-muted font-italic">No audit reports available</span>
+            </div>
+
+            <table class="table table-hover table-borderless mt-3" *ngIf="reports && reports.length">
+                <thead class="small text-uppercase border bg-light text-secondary">
+                <tr>
+                    <th class="border-right py-2" style="width: 150px">Date</th>
+                    <th class="border-right py-2">Reporter</th>
+                    <th class="border-right py-2">School</th>
+                    <th class="py-2">Results</th>
+                </tr>
+                </thead>
+
+                <tbody class="border-bottom" style="font-size: 0.95em">
+                <tr *ngFor="let report of reports" class="border-top">
+                    <td class="small">
+                        {{report.creationTime | date : 'EEE, MMM d, yyyy'}}
+                        <div>{{report.creationTime | date : 'h:mm:ss a'}}</div>
+                    </td>
+                    <td>{{report.account.firstName}} {{report.account.lastName}}
+                        <div class="small">{{report.account.email}}</div>
+                    </td>
+                    <td>
+                        <span *ngIf="report.district">{{report.district.label}} District</span>
+                        <div *ngIf="report.school">{{report.school.name}}</div>
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div>
+                <app-mini-pager [available]="paging.available" [numberPerPage]="paging.limit"
+                                class="mb-2"></app-mini-pager>
+            </div>
+        </div>
+    </div>
+</div>

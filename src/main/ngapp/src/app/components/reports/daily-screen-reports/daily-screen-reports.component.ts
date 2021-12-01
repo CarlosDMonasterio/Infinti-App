@@ -42,4 +42,8 @@ export class DailyScreenReportsComponent implements OnInit {
             this.reports = result.requested;
         });
     }
+
+    sortQuestions(questions: SurveyQuestion[]): SurveyQuestion[] {
+        return questions.sort((a, b) => a.label > b.label ? 1 : a.label === b.label ? 0 : -1);
+    }
 }

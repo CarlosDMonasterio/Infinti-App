@@ -14,8 +14,8 @@
                 <thead class="small text-uppercase border bg-light text-secondary">
                 <tr>
                     <th class="border-right py-2" style="width: 150px">Date</th>
-                    <th class="border-right py-2">Reporter</th>
-                    <th class="border-right py-2">School</th>
+                    <th class="border-right py-2" style="width: 200px">Reporter</th>
+                    <th class="border-right py-2" style="width: 350px">Location</th>
                     <th class="py-2">Results</th>
                 </tr>
                 </thead>
@@ -27,13 +27,24 @@
                         <div>{{report.creationTime | date : 'h:mm:ss a'}}</div>
                     </td>
                     <td>{{report.account.firstName}} {{report.account.lastName}}
-                        <div class="small">{{report.account.email}}</div>
+                        <div class="small text-muted">{{report.account.email}}</div>
                     </td>
                     <td>
                         <span *ngIf="report.district">{{report.district.label}} District</span>
-                        <div *ngIf="report.school">{{report.school.name}}</div>
+                        <div *ngIf="report.school" class="small text-muted">{{report.school.name}}</div>
                     </td>
-                    <td></td>
+                    <td class="p-0">
+                        <div class="d-flex mt-3">
+                            <div class="border text-center ml-2 bg-white"
+                                 *ngFor="let question of sortQuestions(report.questions)" style="width: 35px">
+                                <i class="fa fa-fw" [ngbTooltip]="question.label" *ngIf="!question.comments"
+                                   [ngClass]="{'fa-times text-success': !question.answer, 'fa-check text-danger': question.answer}"></i>
+
+                                <i class="fa fa-fw fa-comments-o text-muted" [ngbTooltip]="question.comments"
+                                   *ngIf="question.comments"></i>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -10,7 +10,7 @@ export class SurveyReportsComponent implements OnInit {
     active: string;
 
     constructor() {
-        this.active = 'dhs';
+        this.active = 'survey';
     }
 
     ngOnInit(): void {

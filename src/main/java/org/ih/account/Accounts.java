@@ -129,6 +129,7 @@ public class Accounts {
         accountModel.setEmail(account.getEmail().trim().toLowerCase(Locale.ROOT));
         accountModel.setDescription(account.getDescription());
         accountModel.setDisabled(!sendEmailNotification);
+        account.setPhone(account.getPhone());
         String password = "";
 
         // check whether to generate password information if sending email notification

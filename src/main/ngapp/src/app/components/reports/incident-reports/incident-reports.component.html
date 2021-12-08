@@ -1,10 +1,5 @@
 <div class="container-fluid pt-3">
 
-    <div class="row">
-        <div class="col">
-        </div>
-    </div>
-
     <div class="row border shadow-sm">
         <div class="col-sm-12 bg-white">
             <div *ngIf="!reports || !reports.length" class="p-3">
@@ -15,24 +10,30 @@
                 <thead class="small text-uppercase border bg-light text-secondary">
                 <tr>
                     <th class="border-right py-2">Reporter</th>
-                    <th class="border-right py-2">School</th>
+                    <th class="border-right py-2">Location</th>
                     <th class="border-right py-2">Details</th>
+                    <th class="border-right py-2">Action</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <tr *ngFor="let report of reports">
-                    <td class="w-25">
+                    <td style="width: 250px">
                         {{report.user.firstName}} {{report.user.lastName}}
                         <div class="small text-muted">{{report.dateTime | date : 'EEE, MMM d, yyyy h:mm:ss a'}}</div>
                     </td>
-                    <td class="w-25">
+                    <td *ngIf="!report.district" style="width: 250px">
+                        {{report.department}} Department
+                        <div>{{report.location}}</div>
+                    </td>
+                    <td *ngIf="report.district" style="width: 250px">
                         {{report.district.label}} District
                         <div>{{report.school.name}}</div>
                     </td>
-                    <td class="w-50">
+                    <td class="small">
                         {{report.details}}
                     </td>
+                    <td style="width: 100px;"></td>
                 </tr>
                 </tbody>
             </table>

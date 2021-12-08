@@ -129,6 +129,7 @@ public class Accounts {
         accountModel.setEmail(account.getEmail().trim().toLowerCase(Locale.ROOT));
         accountModel.setDescription(account.getDescription());
         accountModel.setDisabled(!sendEmailNotification);
+        account.setPhone(account.getPhone());
         String password = "";
 
         // check whether to generate password information if sending email notification
@@ -301,7 +302,7 @@ public class Accounts {
                 dateFormat.format(new Date()) + ". Your new temporary password is\n\n" +
                 tempPassword + "\n\n" +
                 "Please use the link below to login" +
-                "\n\nLink: https:\\infinitihealth.tech\n\n\nThank you" +
+                "\n\nLink: https://infinitihealth.tech\n\n\nThank you" +
                 "\n\n\n----------------------------------------------------";
 
         NotificationTask notificationTask = new NotificationTask();

@@ -36,12 +36,14 @@
                             <div class="form-group col-sm-6 pr-0 pl-0">
                                 <label for="firstName" class="control-label float-left">First name</label>
                                 <input type="text" id="firstName" class="form-control" [(ngModel)]="newUser.firstName"
+                                       maxlength="50"
                                        name="firstName" required [ngClass]="{'is-invalid': validationError.firstName}">
                             </div>
 
                             <div class="form-group col-sm-6 pr-0">
                                 <label for="lastName" class="control-label float-left">Last name</label>
                                 <input type="text" id="lastName" class="form-control" [(ngModel)]="newUser.lastName"
+                                       maxlength="50"
                                        name="lastName" [ngClass]="{'is-invalid': validationError.lastName}">
                             </div>
                         </div>
@@ -50,15 +52,25 @@
                             <div class="form-group col-sm pr-0 pl-0">
                                 <label for="email" class="control-label float-left">Email address</label>
                                 <input type="email" id="email" class="form-control" [(ngModel)]="newUser.email"
-                                       name="email"
+                                       name="email" maxlength="320"
                                        [ngClass]="{'is-invalid': validationError.email || validationError.userIdNotAvailable}">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-sm pr-0 pl-0">
+                                <label for="phone" class="control-label float-left">Phone</label>
+                                <input type="text" id="phone" class="form-control" [(ngModel)]="newUser.phone"
+                                       name="phone" placeholder="(123) 456-7890" maxlength="15"
+                                       [ngClass]="{'is-invalid': validationError.phone}">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-sm pr-0 pl-0">
                                 <label for="affiliation" class="control-label float-left">Role</label>
-                                <input type="text" id="affiliation" class="form-control"
+                                <input type="text" id="affiliation" class="form-control" maxlength="300"
+                                       placeholder="Enter your role or title at Infiniti Health"
                                        [(ngModel)]="newUser.description" name="affiliation">
                             </div>
                         </div>
@@ -69,7 +81,7 @@
                                     Register
                                 </button>
                                 <br>
-                                <button class="btn btn-link">
+                                <button class="btn btn-link" (click)="cancelRegister()">
                                     Cancel
                                 </button>
                             </div>

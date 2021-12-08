@@ -33,18 +33,27 @@ public class Incidents {
 
         AccountModel accountModel = DAOFactory.getAccountDAO().getByEmail(userId);
         model.setReporter(accountModel);
+        model.setDepartment(report.getDepartment());
+        model.setLocation(report.getLocation());
+        model.setDate(new Date(report.getDateTime()));
+        model.setSupervisor(report.getSupervisor());
+        model.setAdditionalDetails(report.getAdditionalDetails());
 
         // get district
-        DistrictModel districtModel = DAOFactory.getDistrictDAO().get(report.getDistrict().getId());
-        if (districtModel == null)
-            throw new IllegalArgumentException("Cannot create report without district");
-        model.setDistrict(districtModel);
+        if (report.getDistrict() != null) {
+            DistrictModel districtModel = DAOFactory.getDistrictDAO().get(report.getDistrict().getId());
+            if (districtModel == null)
+                throw new IllegalArgumentException("Cannot create report without district");
+            model.setDistrict(districtModel);
 
-        // get school
-        SchoolModel schoolModel = DAOFactory.getSchoolDAO().get(report.getSchool().getId());
-        if (schoolModel == null)
-            throw new IllegalArgumentException("Cannot create report without school");
-        model.setSchool(schoolModel);
+            // get school
+            if (report.getSchool() != null) {
+                SchoolModel schoolModel = DAOFactory.getSchoolDAO().get(report.getSchool().getId());
+                if (schoolModel == null)
+                    throw new IllegalArgumentException("Cannot create report without school");
+                model.setSchool(schoolModel);
+            }
+        }
 
         model = this.dao.create(model);
         return model.toDataObject();

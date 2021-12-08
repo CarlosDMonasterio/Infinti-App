@@ -24,6 +24,7 @@ public class Account implements DataObject {
     private String description;
     private boolean isAdministrator;
     private String address;
+    private String phone;
 
     public long getId() {
         return id;
@@ -159,5 +160,13 @@ public class Account implements DataObject {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

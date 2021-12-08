@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
             this.validationError.lastName = true;
         }
 
-        if (!this.newUser.email) {
+        if (!this.newUser.email || !/(.+)@(.+){2,}\.(.+){2,}/.test(this.newUser.email)) {
             this.validationError.email = true;
         }
 

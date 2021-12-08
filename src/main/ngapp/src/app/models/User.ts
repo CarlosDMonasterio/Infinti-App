@@ -18,4 +18,5 @@ export class User {
     type?: string;
     isAdministrator: boolean;
     address: string;
+    phone: string;
 }

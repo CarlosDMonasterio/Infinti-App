@@ -28,7 +28,7 @@ public class AccountModel implements DatabaseModel {
     @Column(name = "email", length = 320, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "phone")
+    @Column(name = "phone", length = 15)
     private String phone;
 
     @Column(name = "address")
@@ -226,6 +226,7 @@ public class AccountModel implements DatabaseModel {
             transfer.setLastLoginTime(lastLoginTime.getTime());
         transfer.setCurrentTime(System.currentTimeMillis());
         transfer.setDescription(description);
+        transfer.setPhone(phone);
         transfer.setDisabled(Objects.requireNonNullElse(disabled, false));
         return transfer;
     }

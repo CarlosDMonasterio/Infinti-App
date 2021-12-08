@@ -31,16 +31,24 @@ import {ConfirmActionComponent} from './components/widgets/confirm-action/confir
 import {SurveyComponent} from './components/nurse/survey/survey.component';
 import {CreateUserComponent} from './components/admin/admin-users/create-user/create-user.component';
 import {DistrictsComponent} from "./components/admin/sites/districts.component";
-import {ModalCreateDistrictComponent} from './components/admin/sites/modal-create-district/modal-create-district.component';
+import {
+    ModalCreateDistrictComponent
+} from './components/admin/sites/modal-create-district/modal-create-district.component';
 import {SelectDistrictComponent} from './components/nurse/survey/questions/select-district/select-district.component';
 import {IncidentComponent} from './components/nurse/incident/incident.component';
 import {AdminSchoolsComponent} from './components/admin/admin-schools/admin-schools.component';
-import {ModalCreateSchoolComponent} from './components/admin/admin-schools/modal-create-school/modal-create-school.component';
+import {
+    ModalCreateSchoolComponent
+} from './components/admin/admin-schools/modal-create-school/modal-create-school.component';
 import {ReportsComponent} from './components/reports/reports.component';
-import {ModalUploadUsersComponent} from './components/admin/admin-users/modal-upload-users/modal-upload-users.component';
+import {
+    ModalUploadUsersComponent
+} from './components/admin/admin-users/modal-upload-users/modal-upload-users.component';
 import {HygieneComponent} from './components/nurse/hygiene/hygiene.component';
 import {GlovesComponent} from './components/nurse/gloves/gloves.component';
-import {ModalUploadSchoolsComponent} from './components/admin/sites/modal-upload-schools/modal-upload-schools.component';
+import {
+    ModalUploadSchoolsComponent
+} from './components/admin/sites/modal-upload-schools/modal-upload-schools.component';
 import {ProfileDetailsResolver} from "./components/profile/profile.details.resolver";
 import {HygieneReportsComponent} from './components/reports/hygiene-reports/hygiene-reports.component';
 import {IncidentReportsComponent} from './components/reports/incident-reports/incident-reports.component';
@@ -62,6 +70,7 @@ import {PatientDetailsResolver} from "./components/reports/patients/patient-deta
 import {ScreeningComponent} from './components/dashboard/screening/screening.component';
 import {AuditsComponent} from './components/reports/audits/audits.component';
 import {DailyScreenReportsComponent} from './components/reports/daily-screen-reports/daily-screen-reports.component';
+import {TestResultsComponent} from './components/dashboard/test-results/test-results.component';
 
 @NgModule({
     declarations: [
@@ -114,7 +123,8 @@ import {DailyScreenReportsComponent} from './components/reports/daily-screen-rep
         PatientDetailsComponent,
         ScreeningComponent,
         AuditsComponent,
-        DailyScreenReportsComponent
+        DailyScreenReportsComponent,
+        TestResultsComponent
     ],
     imports: [
         BrowserModule,

@@ -1,0 +1,26 @@
+h1 {
+    width: 100%;
+    margin: .7em auto;
+    overflow: hidden;
+    text-align: center;
+    color: #a7a7a7;
+    font-size: 1.1em;
+}
+
+h1:before, h1:after {
+    content: "";
+    display: inline-block;
+    width: 50%;
+    margin: 0 .5em 0 -55%;
+    vertical-align: middle;
+    border-bottom: 1px solid #ccc;
+}
+
+h1:after {
+    margin: 0 -55% 0 .5em;
+}
+
+span {
+    display: inline-block;
+    vertical-align: middle;
+}

@@ -34,22 +34,39 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-3 pt-4">
-                <label for="district" class="text-muted font-weight-bold">District</label>:<br>
-                <select class="custom-select" id="district" required [(ngModel)]="report.district" name="district"
-                        style="width: 180px" (ngModelChange)="districtSelected()">
-                    <option selected [ngValue]=undefined>Choose One...</option>
-                    <option *ngFor="let district of districts" [ngValue]="district">{{district.label}}</option>
-                </select>
+        <ng-container *ngIf="page === 0">
+            <div class="row pt-4">
+                <div class="col-sm-6">
+                    <label for="department" class="text-muted font-weight-bold">Department</label>:<br>
+                    <input type="text" class="form-control" id="department" name="department"
+                           [(ngModel)]="report.department">
+                </div>
+                <div class="col-sm-6">
+                    <label for="location" class="text-muted font-weight-bold">Location</label>:<br>
+                    <input type="text" class="form-control" id="location" name="location" [(ngModel)]="report.location">
+                </div>
             </div>
 
-            <div class="col-md-6 mb-3 pt-4" *ngIf="report.district">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>OR</h1>
+                </div>
+            </div>
 
-                <ng-container *ngIf="!availableSchools">
+            <div class="row">
+                <div class="col-sm-6 mb-3 ">
+                    <label for="district" class="text-muted font-weight-bold">School District</label>:<br>
+                    <select class="custom-select" id="district" required [(ngModel)]="report.district"
+                            name="district" style="width: 180px" (ngModelChange)="districtSelected()">
+                        <option selected [ngValue]=undefined>Choose One...</option>
+                        <option *ngFor="let district of districts" [ngValue]="district">{{district.label}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-6 mb-3">
                     <label for="school" class="text-muted font-weight-bold">School</label>:
                     <input type="text" class="form-control" placeholder="Start entering school name..."
-                           name="school" id="school"
+                           name="school" id="school" [disabled]="!report.district"
                            (selectItem)="schoolSelected($event)"
                            [(ngModel)]="report.school"
                            [editable]="false"
@@ -57,35 +74,140 @@
                            [inputFormatter]="formatter"
                            [resultFormatter]="formatter"
                            #instance="ngbTypeahead">
-                </ng-container>
-            </div>
-        </div>
-
-        <hr>
-
-        <ng-container *ngIf="progress >= 50">
-            <div class="row">
-                <div class="col mb-3 pt-4">
-                    <label for="comment" class="text-muted font-weight-bold">Incident Details</label>:<br>
-                    <textarea name="comment" id="comment" class="form-control" rows="6" [(ngModel)]="report.details"
-                              placeholder="Please enter the details of the incident"></textarea>
                 </div>
             </div>
         </ng-container>
 
-        <div class="row mt-5">
-            <div class="col" *ngIf="errorSubmitting">
-                <div class="alert alert-danger p-2 small"><i class="fa fa-exclamation-triangle"></i> Server error.</div>
+        <ng-container *ngIf="page === 1">
+            <div class="row mb-1">
+                <div class="col-sm-6 pt-4">
+                    <span class="text-muted font-weight-bold">Date of incident</span>
+                    <div class="input-group w-50 pt-4">
+                        <input class="form-control" [(ngModel)]="report.date"
+                               placeholder="mm/dd/yyyy" name="dp" ngbDatepicker #d="ngbDatepicker">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                <i class="fa fa-fw fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 pt-4">
+                    <span class=" text-muted font-weight-bold">Approximate time of incident</span> &nbsp; &nbsp;
+                    <ngb-timepicker [(ngModel)]="report.time" [meridian]="true"
+                                    [minuteStep]="minuteStep"></ngb-timepicker>
+                </div>
             </div>
 
-            <div class="col mb-3 text-right">
-                <button class="btn btn-primary ml-2" *ngIf="progress >= 50"
-                        [disabled]="!report.details || submittingReport" (click)="submitReport()">
+            <div class="row mb-3">
+                <div class="col-sm-12">
+                    <label for="details" class="text-muted font-weight-bold">Details</label>:<br>
+                    <textarea class="form-control" id="details" placeholder="Please enter details of the incident"
+                              rows="5" [(ngModel)]="report.details"></textarea>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="page === 2">
+            <div class="row pt-4">
+                <div class="col-sm-4">
+                    <span class=" text-muted font-weight-bold">Was a supervisor notified?</span>
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="supervisor-notified" id="inlineRadio1"
+                               [value]="true" [(ngModel)]="report.supervisorNotified">
+                        <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="supervisor-notified" id="inlineRadio2"
+                               [value]="false" [(ngModel)]="report.supervisorNotified">
+                        <label class="form-check-label" for="inlineRadio2">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3 pt-4" *ngIf="report.supervisorNotified">
+                <div class="col-sm-4"><span class=" text-muted font-weight-bold">Enter Supervisor name</span></div>
+                <div class="col-sm-8"><input type="text" class="form-control" id="supervisor" name="supervisor"
+                                             [(ngModel)]="report.supervisor">
+                </div>
+            </div>
+
+            <div class="row mb-3 pt-4">
+                <div class="col-sm-12">
+                    <label for="witnesses" class="text-muted font-weight-bold">Witnesses</label><br>
+                    <textarea class="form-control" id="witnesses" [(ngModel)]="report.witnesses"
+                              placeholder="Please enter any witness to the incident"
+                              rows="5"></textarea>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="page === 3">
+            <div class="row mb-3 pt-4">
+                <div class="col-sm-12">
+                    <label for="additional-info" class="text-muted font-weight-bold">Additional Information</label>:<br>
+                    <textarea class="form-control" id="additional-info" [(ngModel)]="report.additionalDetails"
+                              placeholder="Please enter any additional information, suggestions or feedback"
+                              rows="5"></textarea>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="page === 4">
+            <div class="row  pt-4">
+                <div class="col-sm-12">
+                    <div class="alert alert-success">
+                        Thank you for submitting your report. We will be following up on it.
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <hr>
+
+        <div class="row mt-5" *ngIf="page < 4">
+            <div class="col text-left">
+                <button class="btn btn-secondary" [disabled]="page <= 0" (click)="previousQuestion()">
+                    <i class="fa fa-fw fa-angle-double-left"></i> Previous
+                </button>
+            </div>
+
+            <div class="col text-right">
+                <button class="btn btn-secondary" [disabled]="nextDisabled()" (click)="nextQuestion()"
+                        *ngIf="!isLastQuestion()">Next <i class="fa fa-fw fa-angle-double-right"></i></button>
+
+                <button class="btn btn-primary ml-1" *ngIf="isLastQuestion()"
+                        [disabled]="submitDisabled()" (click)="submitReport()">
                     <span *ngIf="!submittingReport">Submit</span>
                     <span *ngIf="submittingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>
                 </button>
             </div>
         </div>
+
+        <div class="row" *ngIf="page === 4">
+            <div class="col-sm-12">
+                <button class="btn btn-primary float-right" (click)="goToHome()">OK</button>
+            </div>
+        </div>
+
+        <!--        <div class="row mt-5">-->
+        <!--            <div class="col" *ngIf="errorSubmitting">-->
+        <!--                <div class="alert alert-danger p-2 small"><i class="fa fa-exclamation-triangle"></i> Server error.-->
+        <!--                </div>-->
+        <!--            </div>-->
+
+        <!--            <div class="col text-right">-->
+        <!--                <button class="btn btn-primary ml-2" *ngIf="progress >= 50"-->
+        <!--                        [disabled]="!report.details || submittingReport" (click)="submitReport()">-->
+        <!--                    <span *ngIf="!submittingReport">Submit</span>-->
+        <!--                    <span *ngIf="submittingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>-->
+        <!--                </button>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 
     <br><br><br><br>

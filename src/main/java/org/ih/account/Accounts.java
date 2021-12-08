@@ -302,7 +302,7 @@ public class Accounts {
                 dateFormat.format(new Date()) + ". Your new temporary password is\n\n" +
                 tempPassword + "\n\n" +
                 "Please use the link below to login" +
-                "\n\nLink: https:\\infinitihealth.tech\n\n\nThank you" +
+                "\n\nLink: https://infinitihealth.tech\n\n\nThank you" +
                 "\n\n\n----------------------------------------------------";
 
         NotificationTask notificationTask = new NotificationTask();

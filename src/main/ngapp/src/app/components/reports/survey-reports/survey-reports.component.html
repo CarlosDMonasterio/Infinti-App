@@ -34,6 +34,13 @@
                         <app-daily-screen-reports></app-daily-screen-reports>
                     </ng-template>
                 </li>
+
+                <li [ngbNavItem]="'tests'">
+                    <a ngbNavLink>Test Results</a>
+                    <ng-template ngbNavContent>
+                        <app-test-results></app-test-results>
+                    </ng-template>
+                </li>
             </ul>
         </div>
     </div>

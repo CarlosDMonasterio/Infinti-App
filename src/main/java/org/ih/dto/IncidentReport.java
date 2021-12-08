@@ -8,6 +8,10 @@ public class IncidentReport implements DataObject {
     private School school;
     private String details;
     private long dateTime;
+    private String supervisor;
+    private String additionalDetails;
+    private String department;
+    private String location;
 
     public long getId() {
         return id;
@@ -55,5 +59,37 @@ public class IncidentReport implements DataObject {
 
     public void setSchool(School school) {
         this.school = school;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public String getAdditionalDetails() {
+        return additionalDetails;
+    }
+
+    public void setAdditionalDetails(String additionalDetails) {
+        this.additionalDetails = additionalDetails;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

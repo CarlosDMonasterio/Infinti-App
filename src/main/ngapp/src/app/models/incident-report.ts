@@ -9,4 +9,12 @@ export class IncidentReport {
     school: School;
     details: string;
     dateTime: number;
+    department: string;
+    location: string;
+    date: string;
+    time: string;
+    supervisorNotified: boolean;
+    supervisor: string;
+    witnesses: string;
+    additionalDetails: string;
 }

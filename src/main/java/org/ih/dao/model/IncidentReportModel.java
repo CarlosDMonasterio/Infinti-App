@@ -30,6 +30,18 @@ public class IncidentReportModel implements DatabaseModel {
     @Column(name = "details")
     private String details;
 
+    @Column(name = "additional_details")
+    private String additionalDetails;
+
+    @Column(name = "department")
+    private String department;
+
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "supervisor")
+    private String supervisor;
+
     @Temporal(value = TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;
@@ -78,15 +90,53 @@ public class IncidentReportModel implements DatabaseModel {
         this.school = school;
     }
 
+    public String getAdditionalDetails() {
+        return additionalDetails;
+    }
+
+    public void setAdditionalDetails(String additionalDetails) {
+        this.additionalDetails = additionalDetails;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(String supervisor) {
+        this.supervisor = supervisor;
+    }
+
     @Override
     public IncidentReport toDataObject() {
         IncidentReport incidentReport = new IncidentReport();
         incidentReport.setId(this.id);
         incidentReport.setDateTime(this.date.getTime());
-        incidentReport.setDistrict(this.district.toDataObject());
-        incidentReport.setSchool(this.school.toDataObject());
+        if (this.district != null)
+            incidentReport.setDistrict(this.district.toDataObject());
+        if (this.school != null)
+            incidentReport.setSchool(this.school.toDataObject());
         incidentReport.setDetails(this.details);
         incidentReport.setUser(this.reporter.toDataObject());
+        incidentReport.setDepartment(this.department);
+        incidentReport.setLocation(this.location);
+        incidentReport.setAdditionalDetails(this.additionalDetails);
+        incidentReport.setSupervisor(this.supervisor);
         return incidentReport;
     }
 }

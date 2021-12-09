@@ -3,6 +3,7 @@ import {Result} from "../../../models/Result";
 import {Survey} from "../../../models/survey";
 import {Paging} from "../../../models/Paging";
 import {HttpService} from "../../../http.service";
+import {SurveyQuestion} from "../../../models/survey-question";
 
 @Component({
     selector: 'app-audits',
@@ -27,5 +28,9 @@ export class AuditsComponent implements OnInit {
 
         // get graph data
         // this.http.get('surveys/graph?type=AUDIT')
+    }
+
+    sortQuestions(questions: SurveyQuestion[]): SurveyQuestion[] {
+        return questions.sort((a, b) => a.label > b.label ? 1 : a.label === b.label ? 0 : -1);
     }
 }

@@ -34,7 +34,8 @@
                     <td class="p-0">
                         <div class="d-flex mt-3">
                             <div class="border text-center ml-2"
-                                 *ngFor="let question of report.questions; let i = index" style="width: 35px">
+                                 *ngFor="let question of sortQuestions(report.questions); let i = index"
+                                 style="width: 35px">
                                 <i class="fa fa-fw" [ngbTooltip]="questions[i].details"
                                    [ngClass]="{'fa-times text-success': !question.answer, 'fa-check text-danger': question.answer}"></i>
                             </div>

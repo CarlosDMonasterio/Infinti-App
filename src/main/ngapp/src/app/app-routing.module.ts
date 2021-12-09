@@ -39,6 +39,7 @@ const routes: Routes = [
     {path: 'screening', component: ScreeningComponent},
     {path: 'incidents', component: IncidentComponent},
     {path: 'hygiene', component: HygieneComponent},
+    {path: 'tests', component: TestsComponent},
     {path: 'gloves', component: GlovesComponent},
     {path: 'tracing', component: TracingComponent},
     {path: 'forgotPassword', component: ForgotPasswordComponent},

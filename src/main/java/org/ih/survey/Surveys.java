@@ -70,6 +70,7 @@ public class Surveys {
             for (Question question : survey.getQuestions()) {
                 QuestionModel questionModel = new QuestionModel();
                 questionModel.setAnswer(question.isAnswer());
+                questionModel.setComments(question.getComments());
                 questionModel.setLabel(question.getLabel());
                 questionModel.setSurvey(model);
                 questionModel = dao.create(questionModel);

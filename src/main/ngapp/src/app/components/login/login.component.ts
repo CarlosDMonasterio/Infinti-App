@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
 
         this.processing = true;
         this.http.post('accesstoken', this.loggedInUser).subscribe((result: User) => {
-            console.log(result);
+            console.log(result); //**ASK IF NECESSARY**
             this.processing = false;
 
             // this relies on the user knowing their password before being notified which is highly unlikely

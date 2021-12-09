@@ -238,77 +238,82 @@ public class Accounts {
      */
     public Account resetPassword(String userId, Account transfer) throws ServiceException {
         AccountModel accountModel = dao.getByEmail(userId);
-        if (accountModel == null)
-            throw new IllegalArgumentException("User id \"" + userId + "\" is invalid");
 
-        if (accountModel.getDisabled() == null || accountModel.getDisabled() || userId.equalsIgnoreCase(DEFAULT_ADMIN_USERID)) {
-            Logger.error("Cannot reset password for account " + accountModel.getEmail());
-            String errorMsg = "Cannot reset the password for this account";
-            throw new ServiceException(errorMsg);
-        }
+        if (accountModel == null) { /* Wrapping entire operation to bypass IF User ID is not valid */
+            return null; /* Returns 404 */
+        } else {
+            //execute only if accountModel !null
+            if (accountModel.getDisabled() == null || accountModel.getDisabled() || userId.equalsIgnoreCase(DEFAULT_ADMIN_USERID)) {
+                Logger.error("Cannot reset password for account " + accountModel.getEmail());
+                String errorMsg = "Cannot reset the password for this account";
 
-        // check how long since last update request; it must be greater than the min password reset period
-        if (accountModel.getPasswordUpdatedTime() != null && !accountModel.getUsingTempPassword()) {
-            // now - updatedTime >= MIN_PASSWORD_RESET_PERIOD;
-            long updatedTime = accountModel.getPasswordUpdatedTime().getTime();
-            if (new Date(updatedTime + MIN_PASSWORD_RESET_PERIOD).after(new Date())) {
-                String errMsg = "Too many password reset attempts in the past few hours";
-                Logger.error(errMsg);
-                throw new ServiceException(errMsg);
+                /* throw new ServiceException(errorMsg); -- Returns a 500 error */
+                return null; /* Returns 404 - Protects administrator username*/
             }
-        }
 
-        if (transfer != null && !StringUtil.isEmpty(transfer.getNewPassword())) {
+            // check how long since last update request; it must be greater than the min password reset period
+            if (accountModel.getPasswordUpdatedTime() != null && !accountModel.getUsingTempPassword()) {
+                // now - updatedTime >= MIN_PASSWORD_RESET_PERIOD;
+                long updatedTime = accountModel.getPasswordUpdatedTime().getTime();
+                if (new Date(updatedTime + MIN_PASSWORD_RESET_PERIOD).after(new Date())) {
+                    String errMsg = "Too many password reset attempts in the past few hours";
+                    Logger.error(errMsg);
+                    throw new ServiceException(errMsg);
+                }
+            }
+
+            if (transfer != null && !StringUtil.isEmpty(transfer.getNewPassword())) {
+                try {
+                    return updatePassword(userId, transfer.getPassword(), transfer.getNewPassword());
+                } catch (AuthenticationException e) {
+                    throw new ServiceException(e);
+                }
+            }
+
+            // generate a new random password and send
+            String tempPassword = PasswordUtil.generateTemporaryPassword();
+            boolean isNewReset = StringUtil.isEmpty(accountModel.getPassword());    // if this is a new password generation
+
             try {
-                return updatePassword(userId, transfer.getPassword(), transfer.getNewPassword());
-            } catch (AuthenticationException e) {
-                throw new ServiceException(e);
+                accountModel.setPassword(PasswordUtil.encryptPassword(tempPassword, accountModel.getSalt()));
+            } catch (UtilityException ue) {
+                throw new ServiceException("Exception encrypting password", ue);
             }
-        }
 
-        // generate a new random password and send
-        String tempPassword = PasswordUtil.generateTemporaryPassword();
-        boolean isNewReset = StringUtil.isEmpty(accountModel.getPassword());    // if this is a new password generation
+            accountModel.setUsingTempPassword(true);
+            accountModel.setLastUpdateTime(new Date());
+            accountModel.setPasswordUpdatedTime(new Date());
+            accountModel = dao.update(accountModel);
 
-        try {
-            accountModel.setPassword(PasswordUtil.encryptPassword(tempPassword, accountModel.getSalt()));
-        } catch (UtilityException ue) {
-            throw new ServiceException("Exception encrypting password", ue);
-        }
+            if (isNewReset) {
+                sendAccountEmail(accountModel.toDataObject(), tempPassword);
+                return accountModel.toDataObject();
+            }
 
-        accountModel.setUsingTempPassword(true);
-        accountModel.setLastUpdateTime(new Date());
-        accountModel.setPasswordUpdatedTime(new Date());
-        accountModel = dao.update(accountModel);
+            String subject = "Your Infiniti Health password was reset";
+            String name = accountModel.getFirstName();
+            if (StringUtil.isEmpty(name)) {
+                name = accountModel.getLastName();
+                if (StringUtil.isEmpty(name))
+                    name = accountModel.getEmail();
+            }
 
-        if (isNewReset) {
-            sendAccountEmail(accountModel.toDataObject(), tempPassword);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy 'at' HH:mm aaa, z");
+
+            String builder = "Dear " + name + ",\n\n" +
+                    "The password for your Infiniti Health" +
+                    " account (" + userId + ") was reset on " +
+                    dateFormat.format(new Date()) + ". Your new temporary password is\n\n" +
+                    tempPassword + "\n\n" +
+                    "Please use the link below to login" +
+                    "\n\nLink: https:\\infinitihealth.tech\n\n\nThank you" +
+                    "\n\n\n----------------------------------------------------";
+
+            NotificationTask notificationTask = new NotificationTask();
+            notificationTask.addInformation(accountModel.getEmail(), subject, builder);
+            TaskRunner.getInstance().runTask(notificationTask);
             return accountModel.toDataObject();
         }
-
-        String subject = "Your Infiniti Health password was reset";
-        String name = accountModel.getFirstName();
-        if (StringUtil.isEmpty(name)) {
-            name = accountModel.getLastName();
-            if (StringUtil.isEmpty(name))
-                name = accountModel.getEmail();
-        }
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy 'at' HH:mm aaa, z");
-
-        String builder = "Dear " + name + ",\n\n" +
-                "The password for your Infiniti Health" +
-                " account (" + userId + ") was reset on " +
-                dateFormat.format(new Date()) + ". Your new temporary password is\n\n" +
-                tempPassword + "\n\n" +
-                "Please use the link below to login" +
-                "\n\nLink: https://infinitihealth.tech\n\n\nThank you" +
-                "\n\n\n----------------------------------------------------";
-
-        NotificationTask notificationTask = new NotificationTask();
-        notificationTask.addInformation(accountModel.getEmail(), subject, builder);
-        TaskRunner.getInstance().runTask(notificationTask);
-        return accountModel.toDataObject();
     }
 
     public boolean isAdministrator(String userId) {

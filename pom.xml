@@ -6,7 +6,7 @@
 
     <groupId>org.ih</groupId>
     <artifactId>InfinitiHealth</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <packaging>war</packaging>
 
     <name>ih</name>

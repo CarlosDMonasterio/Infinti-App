@@ -31,7 +31,7 @@ public class UserResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(@Context HttpServletRequest req,
                            @DefaultValue("false") @QueryParam("notify") boolean notifyUser, Account account) {
-        String userId = getUserId();
+        String userId = requireUserId();
         if (StringUtils.isBlank(userId)) {
             Logger.info("Self-registering account for " + account.getEmail());
             notifyUser = false;     // force false, if self-registering in order to have an approval

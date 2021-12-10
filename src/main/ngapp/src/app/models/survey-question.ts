@@ -4,4 +4,5 @@ export class SurveyQuestion {
     options?: string[];
     answer?: boolean;
     comments?: string;
+    expected?: boolean;
 }

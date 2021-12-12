@@ -21,8 +21,8 @@
                 </thead>
 
                 <tbody class="border-bottom" style="font-size: 0.95em">
-                <tr *ngFor="let report of reports" class="border-top">
-                    <td class="small">
+                <tr *ngFor="let report of reports; let i = index" class="border-top">
+                    <td class="small text-nowrap" style="width: 150px">
                         {{report.creationTime | date : 'EEE, MMM d, yyyy'}}
                         <div>{{report.creationTime | date : 'h:mm:ss a'}}</div>
                     </td>
@@ -35,10 +35,13 @@
                     </td>
                     <td class="p-0">
                         <div class="d-flex mt-3">
-                            <div class="border text-center ml-2 bg-white"
-                                 *ngFor="let question of sortQuestions(report.questions)" style="width: 35px">
-                                <i class="fa fa-fw" [ngbTooltip]="question.label" *ngIf="!question.comments"
-                                   [ngClass]="{'fa-times text-success': !question.answer, 'fa-check text-danger': question.answer}"></i>
+                            <div class="border text-center ml-2 bg-white d-inline-block"
+                                 *ngFor="let question of sortQuestions(report.questions)" style="width: 30px">
+
+                                <i class="fa fa-fw" [ngbTooltip]="question.label"
+                                   *ngIf="question.expected !== undefined"
+                                   [ngClass]="{'fa-check text-success': question.answer === question.expected,
+                                   'fa-times text-danger': question.answer !== question.expected}"></i>
 
                                 <i class="fa fa-fw fa-comments-o text-muted" [ngbTooltip]="question.comments"
                                    *ngIf="question.comments"></i>
@@ -51,6 +54,7 @@
 
             <div>
                 <app-mini-pager [available]="paging.available" [numberPerPage]="paging.limit"
+                                (nextPage)="pageQualityAudits($event)"
                                 class="mb-2"></app-mini-pager>
             </div>
         </div>

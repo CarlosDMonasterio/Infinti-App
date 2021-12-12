@@ -6,7 +6,8 @@
                 <span class="text-muted font-italic">No incident reports available</span>
             </div>
 
-            <table class="table table-hover table-borderless mt-3" *ngIf="reports && reports.length">
+            <table class="table table-hover mt-3" *ngIf="reports && reports.length"
+                   [ngClass]="{'opacity-2': paging.processing}">
                 <thead class="small text-uppercase border bg-light text-secondary">
                 <tr>
                     <th class="border-right py-2">Reporter</th>
@@ -20,23 +21,32 @@
                 <tr *ngFor="let report of reports">
                     <td style="width: 250px">
                         {{report.user.firstName}} {{report.user.lastName}}
-                        <div class="small text-muted">{{report.dateTime | date : 'EEE, MMM d, yyyy h:mm:ss a'}}</div>
+                        <div class="small text-muted">{{report.dateTime | date : 'EEE, MMM d, yyyy h:mm a'}}</div>
                     </td>
                     <td *ngIf="!report.district" style="width: 250px">
                         {{report.department}} Department
-                        <div>{{report.location}}</div>
+                        <div class="small">{{report.location}}</div>
                     </td>
                     <td *ngIf="report.district" style="width: 250px">
                         {{report.district.label}} District
-                        <div>{{report.school.name}}</div>
+                        <div class="small">{{report.school.name}}</div>
                     </td>
                     <td class="small">
                         {{report.details}}
                     </td>
-                    <td style="width: 100px;"></td>
+                    <td style="width: 100px"></td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-sm-12 pl-0">
+            <ngb-pagination [collectionSize]="paging.available" (pageChange)="pageIncidents($event)"
+                            [boundaryLinks]="true" [rotate]="true" [(page)]="paging.currentPage"
+                            [maxSize]="5" class="pagination-sm"
+                            [pageSize]="paging.limit"></ngb-pagination>
         </div>
     </div>
 </div>

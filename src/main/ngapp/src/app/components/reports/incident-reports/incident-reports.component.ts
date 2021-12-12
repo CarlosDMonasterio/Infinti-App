@@ -19,11 +19,20 @@ export class IncidentReportsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getDataFromServer();
+    }
+
+    pageIncidents(page): void {
+        this.paging.start = ((page - 1) * this.paging.limit);
+        this.getDataFromServer();
+    }
+
+    private getDataFromServer(): void {
+        this.paging.processing = true;
         this.http.get('incidents', this.paging).subscribe((result: Result<IncidentReport>) => {
             this.paging.available = result.available;
             this.reports = result.requested;
-            console.log(result);
-        })
+            this.paging.processing = false;
+        });
     }
-
 }

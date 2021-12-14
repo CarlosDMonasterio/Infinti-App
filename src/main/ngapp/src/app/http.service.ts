@@ -60,8 +60,7 @@ export class HttpService {
             );
     }
 
-                                                          //true - Stops from redirecting to the login page.
-    post<T>(api: string, payload: T, options?, redirect = false): Observable<any> {
+    post<T>(api: string, payload: T, options?, redirect = true): Observable<any> {
         this.setOptions(options);
         this.setHeaders(redirect);
         const url = `${this.apiUrl}/${api}`;

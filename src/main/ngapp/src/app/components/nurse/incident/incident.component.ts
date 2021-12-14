@@ -136,8 +136,6 @@ export class IncidentComponent implements OnInit {
     }
 
     submitReport(): void {
-
-
         this.submittingReport = true;
         let dataString = this.report.date.year + '-' + ("0" + this.report.date.month).slice(-2) + '-' +
             ("0" + this.report.date.day).slice(-2)

@@ -1,5 +1,6 @@
 package org.ih.dto;
 
+import org.ih.labtest.LabTestResult;
 import org.ih.labtest.LabTestType;
 
 public class LabTest implements DataObject {
@@ -10,9 +11,11 @@ public class LabTest implements DataObject {
     private District district;
     private School school;
     private long dateTime;
+    private long created;
     private String location;
     private String department;
     private String fileId;
+    private LabTestResult result;
 
     public LabTest() {
         this.type = LabTestType.COVID19;
@@ -84,5 +87,21 @@ public class LabTest implements DataObject {
 
     public void setFileId(String fileId) {
         this.fileId = fileId;
+    }
+
+    public LabTestResult getResult() {
+        return result;
+    }
+
+    public void setResult(LabTestResult result) {
+        this.result = result;
+    }
+
+    public long getCreated() {
+        return created;
+    }
+
+    public void setCreated(long created) {
+        this.created = created;
     }
 }

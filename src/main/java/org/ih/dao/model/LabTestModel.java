@@ -44,6 +44,9 @@ public class LabTestModel implements DatabaseModel {
     @Column(name = "location")
     private String location;
 
+    @Column(name = "fileId")
+    private String fileId;
+
     @Column(name = "department")
     private String department;
 
@@ -127,12 +130,24 @@ public class LabTestModel implements DatabaseModel {
         this.testDate = testDate;
     }
 
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+    }
+
     @Override
     public LabTest toDataObject() {
         LabTest labTest = new LabTest();
         labTest.setDepartment(this.department);
         labTest.setLocation(this.location);
         labTest.setDateTime(this.testDate.getTime());
+        labTest.setCreated(this.created.getTime());
+        labTest.setAccount(this.account.toDataObject());
+        labTest.setResult(this.result);
+        labTest.setFileId(this.fileId);
         if (this.district != null) {
             labTest.setDistrict(this.district.toDataObject());
 

@@ -117,6 +117,7 @@ public class HibernateConfiguration {
         configuration.addAnnotatedClass(QuestionModel.class);
         configuration.addAnnotatedClass(PatientModel.class);
         configuration.addAnnotatedClass(FileStorageModel.class);
+        configuration.addAnnotatedClass(LabTestModel.class);
     }
 
     /**

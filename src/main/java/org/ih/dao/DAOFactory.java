@@ -22,6 +22,7 @@ public class DAOFactory {
     private static PatientDAO patientDAO;
     private static TestDAO testDAO;
     private static FileStorageDAO fileStorageDAO;
+    private static LabTestDAO labTestDAO;
 
     public static AccountDAO getAccountDAO() {
         if (accountDAO == null)
@@ -99,5 +100,11 @@ public class DAOFactory {
         if (fileStorageDAO == null)
             fileStorageDAO = new FileStorageDAO();
         return fileStorageDAO;
+    }
+
+    public static LabTestDAO getLabTestDAO() {
+        if (labTestDAO == null)
+            labTestDAO = new LabTestDAO();
+        return labTestDAO;
     }
 }

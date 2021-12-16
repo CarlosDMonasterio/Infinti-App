@@ -4,9 +4,11 @@ import org.hibernate.HibernateException;
 import org.ih.common.logging.Logger;
 import org.ih.dao.DataAccessException;
 import org.ih.dao.model.SurveyModel;
+import org.ih.dto.Account;
 import org.ih.survey.SurveyType;
 
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -41,5 +43,32 @@ public class SurveyDAO extends HibernateRepository<SurveyModel> {
             Logger.error(e);
             throw new DataAccessException(e);
         }
+    }
+
+    /**
+     * Retrieves most recent survey filled out by specified user for today
+     *
+     * @return
+     */
+    public SurveyModel getUserSurveyFromToday(SurveyType type, String userId) {
+        try {
+            CriteriaQuery<SurveyModel> query = getBuilder().createQuery(SurveyModel.class);
+            Root<SurveyModel> from = query.from(SurveyModel.class);
+            Join<SurveyModel, Account> accountJoin = from.join("account");
+            query.where(getBuilder().equal(from.get("type"), type),
+                    getBuilder().equal(accountJoin.get("email"), userId));
+
+            query.orderBy(getBuilder().desc(from.get("id")));
+            List<SurveyModel> list = currentSession().createQuery(query).setMaxResults(1).list();
+            if (list == null || list.isEmpty())
+                return null;
+
+            return list.get(0);
+
+        } catch (HibernateException e) {
+            Logger.error(e);
+            throw new DataAccessException(e);
+        }
+
     }
 }

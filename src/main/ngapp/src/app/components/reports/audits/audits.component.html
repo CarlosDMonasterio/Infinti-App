@@ -6,11 +6,33 @@
 
     <div class="row border shadow-sm">
         <div class="col-sm-12 bg-white">
+
+            <div class="row mt-2">
+                <div class="col-sm-6">
+                    <!--                    <input type="text" class="form-control form-control-sm">-->
+                </div>
+
+                <div *ngIf="reports && reports.length" class="col-sm-6 text-right">
+                    <i class="fa fa-filter text-muted"></i>
+                    <span ngbDropdown>
+                    <button class="btn btn-sm text-secondary small" ngbDropdownToggle> {{selectedDistrict}}
+                        Districts
+                        <ul ngbDropdownMenu class="dropdown-menu p-1">
+                            <li ngbDropdownItem *ngFor="let district of districts" class="small pl-2 cursor-pointer"
+                                (click)="filterDistricts(district)">
+                                {{district.label}}
+                            </li>
+                        </ul>
+                    </button>
+                </span>
+                </div>
+            </div>
+
             <div *ngIf="!reports || !reports.length" class="p-3">
                 <span class="text-muted font-italic">No audit reports available</span>
             </div>
 
-            <table class="table table-hover table-borderless mt-3" *ngIf="reports && reports.length">
+            <table class="table table-hover" *ngIf="reports && reports.length">
                 <thead class="small text-uppercase border bg-light text-secondary">
                 <tr>
                     <th class="border-right py-2" style="width: 150px">Date</th>
@@ -51,12 +73,17 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
 
-            <div>
-                <app-mini-pager [available]="paging.available" [numberPerPage]="paging.limit"
-                                (nextPage)="pageQualityAudits($event)"
-                                class="mb-2"></app-mini-pager>
-            </div>
+        <div class="pl-3">
+            <ngb-pagination [collectionSize]="paging.available" (pageChange)="pageQualityAudits($event)"
+                            [boundaryLinks]="true" [rotate]="true" [(page)]="paging.currentPage"
+                            [maxSize]="5" [pageSize]="paging.limit">
+                <ng-template ngbPaginationFirst><i class="fa fa-fw fa-angle-double-left"></i> First</ng-template>
+                <ng-template ngbPaginationPrevious><i class="fa fa-fw fa-angle-left"></i> Prev</ng-template>
+                <ng-template ngbPaginationNext>Next <i class="fa fa-fw fa-angle-right"></i></ng-template>
+                <ng-template ngbPaginationLast>Last<i class="fa fa-fw fa-angle-double-right"></i></ng-template>
+            </ngb-pagination>
         </div>
     </div>
 </div>

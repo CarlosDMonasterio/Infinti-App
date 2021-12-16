@@ -84,9 +84,22 @@
 
     </div>
 
-    <div class="row" *ngIf="currentUser && currentUser.isAdministrator">
+    <div class="row">
 
-        <div class="col-md-4 mt-5 mb-5">
+        <div class="col-md-4 mt-5">
+            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('passes')">
+                <div class="p-3 mx-auto">
+                    <i class="fa fa-fw fa-4x fa-qrcode text-muted"></i>
+                </div>
+
+                <div class="card-body text-center border-top">
+                    <h5 class="card-title font-weight-bold">Daily Pass</h5>
+                    <p class="card-text">Retrieve the daily pass from completing daily health screen.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mt-5 mb-5" *ngIf="currentUser && currentUser.isAdministrator">
             <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('reports')">
                 <div class="p-3 mx-auto">
                     <i class="fa fa-fw fa-4x fa-bar-chart text-muted"></i>

@@ -71,6 +71,8 @@ import {ScreeningComponent} from './components/dashboard/screening/screening.com
 import {AuditsComponent} from './components/reports/audits/audits.component';
 import {DailyScreenReportsComponent} from './components/reports/daily-screen-reports/daily-screen-reports.component';
 import {TestResultsComponent} from './components/dashboard/test-results/test-results.component';
+import {QRCodeModule} from "angular2-qrcode";
+import {PassesComponent} from './components/passes/passes.component';
 
 @NgModule({
     declarations: [
@@ -124,7 +126,8 @@ import {TestResultsComponent} from './components/dashboard/test-results/test-res
         ScreeningComponent,
         AuditsComponent,
         DailyScreenReportsComponent,
-        TestResultsComponent
+        TestResultsComponent,
+        PassesComponent
     ],
     imports: [
         BrowserModule,
@@ -136,7 +139,8 @@ import {TestResultsComponent} from './components/dashboard/test-results/test-res
         NgxChartsModule,
         BrowserAnimationsModule,
         FlatpickrModule.forRoot(),
-        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory})
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
+        QRCodeModule
     ],
     providers: [UserResolver, ProfileDetailsResolver, PatientDetailsResolver],
     bootstrap: [AppComponent]

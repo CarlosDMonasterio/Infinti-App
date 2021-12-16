@@ -60,13 +60,6 @@ public class PasswordUtil {
         return String.copyValueOf(arr);
     }
 
-    public static String generateRandomToken() {
-        SecureRandom random = new SecureRandom();
-        byte[] token = new byte[TOKEN_BYTE_SIZE];
-        random.nextBytes(token);
-        return DatatypeConverter.printBase64Binary(token);
-    }
-
     public static String generateRandomToken(int byteSize) {
         SecureRandom random = new SecureRandom();
         byte[] token = new byte[byteSize];

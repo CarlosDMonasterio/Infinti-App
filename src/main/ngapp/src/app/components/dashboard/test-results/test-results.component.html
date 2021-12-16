@@ -31,7 +31,7 @@
                         {{test.department}}
                     </td>
                     <td>{{test.location}}
-                        <div class="small text-muted">{{test.dateTime | date : 'EEE, MMM d, yyyy h:mm a'}}</div>
+                        <div class="small text-muted">{{test.dateTime | date : 'EEE, MMM d, yyyy'}}</div>
                     </td>
                     <td style="width: 100px">
                         <div class="badge p-2" [ngClass]="{'badge-danger': test.result === 'POSITIVE',

@@ -8,6 +8,8 @@ import org.ih.dao.model.DistrictModel;
 import org.ih.dao.model.LabTestModel;
 import org.ih.dao.model.SchoolModel;
 import org.ih.dto.LabTest;
+import org.ih.notification.NotificationTask;
+import org.ih.task.TaskRunner;
 
 import java.util.Date;
 import java.util.List;
@@ -49,7 +51,30 @@ public class LabTests {
         model.setFileId(test.getFileId());
         model = this.dao.create(model);
 
+        // send email if positive test
+        if (test.getResult() == LabTestResult.POSITIVE || test.getResult() == LabTestResult.INCONCLUSIVE)
+            sendEmailNotification();
+
         return model.toDataObject();
+    }
+
+    private void sendEmailNotification() {
+        String subject = "Infiniti Health COVID-19 Test result alert";
+        String stringBuilder = """
+                Hello,\s
+
+                A user has reported a positive or inconclusive COVID-19 test result.
+                Test result submissions are located at:
+
+                https://infinitihealth.tech/reports/surveys
+
+                Thank you!
+
+                """;
+
+        NotificationTask notificationTask = new NotificationTask();
+        notificationTask.addInformation("infectionprevention@infinitihealth.org", subject, stringBuilder);
+        TaskRunner.getInstance().runTask(notificationTask);
     }
 
     public Results<LabTest> list(int offset, int limit, boolean asc, String sort) {

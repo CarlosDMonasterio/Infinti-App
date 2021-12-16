@@ -12,8 +12,55 @@
         </div>
     </div>
 
-    <div class="container bg-white shadow-sm p-5">
+    <ng-container *ngIf="reportSubmitted && pass">
+        <div class="container bg-white shadow-sm p-5" *ngIf="!pass.uuid">
+            <div class="row">
+                <div class="col-sm d-sm-flex justify-content-center">
+                    <div class="alert alert-warning">Thank you for submitting your daily health screening. You are not
+                        eligible for a daily pass at this time.
+                        Please contact your supervisor as soon as possible.
+                    </div>
 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm text-right">
+                    <button class="btn btn-primary" (click)="goToHome()">Ok</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container bg-white shadow-sm p-5" *ngIf="pass.uuid">
+            <div class="row">
+                <div class="col-sm d-sm-flex justify-content-center">
+                    <div class="alert alert-success">Thank you for submitting your daily health screening. Your daily
+                        pass is available below.
+                        You can also access this on the <a href="/passes">daily passes section</a> of the application
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-sm text-center">
+                    <h3 class="mb-0">{{pass.account.firstName}} {{pass.account.lastName}}</h3>
+                    <small class="text-muted">{{pass.account.email}}</small>
+
+                    <br><br>
+
+                    <div class="small font-weight-bold">DAILY PASS</div>
+                    {{survey.creationTime | date: 'EEEE, MMMM d, y'}}<br><br>
+                    <img src="assets/ih-logo.png" alt="Infiniti Health Logo" style="width: 150px">
+
+                    <div class="mt-2 mb-5">
+                        <qr-code [value]="" size="220"></qr-code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div class="container bg-white shadow-sm p-5" *ngIf="!reportSubmitted">
         <div class="row">
             <div class="col-sm-12">
                 <h3>Daily Health Screening</h3>
@@ -72,14 +119,14 @@
                               [(ngModel)]="questions[page].comments"></textarea>
 
                     <div *ngIf="questions[page].options" style="font-size: large">
-                <span class="btn btn-light" (click)="setAnswer(true)">
-                    <i class="fa fa-fw"
-                       [ngClass]="{'fa-check-circle': questions[page].answer, 'fa-circle-o': !questions[page].answer}"></i> {{questions[page].options[0]}}
-                </span>
+                        <span class="btn btn-light" (click)="setAnswer(true)">
+                            <i class="fa fa-fw"
+                               [ngClass]="{'fa-check-circle': questions[page].answer, 'fa-circle-o': !questions[page].answer}"></i> {{questions[page].options[0]}}
+                        </span>
                         <span class="ml-3 btn btn-light" (click)="setAnswer(false)">
-                    <i class="fa fa-fw"
-                       [ngClass]="{'fa-check-circle': questions[page].answer === false, 'fa-circle-o': questions[page].answer !== false || questions[page].answer === true}"></i> {{questions[page].options[1]}}
-                </span>
+                            <i class="fa fa-fw"
+                               [ngClass]="{'fa-check-circle': questions[page].answer === false, 'fa-circle-o': questions[page].answer !== false || questions[page].answer === true}"></i> {{questions[page].options[1]}}
+                        </span>
                     </div>
                 </div>
             </ng-container>

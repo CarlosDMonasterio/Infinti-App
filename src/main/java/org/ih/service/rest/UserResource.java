@@ -9,6 +9,7 @@ import org.ih.account.Accounts;
 import org.ih.account.Users;
 import org.ih.common.logging.Logger;
 import org.ih.dto.Account;
+import org.ih.pass.Passes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -177,5 +178,14 @@ public class UserResource extends RestResource {
         Users users = new Users(userId);
         users.importFile(fileInputStream, notify);
         return super.respond(true);
+    }
+
+    @GET
+    @Path("{id}/pass")
+    public Response getUserPass(@PathParam("id") String id) {
+        // id could be uuid / db id / other unique identifier for user
+        String userId = requireUserId();
+        Passes passes = new Passes(userId);
+        return super.respond(passes.get(userId));
     }
 }

@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+<div class="bg-light">
+
+    <br><br><br><br>
+
+    <ng-container *ngIf="pass">
+        <div class="container bg-white shadow-sm p-4" *ngIf="pass.uuid">
+            <div class="row mt-5">
+                <div class="col-sm text-center">
+                    <h3 class="mb-0">{{pass.account.firstName}} {{pass.account.lastName}}</h3>
+                    <div class="small text-muted">{{pass.account.email}}</div>
+
+                    <br>
+
+                    <div class=" font-weight-bold">DAILY PASS</div>
+                    <div>{{date | date: 'EEEE, MMMM d, y'}}</div>
+
+                    <br>
+
+                    <img src="assets/ih-logo.png" alt="Infiniti Health Logo" style="width: 150px">
+                    <div class="mt-2 mb-5">
+                        <qr-code [value]="pass.uuid" size="220"></qr-code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container bg-white shadow-sm p-4" *ngIf="!pass.uuid">
+            <div class="row mt-5">
+                <div class="col-sm-4">&nbsp;</div>
+                <div class="col-sm-4 text-center">
+                    <div class="alert alert-warning">
+                        <div class="pb-4"><i class="fa fa-fw fa-exclamation-triangle fa-4x"></i></div>
+                        You are not eligible for a daily pass at this time. Please make sure you have completed your <a
+                            href="/screening">daily health screening</a> and have a recent
+                        <a href="/tests">COVID-19 test result</a> on record. Please contact your supervisor if you have
+                        any
+                        questions or concerns.
+                    </div>
+                </div>
+                <div class="col-sm-4">&nbsp;</div>
+            </div>
+        </div>
+    </ng-container>
+
+    <br><br><br><br>
+
+</div>

@@ -17,7 +17,7 @@ public class PatientResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getPatient(@PathParam("identifier") String identifier) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": retrieving patient by identifier " + identifier);
         Patients patients = new Patients(userId);
         return super.respond(patients.get(identifier));
@@ -27,7 +27,7 @@ public class PatientResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response savePatient(Patient patient) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": creating new patient record");
         Patients patients = new Patients(userId);
         return super.respond(patients.create(patient));
@@ -41,7 +41,7 @@ public class PatientResource extends RestResource {
                          @DefaultValue("false") @QueryParam("asc") boolean asc,
                          @DefaultValue("id") @QueryParam("sort") String sort,
                          @QueryParam("filterText") String filter) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": paging patient list");
         Patients patients = new Patients(userId);
         return super.respond(patients.list(start, limit, asc, sort));
@@ -52,7 +52,7 @@ public class PatientResource extends RestResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createTestForPatient(@PathParam("uuid") String uuid, Test test) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": creating test for user " + uuid);
         Patients patients = new Patients(userId);
         return super.respond(patients.createPatientTest(uuid, test));
@@ -68,7 +68,7 @@ public class PatientResource extends RestResource {
                                      @DefaultValue("false") @QueryParam("asc") boolean asc,
                                      @DefaultValue("id") @QueryParam("sort") String sort,
                                      @QueryParam("filterText") String filter) {
-        String userId = getUserId();
+        String userId = requireUserId();
         Logger.info(userId + ": paging patient tests");
         Patients patients = new Patients(userId);
         return super.respond(patients.listPatientTests(uuid, start, limit, asc, sort));

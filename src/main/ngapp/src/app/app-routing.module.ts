@@ -30,11 +30,13 @@ import {RegisterComponent} from "./components/register/register.component";
 import {PatientDetailsComponent} from "./components/reports/patients/patient-details/patient-details.component";
 import {PatientDetailsResolver} from "./components/reports/patients/patient-details/patient.details.resolver";
 import {ScreeningComponent} from "./components/dashboard/screening/screening.component";
+import {PassesComponent} from "./components/passes/passes.component";
 
 const routes: Routes = [
     {path: '', component: DashboardComponent},
     {path: 'login', component: LoginComponent},
     {path: 'config', component: ConfigComponent},
+    {path: 'passes', component: PassesComponent},
     {path: 'survey', component: SurveyComponent},
     {path: 'screening', component: ScreeningComponent},
     {path: 'incidents', component: IncidentComponent},

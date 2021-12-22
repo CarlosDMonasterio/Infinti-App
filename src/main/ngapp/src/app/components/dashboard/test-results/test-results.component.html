@@ -1,0 +1,54 @@
+<div class="container-fluid pt-3">
+    <div class="row border shadow-sm">
+        <div class="col-sm-12 bg-white">
+            <div *ngIf="!tests || !tests.length" class="p-3">
+                <span class="text-muted font-italic">No COVID-19 results available</span>
+            </div>
+
+            <table class="table table-hover mt-3" *ngIf="tests && tests.length"
+                   [ngClass]="{'opacity-2': paging.processing}">
+                <thead class="small text-uppercase border bg-light text-secondary">
+                <tr>
+                    <th class="border-right py-2">Reporter</th>
+                    <th class="border-right py-2">Location</th>
+                    <th class="border-right py-2">Department</th>
+                    <th class="border-right py-2">Test Location & Date</th>
+                    <th class="border-right py-2">Result</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let test of tests">
+                    <td style="width: 250px">
+                        {{test.account.firstName}} {{test.account.lastName}}
+                        <div class="small text-muted">{{test.created | date : 'EEE, MMM d, yyyy h:mm a'}}</div>
+                    </td>
+                    <td style="width: 250px">
+                        {{test.district.label}} District
+                        <div class="small">{{test.school.name}}</div>
+                    </td>
+                    <td style="width: 150px">
+                        {{test.department}}
+                    </td>
+                    <td>{{test.location}}
+                        <div class="small text-muted">{{test.dateTime | date : 'EEE, MMM d, yyyy'}}</div>
+                    </td>
+                    <td style="width: 100px">
+                        <div class="badge p-2" [ngClass]="{'badge-danger': test.result === 'POSITIVE',
+                        'badge-secondary': test.result === 'INCONCLUSIVE', 'badge-success': test.result === 'NEGATIVE'}">{{test.result}}</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-sm-12 pl-0">
+            <ngb-pagination [collectionSize]="paging.available" (pageChange)="pageTests($event)"
+                            [boundaryLinks]="true" [rotate]="true" [(page)]="paging.currentPage"
+                            [maxSize]="5" class="pagination-sm"
+                            [pageSize]="paging.limit"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ import {HttpService} from "../../../http.service";
 import {Router} from "@angular/router";
 import {Result} from "../../../models/Result";
 import {District} from "../../../models/district";
+import {Pass} from "../../../models/pass";
 
 @Component({
     selector: 'app-screening',
@@ -15,8 +16,6 @@ import {District} from "../../../models/district";
 export class ScreeningComponent implements OnInit {
 
     survey: Survey;
-    roles: string[];
-    compliance: string[];
     progress: number;
     submittingReport: boolean;
     errorSubmitting: boolean;
@@ -26,6 +25,8 @@ export class ScreeningComponent implements OnInit {
     districts: District[];
     page: number;
     selectedDistrict = false;
+    pass: Pass;
+    reportSubmitted: boolean;
 
     constructor(private http: HttpService, private screenService: ScreeningService, private router: Router) {
         this.survey = new Survey('DAILY_HEALTH');
@@ -106,13 +107,18 @@ export class ScreeningComponent implements OnInit {
 
         // submit to the backend
         this.http.post('surveys', this.survey).subscribe((result: Survey) => {
-            this.submittingReport = false;
+            this.survey = result;
 
-            if (result) {
-                this.router.navigate(['/']);
-            } else {
-                this.errorSubmitting = true;
-            }
+            // get pass
+            this.http.get('passes?userId=' + this.survey.account.email).subscribe((pass: Pass) => {
+                this.pass = pass;
+                this.reportSubmitted = true;
+                this.submittingReport = false;
+            }, error => {
+                this.reportSubmitted = true;
+                this.submittingReport = false;
+            });
+
         }, error => {
             this.submittingReport = false;
             this.errorSubmitting = true;
@@ -137,5 +143,9 @@ export class ScreeningComponent implements OnInit {
             this.answeredCount -= 1;
         }
         this.progress = (this.answeredCount / (this.questions.length + 1)) * 100;
+    }
+
+    goToHome(): void {
+        this.router.navigate(['/']);
     }
 }

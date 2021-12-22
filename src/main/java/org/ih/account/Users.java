@@ -13,7 +13,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author Hector Plahar
@@ -60,7 +59,7 @@ public class Users {
             return result;
 
         List<AccountModel> matches = dao.getMatchingGroupMembers(groups, token, limit);
-        result.addAll(matches.stream().map(AccountModel::toDataObject).collect(Collectors.toList()));
+        result.addAll(matches.stream().map(AccountModel::toDataObject).toList());
         return result;
     }
 

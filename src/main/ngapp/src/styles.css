@@ -86,3 +86,7 @@ a.href:hover {
     text-decoration: underline;
 }
 
+.opacity-2 {
+    opacity: 0.2;
+}
+

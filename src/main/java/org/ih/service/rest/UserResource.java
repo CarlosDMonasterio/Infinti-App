@@ -9,6 +9,7 @@ import org.ih.account.Accounts;
 import org.ih.account.Users;
 import org.ih.common.logging.Logger;
 import org.ih.dto.Account;
+import org.ih.pass.Passes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -31,7 +32,7 @@ public class UserResource extends RestResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(@Context HttpServletRequest req,
                            @DefaultValue("false") @QueryParam("notify") boolean notifyUser, Account account) {
-        String userId = getUserId();
+        String userId = getUserId();     // only getting instead of requiring due to self registration
         if (StringUtils.isBlank(userId)) {
             Logger.info("Self-registering account for " + account.getEmail());
             notifyUser = false;     // force false, if self-registering in order to have an approval
@@ -177,5 +178,14 @@ public class UserResource extends RestResource {
         Users users = new Users(userId);
         users.importFile(fileInputStream, notify);
         return super.respond(true);
+    }
+
+    @GET
+    @Path("{id}/pass")
+    public Response getUserPass(@PathParam("id") String id) {
+        // id could be uuid / db id / other unique identifier for user
+        String userId = requireUserId();
+        Passes passes = new Passes(userId);
+        return super.respond(passes.get(userId));
     }
 }

@@ -1,22 +1,25 @@
 package org.ih.notification;
 
-import org.ih.task.ITask;
+import org.ih.task.Task;
 import org.ih.task.TaskType;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class NotificationTask extends ITask<NotificationTaskExecutor> {
+/**
+ * Task for submitting notifications via email
+ */
+public class EmailNotificationTask extends Task<EmailNotificationTaskExecutor> {
 
     private final List<EmailInformation> information;
 
-    public NotificationTask() {
+    public EmailNotificationTask() {
         this.information = new LinkedList<>();
     }
 
     @Override
-    public NotificationTaskExecutor getExecutor() {
-        return new NotificationTaskExecutor();
+    public EmailNotificationTaskExecutor getExecutor() {
+        return new EmailNotificationTaskExecutor();
     }
 
     @Override

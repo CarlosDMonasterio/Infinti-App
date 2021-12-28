@@ -5,3 +5,6 @@
 /src/main/webapp/ih/
 /target/
 /package-lock.json
+/src/main/ngapp/package-lock.json
+/src/main/ngapp/.angular
+

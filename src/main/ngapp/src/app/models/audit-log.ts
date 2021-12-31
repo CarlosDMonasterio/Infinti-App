@@ -1,6 +1,8 @@
+import {User} from "./User";
+
 export class AuditLog {
     id: number;
     created: number;
-    account: Account;
+    account: User;
     action: string;
 }

@@ -49,6 +49,7 @@ public class DevServer {
                         "path-prefix('login') or " +
                         "path-prefix('users') or " +
                         "path-prefix('files') or " +
+                        "path-prefix('passes') or " +
                         "path-prefix('reports') or " +
                         "path-prefix('admin') and regex('/.+') -> rewrite('/')",
                 ClassLoader.getSystemClassLoader()), servletHandler);

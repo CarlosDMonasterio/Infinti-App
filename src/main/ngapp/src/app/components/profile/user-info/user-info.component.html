@@ -122,12 +122,17 @@
 
             <div class="btn btn-group pull-right">
                 <button class="btn btn-primary" (click)="updateUser()" [disabled]="updatingUser">
-                    <span *ngIf="!updatingUser">Update</span>
+                    <span *ngIf="!updatingUser">
+                        Update
+                    </span>
+
                     <span *ngIf="updatingUser">
-                        <i class="fa fa-spinner fa-pulse fa-fw"></i> Updating
+                        <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                        Updating
                     </span>
                 </button>
             </div>
+
         </form>
 
     </div>

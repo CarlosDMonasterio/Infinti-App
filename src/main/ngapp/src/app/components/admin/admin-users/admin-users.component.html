@@ -1,5 +1,4 @@
 <div>
-
     <div class="row mt-2">
         <div class="col-sm-4">
             <h5 class="font-weight-bold text-uppercase">User Accounts</h5>
@@ -56,8 +55,7 @@
                 <tr *ngFor="let userItem of users.requested; let i = index">
                     <td class="text-truncate">
                         <a routerLink="/user/{{userItem.id}}">
-                            <span *ngIf="userItem.firstName && userItem.lastName">{{userItem.firstName}}
-                                {{userItem.lastName}}
+                            <span *ngIf="userItem.firstName && userItem.lastName">{{userItem.firstName}} {{userItem.lastName}}
                             </span>
                             <span *ngIf="!userItem.firstName && !userItem.lastName">{{userItem.email}}</span></a>
                         <br>
@@ -102,7 +100,9 @@
                     <td>
                         <i class="fa fa-fw fa-key fa-2x opacity-hover" (click)="confirmPassReset(userItem)"
                            [ngbTooltip]="'Reset Password'"></i>
-                        <i class="fa fa-fw fa-pencil fa-2x opacity-hover" [ngbTooltip]="'Edit'"></i>
+
+                        <i class="fa fa-fw fa-pencil fa-2x opacity-hover" (click)="editUserInfo(userItem)"
+                           [ngbTooltip]="'Edit'"></i>
                     </td>
                 </tr>
                 </tbody>

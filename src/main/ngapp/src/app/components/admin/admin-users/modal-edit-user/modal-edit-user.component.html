@@ -1,0 +1,110 @@
+<div class="modal-header">
+    <h5 class="modal-title">Update User Information</h5>
+
+    <button type="button" class="close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- UPDATE SUCCESS NOTIFICATION -->
+<div class="alert alert-success" *ngIf="updateSuccess">
+    <p class="font-95">User Information successfully updated.</p>
+</div>
+
+<!-- UPDATE ERROR NOTIFICATION -->
+<div class="alert alert-danger" *ngIf="updateError">
+    <p class="font-95">There was an error updating the user's information.
+        <br>Please try again or contact your administrator.
+    </p>
+</div>
+
+<div class="modal-body">
+    <form class="p-4">
+        <div class="row">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="firstName" class="control-label float-left">First Name</label>
+
+                <input type="text"
+                       class="form-control mb-2"
+                       id="firstName"
+                       name="firstName"
+                       [(ngModel)]="user.firstName"
+                       (ngModelChange)="valueChange($event)"
+                       [ngClass]="{'is-invalid': firstNameEmpty}"
+                       required>
+            </div>
+
+            <div class="form-group col-sm-6 pr-0">
+                <label for="lastName" class="control-label float-left">Last Name</label>
+                <input type="text"
+                       class="form-control"
+                       id="lastName"
+                       name="lastName"
+                       [(ngModel)]="user.lastName"
+                       (ngModelChange)="valueChange($event)"
+                       [ngClass]="{'is-invalid': lastNameEmpty}"
+                       required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="email" class="control-label">Email</label>
+                <input type="text"
+                       class="form-control"
+                       id="email"
+                       name="email"
+                       [(ngModel)]="user.email"
+                       (ngModelChange)="valueChange($event)"
+                       [ngClass]="{'is-invalid': emailEmpty}"
+                       required>
+            </div>
+
+            <div class="form-group col-sm-6 pr-0">
+                <label for="phone" class="control-label">Phone</label>
+                <input type="text"
+                       class="form-control"
+                       id="phone"
+                       name="phone"
+                       placeholder="(123) 456-7890"
+                       [(ngModel)]="user.phone"
+                       (ngModelChange)="valueChange($event)"
+                       [ngClass]="{'is-invalid': phoneEmpty}"
+                       required>
+            </div> <!-- PHONE -->
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-6 pr-0">
+                <label for="description" class="control-label">Role</label>
+                <input type="text"
+                       class="form-control"
+                       id="description"
+                       name="description"
+                       [(ngModel)]="user.description"
+                       (ngModelChange)="valueChange($event)">
+            </div> <!-- ROLE -- CHANGE TO A DROP DOWN MENU "REGULAR | ADMINISTRATOR | OTHER ROLES?-->
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <div class="btn-toolbar text-right">
+        <span style = "padding-right: 10px">
+            <button class="btn btn-primary"
+                    style="width: 125px"
+                    (click)="closeUpdateWindow()">
+                Close
+            </button>
+        </span>
+        <button type="submit"
+                style="width: 125px"
+                [disabled]="!update"
+                class="btn btn-primary"
+                id="submit"
+                (click)="updateUserInfo()">
+                <i *ngIf="processing" class="fa fa-spinner fa-pulse fa-fw"></i>
+            Update
+        </button>
+    </div>
+</div>

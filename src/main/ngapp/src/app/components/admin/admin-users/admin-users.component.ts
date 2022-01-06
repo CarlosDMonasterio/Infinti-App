@@ -5,6 +5,7 @@ import {Result} from "../../../models/Result";
 import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {CreateUserComponent} from "./create-user/create-user.component";
 import {ModalUploadUsersComponent} from "./modal-upload-users/modal-upload-users.component";
+import {ModalEditUserComponent} from "./modal-edit-user/modal-edit-user.component";
 import {Paging} from "../../../models/Paging";
 import {ConfirmComponent} from "../../common/confirm/confirm.component";
 import {Observable} from "rxjs";
@@ -116,6 +117,12 @@ export class AdminUsersComponent implements OnInit {
 
             });
         });
+    }
+
+    editUserInfo(user: User): void{
+        const options: NgbModalOptions = {backdrop: 'static', keyboard: false, size: 'lg'};
+        const modalRef = this.modalService.open(ModalEditUserComponent, options);
+        modalRef.componentInstance.userid = user.id
     }
 
     pageCounts(currentPage, resultCount): string {

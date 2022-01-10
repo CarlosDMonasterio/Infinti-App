@@ -1,0 +1,161 @@
+<app-header></app-header>
+
+<div class="bg-light">
+
+    <br><br><br><br>
+
+    <!--Navigation -->
+    <div class="container">
+        <div class="row mb-2">
+            <div class="col-sm-12 small text-uppercase text-monospace font-weight-bold">
+                <a style="color: black" href="/">Home</a> / <span class="text-muted">Update My Info</span>
+            </div>
+        </div>
+    </div>
+
+    <!--Main -->
+    <div class="container bg-white shadow-sm p-5">
+
+        <!-- TITLE -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Update My Information</h3>
+            </div>
+        </div>
+
+        <!-- UPDATE SUCCESS NOTIFICATION -->
+        <div class="alert alert-success" *ngIf="updateSuccess">
+            <p class="font-95">User Information successfully updated.</p>
+        </div>
+
+        <!-- UPDATE ERROR NOTIFICATION -->
+        <div class="alert alert-danger" *ngIf="updateError">
+            <p class="font-95">There was an error updating the user's information.
+                <br>Please try again or contact your administrator.
+            </p>
+        </div>
+
+        <hr>
+
+        <!-- FORM -->
+        <div class="row mb-3 pt-4">
+            <form class="w-50 ml-4">
+
+                <!--Personal Header -->
+                <div class="col" style="margin-left:50px">
+                    <h5>Personal Details</h5>
+                </div>
+
+                <!-- First Name -->
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-right mt-2">
+                        <label for="firstName">First name</label>
+                    </div>
+
+                    <div class="col-sm-8 text-left">
+                        <input type="text"
+                               class="form-control mb-2"
+                               id="firstName"
+                               name="firstName"
+                               [(ngModel)]="loggedInUser.firstName"
+                               (ngModelChange)="valueChange($event)"
+                               [ngClass]="{'is-invalid': firstNameEmpty}"
+                               required>
+                    </div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-right mt-2">
+                        <label for="lastName">Last name</label>
+                    </div>
+
+                    <div class="col-sm-8 text-left">
+                        <input type="text"
+                               class="form-control mb-2"
+                               id="lastName"
+                               name="lastName"
+                               [(ngModel)]="loggedInUser.lastName"
+                               (ngModelChange)="valueChange($event)"
+                               [ngClass]="{'is-invalid': lastNameEmpty}"
+                               required>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-right mt-2">
+                        <label for="phone">Best phone number</label>
+                    </div>
+
+                    <div class="col-sm-8 text-left">
+                        <input type="text"
+                               class="form-control mb-2"
+                               id="phone"
+                               name="phone"
+                               [(ngModel)]="loggedInUser.phone"
+                               (ngModelChange)="valueChange($event)"
+                               [ngClass]="{'is-invalid': phoneEmpty}"
+                               required>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!--Account Header -->
+                <div class="col" style="margin-left:50px">
+                    <h5>Account Details</h5>
+                </div>
+
+                <!-- Email -->
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-right mt-2">
+                        <label for="email">Email</label>
+                    </div>
+
+                    <div class="col-sm-8 text-left">
+                        <input type="text"
+                               [readonly]="!editable"
+                               class="form-control mb-2"
+                               id="email"
+                               name="email"
+                               [(ngModel)]="loggedInUser.email">
+                    </div>
+                </div>
+
+                <!-- Role -->
+                <div class="row mb-3">
+                    <div class="col-sm-3 text-right mt-2">
+                        <label for="description">Role</label>
+                    </div>
+
+                    <div class="col-sm-8 text-left">
+                        <input type="text"
+                               class="form-control mb-2"
+                               id="description"
+                               name="description"
+                               [(ngModel)]="loggedInUser.description"
+                               (ngModelChange)="valueChange($event)">
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Update Button -->
+                <div class="btn btn-group pull-right">
+                    <span style = "padding-right: 10px">
+                        <button style="width: 125px" class="btn btn-primary" (click)="updateUserInfo()" [disabled]="!update||updating">
+                            <span *ngIf="!updating">
+                                Update
+                            </span>
+                            <span *ngIf="updating">
+                                    <i class="fa fa-spinner fa-pulse fa-fw"></i> Updating
+                            </span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

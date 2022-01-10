@@ -15,8 +15,8 @@
                             <i class="fa fa-user-circle"></i> <span
                                 class="hide-on-mobile"> {{loggedInUser.firstName}} {{loggedInUser.lastName}}</span></a>
                             <div ngbDropdownMenu>
-                                <a *ngIf="isAdmin()" ngbDropdownItem routerLink="/admin" class="pl-3 p-1">Admin
-                                    Settings</a>
+                                <a *ngIf="isAdmin()" ngbDropdownItem routerLink="/admin" class="pl-3 p-1">Admin Settings</a>
+                                <a ngbDropdownItem routerLink="/edit" class="pl-3 p-1">Update My Info</a>
                                 <a ngbDropdownItem (click)="logUserOut()" class="pl-3 p-1 cursor-pointer">Logout</a>
                             </div>
                         </li>

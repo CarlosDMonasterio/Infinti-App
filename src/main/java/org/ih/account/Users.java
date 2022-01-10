@@ -39,6 +39,8 @@ public class Users {
                 info.setEmail(match.getEmail());
                 info.setFirstName(match.getFirstName());
                 info.setLastName(match.getLastName());
+                info.setPhone(match.getPhone());
+                info.setDescription(match.getDescription());
                 accounts.add(info);
             }
             return accounts;
@@ -65,14 +67,14 @@ public class Users {
 
     public void importFile(InputStream inputStream, boolean notifyUsers) {
         // expected file format is
-        // "First Name", "Last Name", "Email", "Role/description" (optional)
+        // "First Name", "Last Name", "Email", "Phone", "Role/Description" (optional)
         CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
 
         int i = 0;
         Accounts accounts = new Accounts();
 
         for (String[] next : reader) {
-            if (next.length != 4) {
+            if (next.length != 5) {
                 throw new IllegalArgumentException("Cannot import file. Improper format");
             }
 
@@ -82,7 +84,8 @@ public class Users {
             String firstName = next[0];
             String lastName = next[1];
             String email = next[2];
-            String role = next[3];
+            String phone = next[3];
+            String role = next[4];
 
             AccountModel model = DAOFactory.getAccountDAO().getByEmail(next[1]);
             if (model != null) {
@@ -95,6 +98,7 @@ public class Users {
             account.setEmail(email);
             account.setFirstName(firstName);
             account.setLastName(lastName);
+            account.setPhone(phone);
             account.setDescription(role);
             accounts.createAccount(this.userId, account, notifyUsers);
         }

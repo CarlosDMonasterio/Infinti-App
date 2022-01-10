@@ -8,6 +8,7 @@ import {AdminUsersComponent} from './components/admin/admin-users/admin-users.co
 import {AdminEmailSettingsComponent} from './components/admin/admin-email-settings/admin-email-settings.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserInfoComponent} from './components/profile/user-info/user-info.component';
+import {UserEditComponent} from './components/profile/user-edit/user-edit.component'; //SELF-INFO-UPDATE *cjm*
 import {ProfileDetailsResolver} from './components/profile/profile.details.resolver';
 import {UserGroupsComponent} from './components/profile/user-groups/user-groups.component';
 import {ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
@@ -47,6 +48,7 @@ const routes: Routes = [
     {path: 'forgotPassword', component: ForgotPasswordComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'resetPassword', component: ResetPasswordComponent},
+    {path: 'edit', component: UserEditComponent}, //SELF-INFO-UPDATE **cjm**
     {
         path: 'admin', component: AdminComponent, canActivate: [AdminGuardGuard],
         children: [{

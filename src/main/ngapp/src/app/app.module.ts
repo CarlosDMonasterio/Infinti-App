@@ -20,6 +20,7 @@ import {AdminUsersComponent} from './components/admin/admin-users/admin-users.co
 import {AdminEmailSettingsComponent} from './components/admin/admin-email-settings/admin-email-settings.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {UserInfoComponent} from './components/profile/user-info/user-info.component';
+import {UserEditComponent} from './components/profile/user-edit/user-edit.component'; //USER-SELF-INFO-EDIT
 import {UserGroupsComponent} from './components/profile/user-groups/user-groups.component';
 import {CreateGroupModalComponent} from './components/profile/create-group-modal/create-group-modal.component';
 import {ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
@@ -30,6 +31,7 @@ import {ResetPasswordComponent} from './components/reset-password/reset-password
 import {ConfirmActionComponent} from './components/widgets/confirm-action/confirm-action.component';
 import {SurveyComponent} from './components/nurse/survey/survey.component';
 import {CreateUserComponent} from './components/admin/admin-users/create-user/create-user.component';
+import {ModalEditUserComponent} from './components/admin/admin-users/modal-edit-user/modal-edit-user.component';
 import {DistrictsComponent} from "./components/admin/sites/districts.component";
 import {
     ModalCreateDistrictComponent
@@ -89,6 +91,7 @@ import {PassesComponent} from './components/passes/passes.component';
         AdminEmailSettingsComponent,
         ProfileComponent,
         UserInfoComponent,
+        UserEditComponent,
         UserGroupsComponent,
         CreateGroupModalComponent,
         ForgotPasswordComponent,
@@ -98,6 +101,7 @@ import {PassesComponent} from './components/passes/passes.component';
         ConfirmActionComponent,
         SurveyComponent,
         CreateUserComponent,
+        ModalEditUserComponent,
         DistrictsComponent,
         ModalCreateDistrictComponent,
         SelectDistrictComponent,

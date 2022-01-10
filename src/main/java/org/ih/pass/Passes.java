@@ -61,7 +61,7 @@ public class Passes {
             return pass;
 
         // if test is not within the past week or is negative then do not generate a pass
-        if (!this.isWithinOneWeek(labTestModel.getCreated()) || labTestModel.getResult() == LabTestResult.POSITIVE)
+        if (!this.isWithinOneWeek(labTestModel.getTestDate()) || labTestModel.getResult() == LabTestResult.POSITIVE)
             return pass;
 
         // todo: temporary solution. this should be valid when scanned
@@ -75,6 +75,6 @@ public class Passes {
      * @return true, if referenced date occurs less than one week ago; false otherwise
      */
     private boolean isWithinOneWeek(Date testDate) {
-        return (testDate.toInstant().isBefore(Instant.now().minus(1, ChronoUnit.WEEKS)));
+        return (testDate.toInstant().isAfter(Instant.now().minus(7, ChronoUnit.DAYS)));
     }
 }

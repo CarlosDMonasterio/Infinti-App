@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <!--    {{test | json}}-->
+<!--    {{test | json}}-->
 
     <div class="container bg-white shadow-sm p-5">
 
@@ -38,7 +38,7 @@
 
         <div class="row">
             <div class="col-md-6 mb-3 pt-4">
-                <label for="district" class="font-weight-bold text-muted">District</label>:<br>
+                <label for="district" class="font-weight-bold text-muted">District (optional)</label>:<br>
                 <select class="custom-select" id="district" required [(ngModel)]="test.district" name="district"
                         style="width: 180px" (ngModelChange)="districtSelected()" [disabled]="submittingReport">
                     <option selected [ngValue]=undefined>Choose One...</option>
@@ -49,7 +49,7 @@
             <div class="col-md-6 mb-3 pt-4" *ngIf="test.district">
 
                 <ng-container *ngIf="!availableSchools">
-                    <label for="school" class="text-muted font-weight-bold">School</label>:
+                    <label for="school" class="text-muted font-weight-bold">School (optional)</label>:
                     <input type="text" class="form-control" placeholder="Start entering school name..."
                            name="school" id="school"
                            (selectItem)="schoolSelected($event)"
@@ -72,7 +72,7 @@
 
             <div class="col-sm-4">
                 <select class="custom-select" id="role" required name="role" [(ngModel)]="test.department"
-                        (ngModelChange)="departmentSelected()" [disabled]="submittingReport">
+                        (ngModelChange)="modelChange()" [disabled]="submittingReport">
                     <option selected disabled [ngValue]=undefined>Choose One...</option>
                     <option *ngFor="let department of departments" [ngValue]="department">{{department}}</option>
                 </select>
@@ -86,7 +86,8 @@
 
             <div class="col-sm-6">
                 <div class="input-group w-50">
-                    <input class="form-control" [(ngModel)]="test.date"
+                    <input class="form-control" [(ngModel)]="test.date" [maxDate]="maxDate"
+                           (dateSelect)="dateSelected($event)"
                            placeholder="mm/dd/yyyy" name="dp" ngbDatepicker #d="ngbDatepicker">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
@@ -103,7 +104,8 @@
             </div>
 
             <div class="col-sm-6">
-                <input class="form-control" [(ngModel)]="test.location" placeholder="e.g. Mobile Site" maxlength="254">
+                <input class="form-control" [(ngModel)]="test.location" placeholder="e.g. Mobile Site" maxlength="254"
+                       (blur)="modelChange()">
             </div>
         </div>
 

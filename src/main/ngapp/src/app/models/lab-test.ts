@@ -1,7 +1,7 @@
-import {User} from "./User";
-import {District} from "./district";
-import {School} from "./school";
-import {NgbDate} from "@ng-bootstrap/ng-bootstrap";
+import {User} from './User';
+import {District} from './district';
+import {School} from './school';
+import {NgbDate} from '@ng-bootstrap/ng-bootstrap';
 
 export class LabTest {
     id: number;

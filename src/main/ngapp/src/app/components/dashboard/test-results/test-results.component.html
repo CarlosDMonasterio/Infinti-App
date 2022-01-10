@@ -24,8 +24,9 @@
                         <div class="small text-muted">{{test.created | date : 'EEE, MMM d, yyyy h:mm a'}}</div>
                     </td>
                     <td style="width: 250px">
-                        {{test.district.label}} District
-                        <div class="small">{{test.school.name}}</div>
+                        <div *ngIf="test.district">{{test.district.label}} District
+                            <div class="small" *ngIf="test.school">{{test.school.name}}</div>
+                        </div>
                     </td>
                     <td style="width: 150px">
                         {{test.department}}

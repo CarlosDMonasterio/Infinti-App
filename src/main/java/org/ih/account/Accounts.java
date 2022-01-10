@@ -102,6 +102,13 @@ public class Accounts {
         Logger.info("************************");
     }
 
+    /**
+     * Create a new account record
+     * @param userId optional unique user identifier if an email notification is to be sent
+     * @param account details of account record to create
+     * @param sendEmailNotification true, if an email notification is to be sent, false otherwise
+     * @return details of created account to include database identifier
+     */
     public Account createAccount(String userId, Account account, boolean sendEmailNotification) {
         if (account == null || account.getEmail() == null || account.getEmail().trim().isEmpty())
             throw new ServiceException("User id is required to create an account");

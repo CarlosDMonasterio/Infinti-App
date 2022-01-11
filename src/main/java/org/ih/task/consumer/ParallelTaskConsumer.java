@@ -2,7 +2,7 @@ package org.ih.task.consumer;
 
 import org.ih.common.logging.Logger;
 import org.ih.dao.hibernate.HibernateConfiguration;
-import org.ih.task.ITask;
+import org.ih.task.Task;
 import org.ih.task.TaskType;
 
 import java.util.concurrent.BlockingQueue;
@@ -18,7 +18,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class ParallelTaskConsumer extends AbstractTaskConsumer {
 
-    public ParallelTaskConsumer(BlockingQueue<ITask> queue) {
+    public ParallelTaskConsumer(BlockingQueue<Task> queue) {
         super(queue, TaskType.REGULAR);
     }
 
@@ -26,7 +26,7 @@ public class ParallelTaskConsumer extends AbstractTaskConsumer {
     public void run() {
         while (!shutdown) {
             try {
-                ITask task = getQueue().take();    // blocks
+                Task task = getQueue().take();    // blocks
                 if (task.getType() != TaskType.REGULAR) {
                     Logger.error("Cannot run task of type " + task.getType());
                     continue;
@@ -43,7 +43,7 @@ public class ParallelTaskConsumer extends AbstractTaskConsumer {
         }
     }
 
-    protected void submitTask(final ITask task) {
+    protected void submitTask(final Task task) {
         this.threadPool.submit(new Runnable() {
             @Override
             public void run() {

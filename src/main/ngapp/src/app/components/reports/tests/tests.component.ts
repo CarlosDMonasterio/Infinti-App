@@ -1,16 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {District} from "../../../models/district";
-import {School} from "../../../models/school";
-import {Observable} from "rxjs";
-import {debounceTime, distinctUntilChanged, switchMap, tap} from "rxjs/operators";
-import {SchoolService} from "../../../services/school.service";
-import {Router} from "@angular/router";
-import {HttpService} from "../../../http.service";
-import {Result} from "../../../models/Result";
-import {LabTest} from "../../../models/lab-test";
-import {HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
-import {UserService} from "../../../user.service";
-import {environment} from "../../../../environments/environment";
+import {District} from '../../../models/district';
+import {School} from '../../../models/school';
+import {Observable} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
+import {SchoolService} from '../../../services/school.service';
+import {Router} from '@angular/router';
+import {HttpService} from '../../../http.service';
+import {Result} from '../../../models/Result';
+import {LabTest} from '../../../models/lab-test';
+import {HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
+import {UserService} from '../../../user.service';
+import {environment} from '../../../../environments/environment';
+import {NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-tests',
@@ -33,11 +34,15 @@ export class TestsComponent implements OnInit {
     fileName: string;
     loaded: number;
 
+    maxDate: NgbDateStruct;
+
     constructor(private http: HttpService, private search: SchoolService, private user: UserService,
                 private router: Router, private httpClient: HttpClient) {
         this.test = new LabTest();
         this.departments = ['Operations', 'Nursing'];
         this.resultOptions = ['Positive', 'Negative', 'Inconclusive'];
+        const today = new Date();
+        this.maxDate = {year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate()};
         this.progress = 0;
     }
 
@@ -51,47 +56,73 @@ export class TestsComponent implements OnInit {
     // change detection when a district is selected
     districtSelected(): void {
         this.retrievingSchools = true;
-        this.incrementProgress();
         this.test.school = undefined;
         this.errorSubmitting = false;
     }
 
     schoolSelected($event): void {
         this.test.school = $event.item;
-        this.incrementProgress();
         this.errorSubmitting = false;
     }
 
-    departmentSelected(): void {
-        this.incrementProgress();
+    // set the progress value
+    modelChange(): void {
         this.errorSubmitting = false;
+        this.progress = 0;
+
+        // check department
+        if (this.test.department) {
+            this.progress += 20;
+        }
+
+        // check test date
+        if (this.test.date) {
+            this.progress += 20;
+        }
+
+        // check test location
+        if (this.test.location) {
+            this.progress += 20;
+        }
+
+        // check test result
+        if (this.test.result) {
+            this.progress += 20;
+        }
+
+        // check file id
+        if (this.test.fileId) {
+            this.progress += 20;
+        }
+    }
+
+    dateSelected(value: NgbDate): void {
+        this.modelChange();
     }
 
     testResultSelected(): void {
-        this.incrementProgress();
+        this.modelChange();
     }
 
-    private incrementProgress(): void {
-        this.progress += 14;
-    }
-
+    /**
+     * Check if user can submit the form (i.e. the submit button can be enabled)
+     * District and school are both optional
+     */
     canSubmit(): boolean {
-        if (!this.test.district || !this.test.school)
+        if (!this.test.department) {
             return false;
-        if (!this.test.department)
+        }
+        if (!this.test.date) {
             return false;
-        if (!this.test.date)
-            return false;
-        if (!this.test.location || !this.test.result || !this.test.fileId)
-            return false;
-        return true;
+        }
+        return !(!this.test.location || !this.test.result || !this.test.fileId);
     }
 
     submitTestResult(): void {
         this.errorSubmitting = false;
         this.submittingReport = true;
-        let dataString = this.test.date.year + '-' + ("0" + this.test.date.month).slice(-2) + '-' +
-            ("0" + this.test.date.day).slice(-2)
+        const dataString = this.test.date.year + '-' + ('0' + this.test.date.month).slice(-2) + '-' +
+            ('0' + this.test.date.day).slice(-2);
         this.test.dateTime = Date.parse(dataString);
         this.test.result = this.test.result.toUpperCase();
 
@@ -121,15 +152,15 @@ export class TestsComponent implements OnInit {
         if (file) {
             this.fileName = file.name;
             const formData = new FormData();
-            formData.append("file", file);
+            formData.append('file', file);
 
             const params = new HttpParams();
-            const headers = new HttpHeaders({'X-IH-Authentication-SessionId': this.user.getUser().sessionId})
+            const headers = new HttpHeaders({'X-IH-Authentication-SessionId': this.user.getUser().sessionId});
             const options = {
                 headers,
                 params,
                 reportProgress: true
-            }
+            };
 
             const request = new HttpRequest('POST', environment.apiUrl + '/files', formData, options);
             this.httpClient.request(request).subscribe(event => {
@@ -139,10 +170,10 @@ export class TestsComponent implements OnInit {
                 } else if (event instanceof HttpResponse) {
                     const data: any = event.body; // {id: number, identifier: string}
                     this.test.fileId = data.identifier;
-                    this.incrementProgress();
+                    this.modelChange();
                     console.log('server response', data);
                 }
-            })
+            });
         }
     }
 }

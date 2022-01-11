@@ -6,17 +6,18 @@ package org.ih.task;
  *
  * @author Hector Plahar
  */
-public abstract class ITask<T extends ITaskExecutor> {
+public abstract class Task<T extends TaskExecutor<?>> {
 
     public abstract T getExecutor();
 
     public abstract TaskType getType();
 
     /**
-     * @return a unique identifier this task for the task.
      * Recommend that implementations of this class add additional information such as
      * the canonical class name plus some additional parameters to the task id, to be able to uniquely identify
      * this task instance
+     *
+     * @return a unique identifier this task for the task.
      */
     public abstract String getUniqueTaskId();
 

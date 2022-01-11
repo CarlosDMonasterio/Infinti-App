@@ -2,7 +2,7 @@ package org.ih.task.consumer;
 
 import org.ih.common.logging.Logger;
 import org.ih.dao.hibernate.HibernateConfiguration;
-import org.ih.task.ITask;
+import org.ih.task.Task;
 import org.ih.task.TaskType;
 
 import java.util.concurrent.BlockingQueue;
@@ -16,7 +16,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class SingleTaskConsumer extends AbstractTaskConsumer {
 
-    public SingleTaskConsumer(BlockingQueue<ITask> queue) {
+    public SingleTaskConsumer(BlockingQueue<Task> queue) {
         super(queue, TaskType.SINGLE);
     }
 
@@ -24,7 +24,7 @@ public class SingleTaskConsumer extends AbstractTaskConsumer {
     public void run() {
         while (!shutdown) {
             try {
-                ITask task = getQueue().take();
+                Task task = getQueue().take();
                 if (task.getType() != supportedType) {
                     Logger.error("Cannot run task of type " + task.getType());
                     continue;

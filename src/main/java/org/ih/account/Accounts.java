@@ -10,7 +10,7 @@ import org.ih.dao.DAOFactory;
 import org.ih.dao.hibernate.AccountDAO;
 import org.ih.dao.model.AccountModel;
 import org.ih.dto.Account;
-import org.ih.notification.NotificationTask;
+import org.ih.notification.EmailNotificationTask;
 import org.ih.task.TaskRunner;
 import org.ih.util.StringUtil;
 
@@ -102,6 +102,13 @@ public class Accounts {
         Logger.info("************************");
     }
 
+    /**
+     * Create a new account record
+     * @param userId optional unique user identifier if an email notification is to be sent
+     * @param account details of account record to create
+     * @param sendEmailNotification true, if an email notification is to be sent, false otherwise
+     * @return details of created account to include database identifier
+     */
     public Account createAccount(String userId, Account account, boolean sendEmailNotification) {
         if (account == null || account.getEmail() == null || account.getEmail().trim().isEmpty())
             throw new ServiceException("User id is required to create an account");
@@ -173,9 +180,9 @@ public class Accounts {
                 "\n\nLink: https://infinitihealth.tech\n\n\nThank you" +
                 "\n\n\n----------------------------------------------------";
 
-        NotificationTask notificationTask = new NotificationTask();
-        notificationTask.addInformation(newAccount.getEmail(), subject, stringBuilder);
-        TaskRunner.getInstance().runTask(notificationTask);
+        EmailNotificationTask emailNotificationTask = new EmailNotificationTask();
+        emailNotificationTask.addInformation(newAccount.getEmail(), subject, stringBuilder);
+        TaskRunner.getInstance().runTask(emailNotificationTask);
     }
 
     public boolean update(String userId, long id, Account transfer) {
@@ -307,9 +314,9 @@ public class Accounts {
                 "\n\nLink: https:\\infinitihealth.tech\n\n\nThank you" +
                 "\n\n\n----------------------------------------------------";
 
-        NotificationTask notificationTask = new NotificationTask();
-        notificationTask.addInformation(accountModel.getEmail(), subject, builder);
-        TaskRunner.getInstance().runTask(notificationTask);
+        EmailNotificationTask emailNotificationTask = new EmailNotificationTask();
+        emailNotificationTask.addInformation(accountModel.getEmail(), subject, builder);
+        TaskRunner.getInstance().runTask(emailNotificationTask);
         return accountModel.toDataObject();
     }
 

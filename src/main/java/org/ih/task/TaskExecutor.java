@@ -5,12 +5,12 @@ package org.ih.task;
  *
  * @author Hector Plahar
  */
-public interface ITaskExecutor<T extends ITask> {
+public interface TaskExecutor<T extends Task<?>> {
 
     /**
      * Executes task using details passed in parameter
      *
-     * @param task
+     * @param task task to be run
      */
     void execute(T task);
 

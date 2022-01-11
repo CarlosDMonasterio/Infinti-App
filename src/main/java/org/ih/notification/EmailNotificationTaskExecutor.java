@@ -1,14 +1,19 @@
 package org.ih.notification;
 
 import org.ih.common.logging.Logger;
-import org.ih.task.ITaskExecutor;
+import org.ih.task.TaskExecutor;
 
-public class NotificationTaskExecutor implements ITaskExecutor<NotificationTask> {
+/**
+ * Executor for email notifications
+ *
+ * @author Hector Plahar
+ */
+public class EmailNotificationTaskExecutor implements TaskExecutor<EmailNotificationTask> {
 
     private boolean cancel;
 
     @Override
-    public void execute(NotificationTask task) {
+    public void execute(EmailNotificationTask task) {
         if (task.getInformation().isEmpty()) {
             Logger.info("Cannot send email. No information set");
             return;

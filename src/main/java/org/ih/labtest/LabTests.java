@@ -8,7 +8,7 @@ import org.ih.dao.model.DistrictModel;
 import org.ih.dao.model.LabTestModel;
 import org.ih.dao.model.SchoolModel;
 import org.ih.dto.LabTest;
-import org.ih.notification.NotificationTask;
+import org.ih.notification.EmailNotificationTask;
 import org.ih.task.TaskRunner;
 
 import java.util.Date;
@@ -72,7 +72,7 @@ public class LabTests {
 
                 """;
 
-        NotificationTask notificationTask = new NotificationTask();
+        EmailNotificationTask notificationTask = new EmailNotificationTask();
         notificationTask.addInformation("infectionprevention@infinitihealth.org", subject, stringBuilder);
         TaskRunner.getInstance().runTask(notificationTask);
     }

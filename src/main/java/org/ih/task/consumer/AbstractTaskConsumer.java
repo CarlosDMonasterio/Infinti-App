@@ -1,8 +1,8 @@
 package org.ih.task.consumer;
 
 import org.ih.common.logging.Logger;
-import org.ih.task.ITask;
-import org.ih.task.ITaskExecutor;
+import org.ih.task.Task;
+import org.ih.task.TaskExecutor;
 import org.ih.task.TaskType;
 
 import java.util.HashMap;
@@ -18,19 +18,19 @@ import java.util.concurrent.ExecutorService;
  */
 public abstract class AbstractTaskConsumer implements Runnable {
 
-    private final BlockingQueue<ITask> queue;
+    private final BlockingQueue<Task> queue;
     protected final TaskType supportedType;
     protected boolean shutdown;
     protected ExecutorService threadPool;
-    protected final HashMap<String, ITaskExecutor> executingTasks;
+    protected final HashMap<String, TaskExecutor> executingTasks;
 
-    public AbstractTaskConsumer(BlockingQueue<ITask> queue, TaskType supportedType) {
+    public AbstractTaskConsumer(BlockingQueue<Task> queue, TaskType supportedType) {
         this.queue = queue;
         this.supportedType = supportedType;
         this.executingTasks = new HashMap<>();
     }
 
-    BlockingQueue<ITask> getQueue() {
+    BlockingQueue<Task> getQueue() {
         return this.queue;
     }
 
@@ -43,7 +43,7 @@ public abstract class AbstractTaskConsumer implements Runnable {
     }
 
     public boolean cancelTask(String uniqueName) {
-        ITaskExecutor executor = executingTasks.get(uniqueName);
+        TaskExecutor executor = executingTasks.get(uniqueName);
         if (executor == null) {
             Logger.warn("Cannot cancel task. Couldn't retrieve executor for task " + uniqueName);
             return false;

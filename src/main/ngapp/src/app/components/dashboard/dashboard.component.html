@@ -1,57 +1,16 @@
 <app-header></app-header>
 <div class="container pt-5">
     <div class="row">
+
         <div class="col-md-4 mt-5">
-            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('hygiene')">
+            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('passes')">
                 <div class="p-3 mx-auto">
-                    <i class="fa fa-fw fa-4x fa-life-bouy text-muted"></i>
+                    <i class="fa fa-fw fa-4x fa-qrcode text-muted"></i>
                 </div>
 
                 <div class="card-body text-center border-top">
-                    <h5 class="card-title font-weight-bold">Hand Hygiene</h5>
-                    <p class="card-text">Submit information about observed hand hygiene
-                        practices</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mt-5">
-            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('survey')">
-                <div class="p-3 mx-auto">
-                    <i class="fa fa-fw fa-4x fa-clipboard text-muted"></i>
-                </div>
-
-                <div class="card-body text-center border-top">
-                    <h5 class="card-title font-weight-bold">Quality Audit</h5>
-                    <p class="card-text">Complete a site survey quality audit at your school location.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mt-5">
-            <div class="card shadow-sm mx-auto cursor-pointer" style="width: 18rem" (click)="goTo('incidents')">
-                <div class="p-3 mx-auto">
-                    <i class="fa fa-fw fa-4x fa-bullhorn text-muted"></i>
-                </div>
-
-                <div class="card-body text-center border-top">
-                    <h5 class="card-title font-weight-bold">Report an Incident</h5>
-                    <p class="card-text">Report an observed incident at a specific location.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 mt-5">
-            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('gloves')">
-                <div class="p-3 mx-auto">
-                    <i class="fa fa-fw fa-4x fa-hand-paper-o text-muted"></i>
-                </div>
-
-                <div class="card-body text-center border-top">
-                    <h5 class="card-title font-weight-bold">Glove Changes</h5>
-                    <p class="card-text">Submit information about observed glove change practices.</p>
+                    <h5 class="card-title font-weight-bold">Daily Pass</h5>
+                    <p class="card-text">Retrieve the daily pass from completing daily health screen.</p>
                 </div>
             </div>
         </div>
@@ -81,20 +40,62 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('gloves')">
+                <div class="p-3 mx-auto">
+                    <i class="fa fa-fw fa-4x fa-hand-paper-o text-muted"></i>
+                </div>
+
+                <div class="card-body text-center border-top">
+                    <h5 class="card-title font-weight-bold">Glove Changes</h5>
+                    <p class="card-text">Submit information about observed glove change practices.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mt-5">
+            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('survey')">
+                <div class="p-3 mx-auto">
+                    <i class="fa fa-fw fa-4x fa-clipboard text-muted"></i>
+                </div>
+
+                <div class="card-body text-center border-top">
+                    <h5 class="card-title font-weight-bold">Quality Audit</h5>
+                    <p class="card-text">Complete a site survey quality audit at your school location.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mt-5">
+            <div class="card shadow-sm mx-auto cursor-pointer" style="width: 18rem" (click)="goTo('incidents')">
+                <div class="p-3 mx-auto">
+                    <i class="fa fa-fw fa-4x fa-bullhorn text-muted"></i>
+                </div>
+
+                <div class="card-body text-center border-top">
+                    <h5 class="card-title font-weight-bold">Report an Incident</h5>
+                    <p class="card-text">Report an observed incident at a specific location.</p>
+                </div>
+            </div>
+        </div>
 
     </div>
 
     <div class="row">
 
         <div class="col-md-4 mt-5">
-            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('passes')">
+            <div class="card shadow-sm mx-auto" style="cursor: pointer; width: 18rem" (click)="goTo('hygiene')">
                 <div class="p-3 mx-auto">
-                    <i class="fa fa-fw fa-4x fa-qrcode text-muted"></i>
+                    <i class="fa fa-fw fa-4x fa-life-bouy text-muted"></i>
                 </div>
 
                 <div class="card-body text-center border-top">
-                    <h5 class="card-title font-weight-bold">Daily Pass</h5>
-                    <p class="card-text">Retrieve the daily pass from completing daily health screen.</p>
+                    <h5 class="card-title font-weight-bold">Hand Hygiene</h5>
+                    <p class="card-text">Submit information about observed hand hygiene
+                        practices</p>
                 </div>
             </div>
         </div>

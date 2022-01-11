@@ -17,10 +17,10 @@ public class TaskProducer implements Runnable {
 
     private boolean shutdown;
     //    private final List<Future<ITask>> futures;
-    private final BlockingQueue<ITask> singleTaskQueue;
-    private final BlockingQueue<ITask> taskQueue;
+    private final BlockingQueue<Task> singleTaskQueue;
+    private final BlockingQueue<Task> taskQueue;
 
-    public TaskProducer(BlockingQueue<ITask> singleTaskQueue, BlockingQueue<ITask> taskQueue, BlockingQueue<ITask> variableTaskQueue) {
+    public TaskProducer(BlockingQueue<Task> singleTaskQueue, BlockingQueue<Task> taskQueue) {
         this.singleTaskQueue = singleTaskQueue;
         this.taskQueue = taskQueue;
 //        this.futures = new ArrayList<>();
@@ -57,7 +57,7 @@ public class TaskProducer implements Runnable {
         }
     }
 
-    public void addTask(ITask task) {
+    public void addTask(Task task) {
         Logger.info("Adding task type " + task.getType() + " with id " + task.getUniqueTaskId());
         switch (task.getType()) {
             case SINGLE:

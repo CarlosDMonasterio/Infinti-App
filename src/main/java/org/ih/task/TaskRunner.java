@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 /**
  * Task runner responsible for executing tasks in a separate
  * thread and guarantees that they are completed. Tasks that can be
- * run must implement the {@link ITask} interface
+ * run must implement the {@link Task} interface
  * <p>
  * It initializes a thread pool with a fixed number of threads
  * <p>
@@ -35,12 +35,11 @@ public class TaskRunner {
      */
     private TaskRunner() {
 
-        BlockingQueue<ITask> taskQueue = new LinkedBlockingQueue<>();
-        BlockingQueue<ITask> singleTaskQueue = new LinkedBlockingQueue<>();
-        BlockingQueue<ITask> variableTaskQueue = new LinkedBlockingQueue<>();
+        BlockingQueue<Task> taskQueue = new LinkedBlockingQueue<>();
+        BlockingQueue<Task> singleTaskQueue = new LinkedBlockingQueue<>();
 
         // initialize producer and consumers
-        this.monitor = new TaskProducer(singleTaskQueue, taskQueue, variableTaskQueue);
+        this.monitor = new TaskProducer(singleTaskQueue, taskQueue);
 
         this.singleTaskConsumer = new SingleTaskConsumer(singleTaskQueue);
         this.parallelTaskConsumer = new ParallelTaskConsumer(taskQueue);
@@ -102,7 +101,7 @@ public class TaskRunner {
      *
      * @param iTask task to be run. Contains information about the executor for running the task
      */
-    public void runTask(ITask iTask) {
+    public void runTask(Task iTask) {
         monitor.addTask(iTask);
     }
 

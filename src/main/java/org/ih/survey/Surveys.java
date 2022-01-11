@@ -8,7 +8,7 @@ import org.ih.dao.hibernate.SurveyDAO;
 import org.ih.dao.model.*;
 import org.ih.dto.Question;
 import org.ih.dto.Survey;
-import org.ih.notification.NotificationTask;
+import org.ih.notification.EmailNotificationTask;
 import org.ih.task.TaskRunner;
 
 import java.util.ArrayList;
@@ -108,9 +108,9 @@ public class Surveys {
 
         stringBuilder.append("\n\n").append("Thank you!\n\n");
 
-        NotificationTask notificationTask = new NotificationTask();
-        notificationTask.addInformation("infectionprevention@infinitihealth.org", subject, stringBuilder.toString());
-        TaskRunner.getInstance().runTask(notificationTask);
+        EmailNotificationTask emailNotificationTask = new EmailNotificationTask();
+        emailNotificationTask.addInformation("infectionprevention@infinitihealth.org", subject, stringBuilder.toString());
+        TaskRunner.getInstance().runTask(emailNotificationTask);
     }
 
     public Results<Survey> list(int offset, int limit, boolean asc, String sort, SurveyType type) {

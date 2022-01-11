@@ -1,5 +1,10 @@
 package org.ih.dto;
 
+import org.ih.account.AccountRole;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * DTO for accounts
  *
@@ -18,13 +23,13 @@ public class Account implements DataObject {
     private long lastLoginTime;
     private long currentTime;
     private String sessionId;
-    private boolean allowedToChangePassword;
     private boolean usingTemporaryPassword;
     private boolean disabled;
     private String description;
     private boolean isAdministrator;
     private String address;
     private String phone;
+    private final List<AccountRole> roles = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -88,14 +93,6 @@ public class Account implements DataObject {
 
     public void setLastUpdateTime(long lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
-    }
-
-    public boolean isAllowedToChangePassword() {
-        return allowedToChangePassword;
-    }
-
-    public void setAllowedToChangePassword(boolean allowedToChangePassword) {
-        this.allowedToChangePassword = allowedToChangePassword;
     }
 
     public String getNewPassword() {
@@ -168,5 +165,9 @@ public class Account implements DataObject {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<AccountRole> getRoles() {
+        return this.roles;
     }
 }

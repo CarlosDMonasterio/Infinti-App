@@ -2,156 +2,750 @@
 
 <div class="bg-light">
 
-    <br><br><br><br>
+    <br><br>
 
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-12 small text-uppercase text-monospace font-weight-bold">
-                <a style="color: black" href="/">Home</a> / <span class="text-muted">COVID-19 Test Results</span>
+                <a style="color: black" href="/">Home</a> / <span class="text-muted">Contact Tracing</span>
             </div>
         </div>
-    </div>
-
-<!--    {{test | json}}-->
+    </div> <!-- Header -->
 
     <div class="container bg-white shadow-sm p-5">
 
         <div class="row">
             <div class="col-sm-12">
-                <h3>COVID-19 Test Results</h3>
+                <h3>Contact Tracing</h3>
             </div>
-        </div>
+        </div> <!--Title-->
 
         <div class="row">
             <div class="col-sm-12">
                 <ngb-progressbar type="primary" [showValue]="false" [value]="progress"
                                  style="height: 10px"></ngb-progressbar>
             </div>
-        </div>
+        </div> <!--Progress Bar-->
+
+        <br><br>
 
         <div class="row">
-            <div class="col-sm-12 text-right font-weight-bold small" *ngIf="test.district">
-                {{test.district.label}} <span class="text-muted">District</span>
-                <span *ngIf="test.school">, {{test.school.name}} <span class="text-muted">School</span></span>
+            <div class="col-sm-12">
+                <h4>Personal Information</h4>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3 pt-4">
-                <label for="district" class="font-weight-bold text-muted">District (optional)</label>:<br>
-                <select class="custom-select" id="district" required [(ngModel)]="test.district" name="district"
-                        style="width: 180px" (ngModelChange)="districtSelected()" [disabled]="submittingReport">
-                    <option selected [ngValue]=undefined>Choose One...</option>
-                    <option *ngFor="let district of districts" [ngValue]="district">{{district.label}}</option>
-                </select>
-            </div>
-
-            <div class="col-md-6 mb-3 pt-4" *ngIf="test.district">
-
-                <ng-container *ngIf="!availableSchools">
-                    <label for="school" class="text-muted font-weight-bold">School (optional)</label>:
-                    <input type="text" class="form-control" placeholder="Start entering school name..."
-                           name="school" id="school"
-                           (selectItem)="schoolSelected($event)"
-                           [(ngModel)]="test.school"
-                           [editable]="false"
-                           [ngbTypeahead]="searchDistrictSchools"
-                           [inputFormatter]="formatter"
-                           [resultFormatter]="formatter"
-                           #instance="ngbTypeahead">
-                </ng-container>
-            </div>
-        </div>
-
+        </div> <!-- ### PERSONAL INFORMATION SECTION ### -->
         <hr>
-
-        <div class="row mb-3 pt-4">
-            <div class="col-sm-6">
-                <label for="role" class="font-weight-bold text-muted">Select the department you report to</label><br>
-            </div>
-
-            <div class="col-sm-4">
-                <select class="custom-select" id="role" required name="role" [(ngModel)]="test.department"
-                        (ngModelChange)="modelChange()" [disabled]="submittingReport">
-                    <option selected disabled [ngValue]=undefined>Choose One...</option>
-                    <option *ngFor="let department of departments" [ngValue]="department">{{department}}</option>
-                </select>
-            </div>
-        </div>
 
         <div class="row mb-3">
             <div class="col-sm-6">
-                <label for="role" class="font-weight-bold text-muted">Date of test</label><br>
+                <label for="fullName" class="font-weight-bold text-muted">First and Last Name</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" id="fullName" required name="fullName" (blur)="modelChange()">
+            </div>
+        </div> <!--fullName--> <!-- [(ngModel)]="fullName"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="email" class="font-weight-bold text-muted">Email Address</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" id="email" required name="email" (blur)="modelChange()">
+            </div>
+        </div> <!--email--> <!-- [(ngModel)]="email"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="phone" class="font-weight-bold text-muted">Phone Number</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" id="phone" required name="phone" (blur)="modelChange()">
+            </div>
+        </div> <!--phone--> <!-- [(ngModel)]="phone"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="address" class="font-weight-bold text-muted">Address</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <textarea class="form-control" id="address" required name="address" (blur)="modelChange()" rows="2"></textarea>
+            </div>
+        </div> <!--address--> <!-- [(ngModel)]="address"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="role" class="font-weight-bold text-muted">Job Title</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" id="role" required name="role" (blur)="modelChange()">
+            </div>
+        </div> <!--role--> <!-- [(ngModel)]="role"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="manager" class="font-weight-bold text-muted">Manager Name</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" id="manager" required name="manager" (blur)="modelChange()">
+            </div>
+        </div> <!--manager--> <!-- [(ngModel)]="manager"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="district" class="font-weight-bold text-muted">Primary District</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="district" required [(ngModel)]="test.district" name="district"
+                        style="width: 180px" (ngModelChange)="districtSelected()" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>East</option>
+                    <option>Northwest</option>
+                    <option>Northeast</option>
+                    <option>Bell Gardens Lot</option>
+                    <option>Soto Lot</option>
+                    <option>Van Nuys Lot</option>
+                    <option>Remote</option>
+                    <!-- <option *ngFor="let district of districts" [ngValue]="district">{{district.label}}</option> -->
+                </select>
+            </div>
+        </div> <!--District--> <!-- [(ngModel)]="district"-->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Current Status</h4>
+            </div>
+        </div> <!-- ### CURRENT STATUS SECTION ### -->
+        <hr>
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="caseNumber" class="font-weight-bold text-muted">Case Number</label><br>
+            </div>
+
+            <div class="col-sm-3">
+                <input class="form-control" id="caseNumber" required name="caseNumber" (blur)="modelChange()">
+            </div>
+
+            <div class="col-sm-1"></div>
+
+            <div class="col-sm-2">
+                <label class="font-weight-bold text-muted"><a href="">Open New Case</a></label><br>
+            </div>
+        </div> <!--Case Number--> <!-- [(ngModel)]="caseNumber"-->
+
+        <div class="row mb-3 ">
+            <div class="col-sm-6">
+                <label for="caseType" class="font-weight-bold text-muted">Case Type</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="caseType" required name="caseType"
+                        (ngModelChange)="modelChange()" [disabled]="submittingReport">
+                    <option selected disabled [ngValue]=undefined>Choose One...</option>
+                    <option>Positive Test | Symptomatic</option>
+                    <option>Positive Test | Asymptomatic</option>
+                    <option>Negative Test | Symptomatic</option>
+                    <option>Negative Test | Asymptomatic</option>
+                    <option>Exposure | Symptomatic</option>
+                    <option>Exposure | Asymptomatic</option>
+                    <option>No Exposure | Symptomatic</option>
+                    <option>Closed Case</option>
+                </select>
+            </div>
+        </div> <!--Case Type--> <!-- [(ngModel)]="test.caseType"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="negativeDueDate" class="font-weight-bold text-muted">
+                    Due Date for negative COVID-19 test for return to work<br><i>(Exposure Only)</i>
+                </label>
             </div>
 
             <div class="col-sm-6">
                 <div class="input-group w-50">
-                    <input class="form-control" [(ngModel)]="test.date" [maxDate]="maxDate"
-                           (dateSelect)="dateSelected($event)"
-                           placeholder="mm/dd/yyyy" name="dp" ngbDatepicker #d="ngbDatepicker">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
-                            <i class="fa fa-fw fa-calendar"></i>
-                        </button>
-                    </div>
+                    <input type="date" class="form-control" id="negativeDueDate" name="negativeDueDate">
+
                 </div>
             </div>
-        </div>
+        </div> <!--Negative Test Due Date--> <!-- [(ngModel)]="test.date"--> <!--(dateSelect)="negativeDueDate($event)"-->
 
         <div class="row mb-3">
             <div class="col-sm-6">
-                <label for="role" class="font-weight-bold text-muted">Where did you get tested?</label><br>
+                <label for="negativePhoneDate" class="font-weight-bold text-muted">
+                    Phone call due date<br><i>(Exposure Only)</i>
+                </label>
             </div>
 
             <div class="col-sm-6">
-                <input class="form-control" [(ngModel)]="test.location" placeholder="e.g. Mobile Site" maxlength="254"
-                       (blur)="modelChange()">
+                <div class="input-group w-50">
+                    <input type="date" class="form-control" id="negativePhoneDate" name="negativePhoneDate">
+                </div>
             </div>
-        </div>
+        </div> <!--Negative Phone Date--> <!-- [(ngModel)]="test.date"--> <!--(dateSelect)="negativePhoneDate($event)"-->
+
+        <div class="row mb-12">
+            <div class="col-sm-12">
+                <label for="exposureNegativeComments" class="font-weight-bold text-muted">Comments <i>(Exposure Only)</i></label>
+                <textarea class="form-control" id="exposureNegativeComments" required name="exposureNegativeComments" (blur)="modelChange()" rows="7"></textarea>
+            </div>
+        </div> <!--Negative Exposure Comments--> <!-- [(ngModel)]="ppe"  (ngModelChange)="negativeExposureComments"  -->
+        <br>
 
         <div class="row mb-3">
             <div class="col-sm-6">
-                <label for="test-result" class="font-weight-bold text-muted">What was your test result?</label><br>
+                <label for="school" class="font-weight-bold text-muted">
+                    School currently working in
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <select class="custom-select" id="school" required name="school"
+                        (ngModelChange)="modelChange()" [disabled]="submittingReport">
+                    <option selected disabled [ngValue]=undefined>Choose One...</option>
+                </select>
+            </div>
+        </div> <!--Current School Name--> <!-- [(ngModel)]="school"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="location" class="font-weight-bold text-muted">
+                    Current location
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <select class="custom-select" id="location" required name="location"
+                        (ngModelChange)="modelChange()" [disabled]="submittingReport">
+                    <option selected disabled [ngValue]=undefined>Choose One...</option>
+                </select>
+            </div>
+        </div> <!--Current location--> <!-- [(ngModel)]="school"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="van" class="font-weight-bold text-muted">
+                    Van # / Self Drive (H)
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <input class="form-control" id="van" required name="van" (blur)="modelChange()">
+            </div>
+        </div> <!--Van# / Self Drive--> <!-- [(ngModel)]="van"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label class="font-weight-bold text-muted">
+                    Hours worked
+                </label>
             </div>
 
             <div class="col-sm-3">
-                <select class="custom-select" id="test-result" required name="test-result" [(ngModel)]="test.result"
-                        (ngModelChange)="testResultSelected()" [disabled]="submittingReport">
-                    <option selected disabled [ngValue]=undefined>Choose One...</option>
-                    <option *ngFor="let result of resultOptions" [ngValue]="result">{{result}}</option>
+                <div class="col text-right" class="font-weight-bold text-muted">
+                    <label for="startTime">Start Time&#8195;</label>
+                    <input type="time" class="font-weight-bold text-muted" id="startTime" name="startTime">
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="col text-right" class="font-weight-bold text-muted">
+                    <label for="endTime" >End Time&#8195;</label>
+                    <input type="time" class="font-weight-bold text-muted" id="endTime" name="startTime">
+                </div>
+            </div>
+        </div> <!--Hours worked--> <!-- [(ngModel)]="hours"-->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Symptoms</h4>
+            </div>
+        </div> <!-- ### SYMPTOMS SECTION ### -->
+        <hr>
+
+        <div class="row mb-3 ">
+            <div class="col-sm-6">
+                <label class="font-weight-bold text-muted">
+                    Do you current have any of the following symptoms?<br>
+                    <i>(check all that apply):</i>
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="fever">
+                    <label class="custom-control-label" for="fever">Fever greater than 100.4</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="chills">
+                    <label class="custom-control-label" for="chills">Chills</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="cough">
+                    <label class="custom-control-label" for="cough">Cough</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="breathing">
+                    <label class="custom-control-label" for="breathing">Difficulty breathing/Shortness of breath</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="fatigue">
+                    <label class="custom-control-label" for="fatigue">Fatigue</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="Confusion">
+                    <label class="custom-control-label" for="Confusion">new Confusion</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="chestPain">
+                    <label class="custom-control-label" for="chestPain">Persistent Chest Pain</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="awake">
+                    <label class="custom-control-label" for="awake">Inability to stay awake</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="abdominal">
+                    <label class="custom-control-label" for="abdominal">Abdominal pain</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="muscle">
+                    <label class="custom-control-label" for="muscle">Muscle or body aches/pain</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="soreThroat">
+                    <label class="custom-control-label" for="soreThroat">Sore throat</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="congestion">
+                    <label class="custom-control-label" for="congestion">Congestion and/or runny nose</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="headache">
+                    <label class="custom-control-label" for="headache">Headache</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="tasteSmell">
+                    <label class="custom-control-label" for="tasteSmell">loss of taste or smell</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="nausea">
+                    <label class="custom-control-label" for="nausea">Nausea or vomiting</label>
+                </div>
+                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="diarrhea">
+                    <label class="custom-control-label" for="diarrhea">Diarrhea</label>
+                </div>
+            </div>
+        </div> <!--Symptoms--> <!-- [(ngModel)]="symptoms"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="contactDate" class="font-weight-bold text-muted">Date of initial contact tracing</label>
+            </div>
+
+            <div class="col-sm-6">
+
+                <div class="input-group w-50">
+                    <input type="date" class="form-control" id="contactDate" name="contactDate">
+                </div>
+            </div>
+        </div> <!--Initial Contact Date--> <!-- [(ngModel)]="contact.date" --> <!--(dateSelect)="dateSelected($event)"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="contactClinician" class="font-weight-bold text-muted">Clinician performing contact tracing</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" id="contactClinician" required name="contactClinician" (blur)="modelChange()">
+            </div>
+        </div> <!--Clinician performing contract tracing--> <!-- [(ngModel)]="contactClinician" -->
+
+        <div class="row mb-12">
+            <div class="col-sm-12">
+                <label for="ongoingCaseNote" class="font-weight-bold text-muted">Ongoing Case Note</label><br>
+                <textarea class="form-control" id="ongoingCaseNote" required name="ongoingCaseNote" (blur)="modelChange()" rows="7"></textarea>
+            </div>
+            <br><br>
+        </div> <!--Ongoing Case Note--> <!-- [(ngModel)]="ongoingCaseNote" -->
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>COVID-19 Testing Status</h4>
+            </div>
+        </div> <!-- ### COVID-19 TESTING SECTION ### -->
+        <hr>
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="tested" class="font-weight-bold text-muted">Have you been tested for COVID-19 in the last 14 days</label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="tested" required name="tested"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>No</option>
+                    <option>Yes</option>
                 </select>
             </div>
-        </div>
+        </div> <!--Tested in last 14 Days--> <!-- [(ngModel)]="tested"  (ngModelChange)="testedSelected()"  -->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="testDate" class="font-weight-bold text-muted">Date of rt-PCR COVID-19 test</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="input-group w-50">
+                    <input type="date" class="form-control" id="testDate" name="testDate">
+                </div>
+            </div>
+        </div> <!--Date fo COVID-19 Test--> <!-- [(ngModel)]="test.date" --> <!--(dateSelect)="dateSelected($event)"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="vaxStatus" class="font-weight-bold text-muted">Vaccination Status</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="vaxStatus" required name="vaxStatus"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>I have received dose #1 of Pfizer or Moderna</option>
+                    <option>I have received dose #1 and #2 of Pfizer or Moderna</option>
+                    <option>I have received 1 dose of Johnson & Johnson</option>
+                    <option>I have not received any COVID-19 vaccination</option>
+                    <option>Yes</option>
+                </select>
+            </div>
+        </div> <!--Vaccine Status--> <!-- [(ngModel)]="tested"  (ngModelChange)="vaxStatusSelected()"  -->
 
         <div class="row mb-3">
             <div class="col-sm-6 align-items-center">
-                <label for="role" class="font-weight-bold text-muted">Upload a picture of the results</label><br>
+                <label class="font-weight-bold text-muted">Upload COVID-19 vaccination record</label><br>
             </div>
             <div class="col-sm-6">
                 <input type="file" class="d-none" (change)="onFileSelected($event)" #fileUpload>
                 <div class="file-upload">
                     {{fileName || "No file uploaded yet."}}
-                    <button class="btn btn-outline-secondary" (click)="fileUpload.click()"><small>Select</small> <i
-                            class="fa fa-fw fa-upload"></i></button>
+                    <button class="btn btn-outline-secondary"
+                            (click)="fileUpload.click()">
+                            <small>Select</small>
+                            <i class="fa fa-fw fa-upload"></i>
+                    </button>
                 </div>
             </div>
+        </div> <!--Upload documentation-->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Mask and Social Distancing in the Worksite</h4>
+            </div>
+        </div> <!-- ### SOCIAL DISTANCING AND WORKSITE SECTION ### -->
+        <hr>
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="wearMask" class="font-weight-bold text-muted">
+                    Do you consistently wear a mask, while in the presence of others, at infiniti Health sites,
+                    and while riding Infiniti Health transportation vehicles?
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="wearMask" required name="wearMask"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </div>
+        </div> <!--Wear mask--> <!-- [(ngModel)]="mask"  (ngModelChange)="maskSelected()" -->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="sitAway" class="font-weight-bold text-muted">
+                    Do you sit with others at meal/break times, while not wearing a mask, at distance of less than 6 feet?
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="sitAway" required name="sitAway"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </div>
+        </div> <!--Wear mask--> <!-- [(ngModel)]="mask"  (ngModelChange)="maskSelected()" -->
+
+        <div class="row mb-12">
+            <div class="col-sm-12">
+                <label for="sitAway" class="font-weight-bold text-muted">
+                    Worksite Guidelines Comments
+                </label>
+            </div>
+            <div class="col-sm-12">
+                <textarea class="form-control" id="guidelines" required name="guidelines" (blur)="modelChange()" rows="7"></textarea>
+            </div>
+        </div> <!--Comments-->
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Exposure</h4>
+            </div>
+        </div> <!-- ### EXPOSURE SECTION ### -->
+        <hr>
+
+        <div class="col-sm-12">
+            <h5>You have been in close contact if you have:</h5>
         </div>
+        <div class="col-sm-10">
+            <label class="font-weight-bold text-muted">
+            <ol type="A">
+                <li>been within 6 feet of someone who has COVID-19 for a combined total of 15 minutes.</li>
+                <li>provided  care at home for someone who is sick with COVID-19.</li>
+                <li>had direct physical contact (hugged/kissed) with someone who has COVID-19.</li>
+                <li>shared eating or drinking utensils with someone who has COVID-19.</li>
+                <li>been sneezed on or coughed on by someone sho has COVID-19.</li>
+            </ol>
+            </label>
+        </div> <!--Exposure criteria-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="2WeeksContact" class="font-weight-bold text-muted">
+                    In the past 2 weeks, have you been in close contact with someone who has COVID-19?
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="2WeeksContact" required name="2WeeksContact"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>No</option>
+                    <option>Yes</option>
+                    <option>Not Sure</option>
+                </select>
+            </div>
+        </div> <!--2 Weeks contact--> <!-- [(ngModel)]="2WeeksContact"  (ngModelChange)="2WeeksContactSelected()"  -->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="travelContact" class="font-weight-bold text-muted">
+                    Have you or a close contact traveled outside the country/state within the past 14 days?
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="travelContact" required name="travelContact"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </div>
+        </div> <!--Travel contact--> <!-- [(ngModel)]="travelContact"  (ngModelChange)="travelContactSelected()"  -->
+
+        <div class="row mb-12">
+            <div class="col-sm-12">
+                <label for="contacts" class="font-weight-bold text-muted">
+                    Please list the names of any close contacts, excluding people who have had COVID-19 within the past 3 months
+                </label>
+                <textarea class="form-control" id="contacts" required name="contacts" (blur)="modelChange()" rows="4"></textarea>
+            </div>
+            <br><br>
+        </div> <!--Close contacts--> <!-- [(ngModel)]="contacts" -->
+        <br>
+
+        <div class="row mb-12">
+            <div class="col-sm-12">
+                <label for="contactsDetails" class="font-weight-bold text-muted">
+                    Close contacts details, including details regarding how you were exposed
+                </label>
+                <textarea class="form-control" id="contactsDetails" required name="contactsDetails" (blur)="modelChange()" rows="7"></textarea>
+            </div>
+        </div> <!--Close contacts details--> <!-- [(ngModel)]="contacts" -->
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4>Personal Protection & Isolation Status</h4>
+            </div>
+        </div> <!-- ### ISOLATION SECTION ### -->
+        <hr>
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="ppe" class="font-weight-bold text-muted">
+                    Did you wear personal protective equipment <i>(gown, N-95 mask, goggles or face shield, gloves)</i> while
+                    working at your school site or other healthcare facility, while performing COVID-19 testing or providing care
+                    to patients with known or suspected COVID-19 infection?
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="ppe" required name="ppe"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>No</option>
+                    <option>Yes</option>
+                    <option>N/A = Role requires medical mask only</option>
+                    <option>Other</option>
+                </select>
+            </div>
+        </div> <!--PPE--> <!-- [(ngModel)]="ppe"  (ngModelChange)="ppeSelected()"  -->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="quarantine" class="font-weight-bold text-muted">
+                    Were Quarantine/Isolation guidelines followed?<br>
+                    <i>(inquire about current living conditions, shared living spaces)</i>
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="quarantine" required name="quarantine"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>N/A</option>
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </div>
+        </div> <!--Quarantine Guidelines Followed--> <!-- [(ngModel)]="quarantine"  (ngModelChange)="quarantine"  -->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="quarantineDuration" class="font-weight-bold text-muted">
+                    Were Quarantine/Isolation guidelines followed?<br>
+                    <i>(inquire about current living conditions, shared living spaces)</i>
+                </label>
+            </div>
+
+            <div class="col-sm-6">
+                <select class="custom-select" id="quarantineDuration" required name="quarantineDuration"
+                        style="width: 180px" [disabled]="submittingReport">
+                    <option selected [ngValue]=undefined>Choose One...</option>
+                    <option>3 Days</option>
+                    <option>5 Days</option>
+                    <option>7 Days</option>
+                    <option>10 Days</option>
+                    <option>Late Notification/protocol not followed</option>
+                    <option>Other (please add comment)</option>
+                </select>
+            </div>
+        </div> <!--Quarantine Duration--> <!-- [(ngModel)]="quarantine"  (ngModelChange)="quarantine"  -->
+
+        <div class="row mb-12">
+            <div class="col-sm-12">
+                <label for="quarantineComments" class="font-weight-bold text-muted">Comments</label>
+                <textarea class="form-control" id="quarantineComments" required name="quarantineComments" (blur)="modelChange()" rows="7"></textarea>
+            </div>
+        </div> <!--Quarantine Comments--> <!-- [(ngModel)]="ppe"  (ngModelChange)="quarantineComments"  -->
+        <br>
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="quarantineStart" class="font-weight-bold text-muted">Quarantine/Isolation start date</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="input-group w-50">
+                    <input type="date" class="form-control" id="quarantineStart" name="quarantineStart">
+                </div>
+            </div>
+        </div> <!--Quarantine Start date--> <!-- [(ngModel)]="test.date" --> <!--(dateSelect)="quarantineStart($event)"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="quarantineEnd" class="font-weight-bold text-muted">Anticipated/Actual return to work date</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="input-group w-50">
+                    <input type="date" class="form-control" id="quarantineEnd" name="quarantineEnd">
+                </div>
+            </div>
+        </div> <!--Quarantine End date--> <!-- [(ngModel)]="test.date" --> <!--(dateSelect)="quarantineEnd($event)"-->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="quarantineDays" class="font-weight-bold text-muted">Calendar Days out for quarantine/isolation</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <input class="form-control" id="quarantineDays" required name="quarantineDays" (blur)="modelChange()">
+            </div>
+        </div> <!--Quarantine Days--> <!-- [(ngModel)]="quarantineDays" -->
+
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <label for="followDate" class="font-weight-bold text-muted">Date of follow-up contact tracing</label><br>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="input-group w-50">
+                    <input type="date" class="form-control" id="followDate" name="followDate">
+                </div>
+            </div>
+        </div> <!--Follow-Up Contact Date--> <!-- [(ngModel)]="contact.date" --> <!--(dateSelect)="dateSelected($event)"-->
 
         <hr>
 
-        <div class="row">
-            <div class="col-sm-4" *ngIf="errorSubmitting">
-                <div class="alert alert-danger p-2 small"><i class="fa fa-exclamation-triangle"></i> Error creating
-                    report. Please try again
-                </div>
-            </div>
+        <div class="row mb-12">
+            <div class="col-sm-12" *ngIf="errorSubmitting">
+                <div class="alert alert-danger p-2 small"><i class="fa fa-exclamation-triangle">
+                </i> Error submitting report. Please try again or contact your administrator</div>
+            </div> <!-- Error Submitting -->
 
-            <div class="col text-right">
-                <button class="btn btn-primary ml-2" (click)="submitTestResult()" [disabled]="!canSubmit()">
-                    <span *ngIf="!submittingReport">Submit</span>
-                    <span *ngIf="submittingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>
-                </button>
-            </div>
+            <div class="col-sm-12" *ngIf="errorSaving">
+                <div class="alert alert-danger p-2 small"><i class="fa fa-exclamation-triangle">
+                </i> Error saving report. Please try again or contact your administrator</div>
+            </div> <!-- Error Saving -->
+
+            <div class="col-sm-12" *ngIf="successSaving">
+                <div class="alert alert-success">
+                    <p class="font-95">Contact tracing information successfully saved.</p>
+                    <p style="color: #005792;"><i>This information is not yet submitted.</i>  To submit, please complete the contact tracing form and press <b>SUBMIT</b>.</p>
+                </div>
+            </div><!-- Success Saving -->
+
+            <div class="col-sm-12" *ngIf="successSubmitting">
+                <div class="alert alert-success">
+                    <p class="font-95">Contact tracing information successfully Submitted.</p>
+                </div>
+            </div>  <!-- Success Submitting -->
+
+            <div class="col-sm-8">
+                <a href=""><i>View COVID-19 Self-Care and Follow Up Instructions</i></a><br>
+                <i>TODO: Opens in a modal screen</i>
+            </div> <!-- COVID-19 Instructions -->
+
+            <div class="col-sm-2">
+                <div class="col text-right">
+                    <button class="btn btn-primary ml-2" style="width: 120px" (click)="saveResults()" [disabled]="!canSave()">
+                        <span *ngIf="!savingReport">Save</span>
+                        <span *ngIf="savingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Saving...</span>
+                    </button>
+                </div>
+            </div> <!-- Save Button -->
+
+            <div class="col-sm-2">
+                <div class="col text-right">
+                    <button class="btn btn-primary ml-2" style="width: 120px" (click)="submitTestResult()" [disabled]="!canSubmit()">
+                        <span *ngIf="!submittingReport">Submit</span>
+                        <span *ngIf="submittingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>
+                    </button>
+                </div>
+            </div> <!-- Submit Button -->
         </div>
 
     </div>

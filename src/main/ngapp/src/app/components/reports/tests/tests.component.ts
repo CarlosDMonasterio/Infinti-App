@@ -30,10 +30,13 @@ export class TestsComponent implements OnInit {
     compliance: { display: string, value: boolean }[];
     progress: number;
     submittingReport: boolean;
+    savingReport: boolean;
     errorSubmitting: boolean;
+    errorSaving: boolean;
+    successSaving: boolean;
+    successSubmitting: boolean;
     fileName: string;
     loaded: number;
-
     maxDate: NgbDateStruct;
 
     constructor(private http: HttpService, private search: SchoolService, private user: UserService,
@@ -118,6 +121,10 @@ export class TestsComponent implements OnInit {
         return !(!this.test.location || !this.test.result || !this.test.fileId);
     }
 
+    canSave(): boolean {
+        return true; //User can always save except if the case number is empty
+    }
+
     submitTestResult(): void {
         this.errorSubmitting = false;
         this.submittingReport = true;
@@ -133,6 +140,17 @@ export class TestsComponent implements OnInit {
         }, error => {
             this.submittingReport = false;
         });
+    }
+
+    saveResults(): void{
+        this.errorSaving = false;
+        this.savingReport = true;
+
+        //TODO - Save to database
+
+        //TODO - IF successful display success div
+        this.successSaving = true;
+        //TODO - Else display error saving div
     }
 
     formatter = (school: School) => school.name;

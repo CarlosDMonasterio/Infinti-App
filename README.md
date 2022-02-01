@@ -81,4 +81,4 @@ Hector Plahar: hector.plahar@infinitihealth.org
 Carlos Monasterio: carlos.monasterio@infinitiheal.org
 Yared Demissie: yared.demissie@infinitihealth.org
 
-**Happy Coding and Welcome onboard.**
+**Happy coding and welcome onboard.**

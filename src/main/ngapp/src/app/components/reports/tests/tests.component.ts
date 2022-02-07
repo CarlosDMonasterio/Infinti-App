@@ -11,7 +11,10 @@ import {LabTest} from '../../../models/lab-test';
 import {HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
 import {UserService} from '../../../user.service';
 import {environment} from '../../../../environments/environment';
-import {NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+//import {NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+
+//Import for Checkbox array
+import { FormBuilder, FormGroup, FormControl, Validators, FormArray} from '@angular/forms';
 
 @Component({
     selector: 'app-tests',
@@ -19,6 +22,13 @@ import {NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
     styleUrls: ['./tests.component.css']
 })
 export class TestsComponent implements OnInit {
+
+    form: FormGroup;
+    symptomList: any = [
+    { id: 1, name: 'Fever'},
+    { id: 2, name: 'Chills' },
+    { id: 3, name: 'Difficulty Breathing' }
+    ]
 
     districts: District[];
     availableSchools: School[];     // available schools by district
@@ -37,23 +47,52 @@ export class TestsComponent implements OnInit {
     successSubmitting: boolean;
     fileName: string;
     loaded: number;
-    maxDate: NgbDateStruct;
+    //dbSymptoms: string;
+
+    //maxDate: NgbDateStruct;
 
     constructor(private http: HttpService, private search: SchoolService, private user: UserService,
-                private router: Router, private httpClient: HttpClient) {
+                private router: Router, private httpClient: HttpClient, private formBuilder: FormBuilder) {
         this.test = new LabTest();
         this.departments = ['Operations', 'Nursing'];
         this.resultOptions = ['Positive', 'Negative', 'Inconclusive'];
-        const today = new Date();
-        this.maxDate = {year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate()};
+        //const today = new Date();
+        //this.maxDate = {year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate()};
         this.progress = 0;
+
+        this.form = this.formBuilder.group({
+              symptom: this.formBuilder.array([], [Validators.required])
+        })
     }
+
+      onCheckboxChange(e) {
+        const symptoms: FormArray = this.form.get('symptom') as FormArray;
+
+        if (e.target.checked) {
+          symptoms.push(new FormControl(e.target.value));
+        } else {
+           const index = symptoms.controls.findIndex(x => x.value === e.target.value);
+           symptoms.removeAt(index);
+        }
+        console.log(this.form.value);
+      }
 
     ngOnInit(): void {
         // retrieve available
         this.http.get('districts').subscribe((result: Result<District>) => {
             this.districts = result.requested;
         });
+
+    /* JSON TEST
+    //this.dbSymptoms = '{"fever":"True","chills":"True","cough":"True","breathing":"True"}';
+    //const symptoms = this.dbSymptoms;
+    //const result = JSON.parse(symptoms);
+
+    //result.fever //TODO - obj.status = result.fever
+    //result.chills  //TODO - obj.status = result.chills
+    //result.breathing  //TODO - obj.status = result.breathing
+    */
+
     }
 
     // change detection when a district is selected
@@ -99,9 +138,9 @@ export class TestsComponent implements OnInit {
         }
     }
 
-    dateSelected(value: NgbDate): void {
-        this.modelChange();
-    }
+    //dateSelected(value: NgbDate): void {
+    //    this.modelChange();
+    //}
 
     testResultSelected(): void {
         this.modelChange();
@@ -112,6 +151,7 @@ export class TestsComponent implements OnInit {
      * District and school are both optional
      */
     canSubmit(): boolean {
+        /*
         if (!this.test.department) {
             return false;
         }
@@ -119,6 +159,8 @@ export class TestsComponent implements OnInit {
             return false;
         }
         return !(!this.test.location || !this.test.result || !this.test.fileId);
+        */
+        return true;
     }
 
     canSave(): boolean {
@@ -128,10 +170,14 @@ export class TestsComponent implements OnInit {
     submitTestResult(): void {
         this.errorSubmitting = false;
         this.submittingReport = true;
+
+        //What is this for?
+        /*
         const dataString = this.test.date.year + '-' + ('0' + this.test.date.month).slice(-2) + '-' +
             ('0' + this.test.date.day).slice(-2);
         this.test.dateTime = Date.parse(dataString);
         this.test.result = this.test.result.toUpperCase();
+
 
         this.http.post('tests', this.test).subscribe((result: LabTest) => {
             this.submittingReport = false;
@@ -140,6 +186,8 @@ export class TestsComponent implements OnInit {
         }, error => {
             this.submittingReport = false;
         });
+        */
+        this.successSubmitting = true;
     }
 
     saveResults(): void{

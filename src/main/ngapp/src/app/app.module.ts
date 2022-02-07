@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms'; //ReactiveFormsModule added by CJM for multiple checkbox response
 import {NgbModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {AppComponent} from './app.component';
@@ -137,6 +137,7 @@ import {PassesComponent} from './components/passes/passes.component';
         BrowserModule,
         AppRoutingModule,
         FormsModule,
+        ReactiveFormsModule, //Added by CJM for multiple checkbox response
         NgbModule,
         NgbNavModule,
         HttpClientModule,

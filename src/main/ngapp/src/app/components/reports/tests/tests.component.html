@@ -267,6 +267,7 @@
         <hr>
 
         <div class="row mb-3 ">
+
             <div class="col-sm-6">
                 <label class="font-weight-bold text-muted">
                     Do you current have any of the following symptoms?<br>
@@ -275,71 +276,77 @@
             </div>
 
             <div class="col-sm-6">
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fever">
-                    <label class="custom-control-label" for="fever">Fever greater than 100.4</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="chills">
-                    <label class="custom-control-label" for="chills">Chills</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="cough">
-                    <label class="custom-control-label" for="cough">Cough</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="breathing">
-                    <label class="custom-control-label" for="breathing">Difficulty breathing/Shortness of breath</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fatigue">
-                    <label class="custom-control-label" for="fatigue">Fatigue</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="Confusion">
-                    <label class="custom-control-label" for="Confusion">new Confusion</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="chestPain">
-                    <label class="custom-control-label" for="chestPain">Persistent Chest Pain</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="awake">
-                    <label class="custom-control-label" for="awake">Inability to stay awake</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="abdominal">
-                    <label class="custom-control-label" for="abdominal">Abdominal pain</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="muscle">
-                    <label class="custom-control-label" for="muscle">Muscle or body aches/pain</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="soreThroat">
-                    <label class="custom-control-label" for="soreThroat">Sore throat</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="congestion">
-                    <label class="custom-control-label" for="congestion">Congestion and/or runny nose</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="headache">
-                    <label class="custom-control-label" for="headache">Headache</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="tasteSmell">
-                    <label class="custom-control-label" for="tasteSmell">loss of taste or smell</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="nausea">
-                    <label class="custom-control-label" for="nausea">Nausea or vomiting</label>
-                </div>
-                <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="diarrhea">
-                    <label class="custom-control-label" for="diarrhea">Diarrhea</label>
-                </div>
+
+                <!-- <div *ngFor="let symptom of symptomList"> -->
+                <!-- {{symptom.name}} -->
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="fever"> <!--[value]="symptom.id" (change)="onCheckboxChange($event)" -->
+                        <!--{{symptom.name}}-->
+                        <label class="custom-control-label" for="fever">Fever greater than 100.4</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="chills"> <!-- [value]="symptom.id" (change)="onCheckboxChange($event)" -->
+                        <label class="custom-control-label" for="chills">Chills</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="cough"> <!-- [value]="symptom.id" (change)="onCheckboxChange($event)" -->
+                        <label class="custom-control-label" for="cough">Cough</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="breathing"> <!-- [value]="symptom.id" (change)="onCheckboxChange($event)" -->
+                        <label class="custom-control-label" for="breathing">Difficulty breathing/Shortness of breath</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="fatigue">
+                        <label class="custom-control-label" for="fatigue">Fatigue</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="Confusion">
+                        <label class="custom-control-label" for="Confusion">new Confusion</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="chestPain">
+                        <label class="custom-control-label" for="chestPain">Persistent Chest Pain</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="awake">
+                        <label class="custom-control-label" for="awake">Inability to stay awake</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="abdominal">
+                        <label class="custom-control-label" for="abdominal">Abdominal pain</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="muscle">
+                        <label class="custom-control-label" for="muscle">Muscle or body aches/pain</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="soreThroat">
+                        <label class="custom-control-label" for="soreThroat">Sore throat</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="congestion">
+                        <label class="custom-control-label" for="congestion">Congestion and/or runny nose</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="headache">
+                        <label class="custom-control-label" for="headache">Headache</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="tasteSmell">
+                        <label class="custom-control-label" for="tasteSmell">loss of taste or smell</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="nausea">
+                        <label class="custom-control-label" for="nausea">Nausea or vomiting</label>
+                    </div>
+                    <div class="custom-control custom-checkbox custom-control-inline pmd-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="diarrhea">
+                        <label class="custom-control-label" for="diarrhea">Diarrhea</label>
+                    </div>
+               <!-- </div> -->
             </div>
+
         </div> <!--Symptoms--> <!-- [(ngModel)]="symptoms"-->
 
         <div class="row mb-3">
@@ -625,8 +632,7 @@
         <div class="row mb-3">
             <div class="col-sm-6">
                 <label for="quarantineDuration" class="font-weight-bold text-muted">
-                    Were Quarantine/Isolation guidelines followed?<br>
-                    <i>(inquire about current living conditions, shared living spaces)</i>
+                    Duration of quarantine/isolation<br>
                 </label>
             </div>
 
@@ -714,13 +720,13 @@
             <div class="col-sm-12" *ngIf="successSaving">
                 <div class="alert alert-success">
                     <p class="font-95">Contact tracing information successfully saved.</p>
-                    <p style="color: #005792;"><i>This information is not yet submitted.</i>  To submit, please complete the contact tracing form and press <b>SUBMIT</b>.</p>
+                    <p style="color: #005792;"><i>This information is not yet submitted.</i>  To submit, please answer all questions and press <b>SUBMIT</b>.</p>
                 </div>
             </div><!-- Success Saving -->
 
             <div class="col-sm-12" *ngIf="successSubmitting">
                 <div class="alert alert-success">
-                    <p class="font-95">Contact tracing information successfully Submitted.</p>
+                    <p class="font-95">Contact tracing information successfully submitted.</p>
                 </div>
             </div>  <!-- Success Submitting -->
 
@@ -731,7 +737,7 @@
 
             <div class="col-sm-2">
                 <div class="col text-right">
-                    <button class="btn btn-primary ml-2" style="width: 120px" (click)="saveResults()" [disabled]="!canSave()">
+                    <button class="btn btn-primary ml-2" style="width: 140px" (click)="saveResults()" [disabled]="!canSave()">
                         <span *ngIf="!savingReport">Save</span>
                         <span *ngIf="savingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Saving...</span>
                     </button>
@@ -740,7 +746,7 @@
 
             <div class="col-sm-2">
                 <div class="col text-right">
-                    <button class="btn btn-primary ml-2" style="width: 120px" (click)="submitTestResult()" [disabled]="!canSubmit()">
+                    <button class="btn btn-primary ml-2" style="width: 140px" (click)="submitTestResult()" [disabled]="!canSubmit()">
                         <span *ngIf="!submittingReport">Submit</span>
                         <span *ngIf="submittingReport"><i class="fa fa-spinner fa-pulse fa-fw"></i> Submitting...</span>
                     </button>

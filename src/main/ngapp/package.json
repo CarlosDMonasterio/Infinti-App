@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --aot -prod"
   },
   "private": true,
   "dependencies": {
@@ -36,7 +37,8 @@
     "quagga": "^0.12.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.1.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "angular-cli": "1.0.0-beta.28.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.1.2",

@@ -178,11 +178,19 @@
                                 <mainClass>com.DevServer</mainClass>
                             </manifest>
                         </archive>
-                        <!-- <processTypes>
-                            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
-                        </processTypes> -->
                     </configuration>
                 </plugin>
+                
+                <plugin>
+                    <groupId>com.heroku.sdk</groupId>
+                    <artifactId>heroku-maven-plugin</artifactId>
+                    <configuration>
+                        <processTypes>
+                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
+                        </processTypes>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.1</version>
@@ -206,4 +214,18 @@
             </plugins>
         </pluginManagement>
     </build>
+    <profile>
+        <id>prod</id>
+        <build>
+        <plugins>
+            <plugin>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <configuration>
+                <appName>infiniti-health</appName>
+            </configuration>
+            </plugin>
+        </plugins>
+        </build>
+    </profile>
 </project>

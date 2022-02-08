@@ -168,9 +168,14 @@
                         <excludes>
                             <exclude>ngapp/**</exclude>
                         </excludes>
-                        <processTypes>
+                        <archive>
+                            <manifest>
+                                <mainClass>com.DevServer</mainClass>
+                            </manifest>
+                        </archive>
+                        <!-- <processTypes>
                             <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
-                        </processTypes>
+                        </processTypes> -->
                     </configuration>
                 </plugin>
                 <plugin>

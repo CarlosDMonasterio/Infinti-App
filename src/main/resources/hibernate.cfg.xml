@@ -21,12 +21,12 @@
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
 
         <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">false</property> <!-- Switch to NO -->
+        <property name="show_sql">false</property> <!-- FALSE hide SQL -->
 
         <property name="hibernate.jdbc.batch_size">20</property>
 
         <!-- format -->
-        <property name="format_sql">false</property> <!-- FALSE hides SQL -->
+        <property name="format_sql">false</property> <!-- FALSE hide SQL -->
 
         <!-- Drop and re-create the database schema on startup (normally it should be validate) -->
         <property name="hbm2ddl.auto">update</property> <!-- update (existing) create (drop and create new) -->

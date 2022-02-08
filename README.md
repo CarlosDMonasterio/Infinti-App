@@ -3,7 +3,7 @@
 - Guidelines Version 1.0 - January 2022
 - All version up to the date of these instructions.  Please confirm with your supervisor for any version changes prior to installation.
 
-- Download and install JAVA JDK 16.0.2
+- Download and install JAVA JDK 17.0.2
   - 
   - https://www.oracle.com/java/technologies/javase/jdk16-archive-downloads.html
 

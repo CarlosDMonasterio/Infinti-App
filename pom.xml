@@ -214,18 +214,20 @@
             </plugins>
         </pluginManagement>
     </build>
-    <profile>
-        <id>prod</id>
-        <build>
-        <plugins>
-            <plugin>
-            <groupId>com.heroku.sdk</groupId>
-            <artifactId>heroku-maven-plugin</artifactId>
-            <configuration>
-                <appName>infiniti-health</appName>
-            </configuration>
-            </plugin>
-        </plugins>
-        </build>
-    </profile>
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <build>
+            <plugins>
+                <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <configuration>
+                    <appName>infiniti-health</appName>
+                </configuration>
+                </plugin>
+            </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

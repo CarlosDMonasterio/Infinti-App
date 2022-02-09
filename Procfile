@@ -1,2 +1,1 @@
-web: java -cp target/classes/:target/dependency/* org.DevServer
-ps:scale web=1
+web: java -jar target/infiniti-health-1.0.jar

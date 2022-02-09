@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/dependency/* org.ih.ApplicationInitializer
+web: java -cp target/classes/:target/dependency/* org.DevServer

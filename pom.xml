@@ -60,6 +60,11 @@
             <version>5.6.3.Final</version>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
             <version>5.6.3.Final</version>
@@ -73,7 +78,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.0.204</version>
+            <version>1.4.200</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -167,6 +172,11 @@
                     <version>3.3.2</version>
                 </plugin>
                 <plugin>
+                    <groupId>com.heroku.sdk</groupId>
+                    <artifactId>heroku-maven-plugin</artifactId>
+                    <version>3.0.3</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
@@ -174,8 +184,24 @@
                         <excludes>
                             <exclude>ngapp/**</exclude>
                         </excludes>
+                        <archive>
+                            <manifest>
+                                <mainClass>org.DevServer</mainClass>
+                            </manifest>
+                        </archive>
                     </configuration>
                 </plugin>
+                
+                <plugin>
+                    <groupId>com.heroku.sdk</groupId>
+                    <artifactId>heroku-maven-plugin</artifactId>
+                    <configuration>
+                        <processTypes>
+                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
+                        </processTypes>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.1</version>
@@ -199,4 +225,20 @@
             </plugins>
         </pluginManagement>
     </build>
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <build>
+            <plugins>
+                <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <configuration>
+                    <appName>infiniti-health</appName>
+                </configuration>
+                </plugin>
+            </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

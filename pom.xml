@@ -175,7 +175,7 @@
                         </excludes>
                         <archive>
                             <manifest>
-                                <mainClass>com.DevServer</mainClass>
+                                <mainClass>org.DevServer</mainClass>
                             </manifest>
                         </archive>
                     </configuration>

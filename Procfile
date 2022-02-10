@@ -1,0 +1,1 @@
+web: java -jar target/infiniti-health-1.2.1.jar

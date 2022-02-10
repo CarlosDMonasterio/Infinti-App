@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* org.ih.DevServer
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* org.DevServer

@@ -7,7 +7,7 @@
     <groupId>org.ih</groupId>
     <artifactId>InfinitiHealth</artifactId>
     <version>1.2.2</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>ih</name>
 
@@ -225,20 +225,4 @@
             </plugins>
         </pluginManagement>
     </build>
-    <profiles>
-        <profile>
-            <id>prod</id>
-            <build>
-            <plugins>
-                <plugin>
-                <groupId>com.heroku.sdk</groupId>
-                <artifactId>heroku-maven-plugin</artifactId>
-                <configuration>
-                    <appName>infiniti-health</appName>
-                </configuration>
-                </plugin>
-            </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

@@ -1,1 +1,1 @@
-web: java -jar target/InfinitiHealth-1.2.1.jar 
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer

@@ -125,17 +125,6 @@
             <artifactId>hapi-fhir-structures-r4</artifactId>
             <version>5.5.3</version>
         </dependency>
-        <!-- <dependency>
-            <groupId>com.heroku.sdk</groupId>
-            <artifactId>heroku-maven-plugin</artifactId>
-            <version>3.0.1</version>
-            <configuration>
-                <appName>infiniti-health</appName>
-                <processTypes>
-                    <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
-                </processTypes>
-            </configuration>
-        </dependency> -->
 
         <!-- validation resource jars -->
         <!--            <dependency>-->
@@ -153,7 +142,18 @@
     <build>
         <pluginManagement>
             <plugins>
-                  <plugin>
+                <plugin>
+                    <groupId>com.heroku.sdk</groupId>
+                    <artifactId>heroku-maven-plugin</artifactId>
+                    <version>3.0.3</version>
+                    <configuration>
+                        <appName>infiniti-health</appName>
+                    </configuration>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
+                    </processTypes>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <executions>

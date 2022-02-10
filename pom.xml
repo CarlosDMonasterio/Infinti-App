@@ -6,8 +6,8 @@
 
     <groupId>org.ih</groupId>
     <artifactId>InfinitiHealth</artifactId>
-    <version>1.2.2</version>
-    <packaging>jar</packaging>
+    <version>1.2.1</version>
+    <packaging>war</packaging>
 
     <name>ih</name>
 
@@ -20,28 +20,28 @@
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
-            <version>2.35</version>
+            <version>2.34</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-multipart</artifactId>
-            <version>2.35</version>
+            <version>2.34</version>
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
-            <version>2.35</version>
+            <version>2.34</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
+            <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.2</version>
+            <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -57,17 +57,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.6.3.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.extras</groupId>
-            <artifactId>glassfish-embedded-all</artifactId>
-            <version>3.1.1</version>
+            <version>5.6.1.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
-            <version>5.6.3.Final</version>
+            <version>5.6.1.Final</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -83,7 +78,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.10</version>
+            <version>1.2.6</version>
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
@@ -118,19 +113,18 @@
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-servlet</artifactId>
-            <version>2.2.14.Final</version>
+            <version>2.2.12.Final</version>
         </dependency>
         <dependency>
             <groupId>ca.uhn.hapi.fhir</groupId>
             <artifactId>hapi-fhir-structures-dstu2</artifactId>
-            <version>5.6.1</version>
+            <version>5.5.3</version>
         </dependency>
         <dependency>
             <groupId>ca.uhn.hapi.fhir</groupId>
             <artifactId>hapi-fhir-structures-r4</artifactId>
-            <version>5.6.1</version>
+            <version>5.5.3</version>
         </dependency>
-        
 
         <!-- validation resource jars -->
         <!--            <dependency>-->
@@ -149,16 +143,6 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <configuration>
-                        <descriptorRefs>
-                            <descriptorRef>jar-with-dependencies</descriptorRef>
-                        </descriptorRefs>
-                        <finalName>infiniti-health</finalName>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
@@ -172,11 +156,6 @@
                     <version>3.3.2</version>
                 </plugin>
                 <plugin>
-                    <groupId>com.heroku.sdk</groupId>
-                    <artifactId>heroku-maven-plugin</artifactId>
-                    <version>3.0.3</version>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
@@ -184,24 +163,8 @@
                         <excludes>
                             <exclude>ngapp/**</exclude>
                         </excludes>
-                        <archive>
-                            <manifest>
-                                <mainClass>org.DevServer</mainClass>
-                            </manifest>
-                        </archive>
                     </configuration>
                 </plugin>
-                
-                <plugin>
-                    <groupId>com.heroku.sdk</groupId>
-                    <artifactId>heroku-maven-plugin</artifactId>
-                    <configuration>
-                        <processTypes>
-                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
-                        </processTypes>
-                    </configuration>
-                </plugin>
-
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.1</version>

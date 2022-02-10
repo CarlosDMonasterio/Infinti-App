@@ -7,7 +7,7 @@
     <groupId>org.ih</groupId>
     <artifactId>InfinitiHealth</artifactId>
     <version>1.2.1</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>ih</name>
 
@@ -211,8 +211,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.2</version>
                     <configuration>
                         <archive>
                             <manifest>

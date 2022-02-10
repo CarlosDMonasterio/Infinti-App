@@ -125,6 +125,11 @@
             <artifactId>hapi-fhir-structures-r4</artifactId>
             <version>5.5.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
         <!-- validation resource jars -->
         <!--            <dependency>-->

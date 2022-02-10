@@ -148,10 +148,10 @@
                     <version>3.0.3</version>
                     <configuration>
                         <appName>infiniti-health</appName>
+                        <processTypes>
+                            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
+                        </processTypes>
                     </configuration>
-                    <processTypes>
-                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* DevServer</web>
-                    </processTypes>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
